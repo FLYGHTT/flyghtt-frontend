@@ -3,18 +3,20 @@ import { motion } from "framer-motion";
 import { useAppContext } from "@/context/AppContext";
 import { AppContextType } from "@/types";
 
+import Background from "./Background";
+import Content from "./Content";
 export default function AboutComponent() {
   const { clickPosition } = useAppContext() as AppContextType;
   console.log(clickPosition);
 
   return (
     <motion.div
-      className="w-full overflow-hidden"
+      className="w-full overflow-hidden text-white py-14 flex flex-col items-center bg-darkGray relative min-h-screen "
       initial={{
-        opacity: 0,
-        scale: 0,
-        x: clickPosition.x - window.innerWidth / 2,
-        y: clickPosition.y - window.innerHeight / 2,
+        // opacity: 0,
+        scale: 0.8,
+        // x: clickPosition.x - window.innerWidth / 2,
+        // y: clickPosition.y - window.innerHeight / 2,
       }}
       animate={{
         opacity: 1,
@@ -28,12 +30,9 @@ export default function AboutComponent() {
         damping: 30,
       }}
     >
-      {" "}
-      <div className="w-[150vw] flex ">
-        {/* <h1 className="text-black/20 font-extrabold -mx-40 -mt-2 text-[400px] leading-[0.8] w-full">
-          About Us
-        </h1> */}
-      </div>
+      <Content />
+
+      <Background />
     </motion.div>
   );
 }

@@ -1,7 +1,7 @@
 "use client"
 import React from "react";
 import Image from "next/image";
-import { styles } from "@/lib/styles";
+import { styles } from "../styles";
 import useNavigate from "@/hooks/useNavigate";
 import logo from "@/public/logo.svg";
 const SecondGrid = () => {

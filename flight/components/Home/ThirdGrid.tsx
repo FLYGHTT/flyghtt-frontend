@@ -1,6 +1,6 @@
 import React from "react";
 import useNavigate from "@/hooks/useNavigate";
-import { styles } from "@/lib/styles";
+import { styles } from "../styles";
 const ThirdGrid = () => {
   return (
     <div className="row-span-4 w-full grid grid-cols-12 gap-8">
