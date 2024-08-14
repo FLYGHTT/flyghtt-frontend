@@ -10,6 +10,9 @@ const config: Config = {
     extend: {
       colors: {
         primary: "#D9D9D9",
+        darkGray: "hsla(0, 0%, 20%, 1)",
+        lightGray: "hsla(0, 0%, 40%, 1)",
+        dark: "hsla(0, 0%, 13%, 1)"
       },
     },
   },
