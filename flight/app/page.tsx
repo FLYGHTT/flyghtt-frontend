@@ -1,9 +1,15 @@
-import React from 'react'
+"use client"
+import Home from "./Home";
 
+import React from "react";
+import useNavigate from "@/hooks/useNavigate";
 const page = () => {
+  const { handleClick } = useNavigate();
   return (
-    <div>page</div>
-  )
-}
+    <div className="" >
+      <Home />
+    </div>
+  );
+};
 
-export default page
+export default page;
