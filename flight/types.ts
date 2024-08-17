@@ -1,4 +1,6 @@
+import React from "react";
+
 export interface AppContextType {
-  clickPosition: { x: number; y: number };
-  setClickPosition: (clickPosition: { x: number; y: number }) => void;
+  showLogin: boolean;
+  setShowLogin: React.Dispatch<React.SetStateAction<boolean>>;
 }

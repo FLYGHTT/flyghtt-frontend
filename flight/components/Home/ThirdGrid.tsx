@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import useNavigate from "@/hooks/useNavigate";
-import { styles } from "../styles";
+import { styles } from "../../lib/styles";
 const ThirdGrid = () => {
   const { handleClick } = useNavigate();
   return (

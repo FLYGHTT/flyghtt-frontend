@@ -6,7 +6,7 @@ import Content from "./Content";
 export default function AboutComponent() {
   return (
     <motion.div
-      className="w-full overflow-hidden text-white py-14 flex flex-col items-center bg-darkGray relative min-h-screen "
+      className="w-full overflow-hidden text-white py-10 flex flex-col items-center bg-darkGray relative min-h-screen "
       initial={{
         scale: 0.8,
       }}

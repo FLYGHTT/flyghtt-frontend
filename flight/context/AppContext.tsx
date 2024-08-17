@@ -1,19 +1,19 @@
 "use client";
 import { AppContextType } from "@/types";
-import React, { useState, createContext, useContext} from "react";
+import React, { useState, createContext, useContext } from "react";
 
 const Context = createContext<AppContextType | undefined>(undefined);
 
 export const AppContext: React.FC<{
   children: React.ReactNode;
 }> = ({ children }) => {
-  const [clickPosition, setClickPosition] = useState({ x: 0, y: 0 });
+  const [showLogin, setShowLogin] = useState(false);
 
   return (
     <Context.Provider
       value={{
-        clickPosition,
-        setClickPosition,
+        showLogin,
+        setShowLogin,
       }}
     >
       {children}

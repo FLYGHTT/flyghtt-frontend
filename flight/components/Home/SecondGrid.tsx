@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import { styles } from "../styles";
+import { styles } from "../../lib/styles";
 import useNavigate from "@/hooks/useNavigate";
 import logo from "@/public/logo.svg";
 import Link from "next/link";
@@ -16,7 +16,7 @@ const SecondGrid = () => {
         <span className="-mr-4 text-clip">Features</span>
       </div>
       <div
-        className={`${styles.mat} col-span-4 bg-transparent flex  items-center justify-center flex-col`}
+        className={`${styles.mat} cursor-default col-span-4 bg-transparent flex  items-center justify-center flex-col`}
       >
         <Image src={logo} alt="logo" priority />
         <p className="my-4 text-black">Take your startup to new heights</p>
