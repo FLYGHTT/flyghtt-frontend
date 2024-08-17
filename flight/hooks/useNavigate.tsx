@@ -15,20 +15,21 @@ const useNavigate = () => {
       x: e.clientX,
       y: e.clientY,
     });
+    animate(
+      e.currentTarget,
+      {
+        opacity: 0,
+        scale: 1.8,
+      },
+      {
+        duration: 0.2,
+        ease: "easeInOut",
+      }
+    );
 
-    // Animate only the clicked element
-    animate(e.currentTarget, {
-      opacity: 0,
-      scale: 1.8,
-    }, {
-      duration: 0.3,
-      ease: "easeInOut",
-    });
-
-    // Delay navigation to allow the animation to complete
     setTimeout(() => {
       router.push(path);
-    }, 100); // Adjust the delay to match your animation duration
+    }, 100);
   };
 
   return { handleClick, scope };

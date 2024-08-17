@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 import Background from "../Background";
 import Content from "./Content";
-export default function AboutComponent() {
+export default function PlanComponent() {
   return (
     <motion.div
       className="w-full overflow-hidden text-white py-14 flex flex-col items-center bg-darkGray relative min-h-screen "
@@ -24,7 +24,10 @@ export default function AboutComponent() {
     >
       <Content />
 
-      <Background text="About Us" className="text-[400px] -mx-40 text-lightGray" />
+      <Background
+        text="Plans"
+        className="text-[550px] -mt-32  text-lightGray"
+      />
     </motion.div>
   );
 }

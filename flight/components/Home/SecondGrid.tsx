@@ -1,18 +1,19 @@
-"use client"
+"use client";
 import React from "react";
 import Image from "next/image";
 import { styles } from "../styles";
 import useNavigate from "@/hooks/useNavigate";
 import logo from "@/public/logo.svg";
+import Link from "next/link";
 const SecondGrid = () => {
-  const { handleClick } = useNavigate();
+  const { handleClick, scope } = useNavigate();
   return (
-    <div className="row-span-4 w-full grid grid-cols-12 gap-8">
+    <div className="row-span-4 w-full grid grid-cols-12 gap-8" ref={scope}>
       <div
         className={`${styles.mat} col-span-4 text-[100px] overflow-hidden  `}
         onClick={(e) => handleClick(e, "/about")}
       >
-        <span className="-mr-4 text-clip" >Features</span>
+        <span className="-mr-4 text-clip">Features</span>
       </div>
       <div
         className={`${styles.mat} col-span-4 bg-transparent flex  items-center justify-center flex-col`}
@@ -23,7 +24,10 @@ const SecondGrid = () => {
           Get Started
         </button>
       </div>
-      <div className={`${styles.mat} col-span-4 text-[85px] overflow-hidden  `}>
+      <div
+        className={`${styles.mat} col-span-4 text-[85px] overflow-hidden  `}
+        onClick={(e) => handleClick(e, "/testimonials")}
+      >
         <span className="-mr-9 text-clip">Testimonials</span>
       </div>
     </div>
