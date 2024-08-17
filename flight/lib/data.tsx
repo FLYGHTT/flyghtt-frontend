@@ -45,3 +45,34 @@ export const testimonials = [
     star: "4",
   },
 ];
+
+export const plans = [
+  {
+    name: "Premium",
+    features: [
+      {tick: true, title: "Feature 1"},
+      {tick: true, title: "Feature 1"},
+      {tick: true, title: "Feature 1"},
+      {tick: true, title: "Feature 1"},
+      {tick: true, title: "Feature 1"},
+      {tick: true, title: "Feature 1"},
+      {tick: true, title: "Feature 1"},
+      {tick: true, title: "Feature 1"},
+      {tick: true, title: "Feature 1"},
+    ],
+  },
+  {
+    name: "Free",
+    features: [
+      {tick: true, title: "Feature 1"},
+      {tick: true, title: "Feature 1"},
+      {tick: true, title: "Feature 1"},
+      {tick: true, title: "Feature 1"},
+      {tick: false, title: "Feature 1"},
+      {tick: false, title: "Feature 1"},
+      {tick: false, title: "Feature 1"},
+      {tick: false, title: "Feature 1"},
+      {tick: false, title: "Feature 1"}
+    ],
+  },
+];

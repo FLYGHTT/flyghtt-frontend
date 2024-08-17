@@ -8,7 +8,7 @@ const Background = ({
   className: string;
 }) => {
   return (
-    <div className=" absolute top-0 left-0 w-[150vw] -z-1">
+    <div className=" absolute top-0 left-0 w-[150vw] flex justify-center -z-1">
       <motion.h1
         initial={{
           opacity: 0,
@@ -26,6 +26,7 @@ const Background = ({
           type: "spring",
           stiffness: 300,
           damping: 30,
+          duration: 0.8,
         }}
         className={` absolute font-extrabold -mt-2 ${className} leading-[0.8] w-full`}
       >
