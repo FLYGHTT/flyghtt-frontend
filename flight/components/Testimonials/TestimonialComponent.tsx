@@ -1,12 +1,12 @@
 "use client";
+import React from "react";
 import { motion } from "framer-motion";
-
 import Background from "../Background";
-import Content from "./Content";
-export default function AboutComponent() {
+import Content from "../Testimonials/Content";
+const TestimonialComponent = () => {
   return (
     <motion.div
-      className="w-full overflow-hidden text-white py-14 flex flex-col items-center bg-darkGray relative min-h-screen "
+      className="w-full overflow-hidden text-white py-14 bg-green relative h-screen flex flex-col "
       initial={{
         scale: 0.8,
       }}
@@ -23,8 +23,12 @@ export default function AboutComponent() {
       }}
     >
       <Content />
-
-      <Background text="About Us" className="text-[400px] -mx-40 text-lightGray" />
+      <Background
+        text="Testimonials"
+        className="text-[250px] mt-8 text-paleGreen"
+      />
     </motion.div>
   );
-}
+};
+
+export default TestimonialComponent;

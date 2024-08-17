@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import back from "@/assets/icons/back.svg";
+
 import Image from "next/image";
-import Link from "next/link";
+
 import instagram from "@/assets/icons/instagram.svg";
 import linkedin from "@/assets/icons/linkedin.svg";
 import { motion } from "framer-motion";
+import Back from "../Back";
 const Content = () => {
   const team = [
     {
@@ -26,13 +27,8 @@ const Content = () => {
 
   const [hoveredIndex, setHoveredIndex] = useState(-1);
   return (
-    <div className="max-w-4xl z-[100]">
-      <Link href="/">
-        <div className="bg-dark mb-1 w-fit rounded-full p-4 cursor-pointer">
-          <Image src={back} alt="back" />
-        </div>
-        Go back
-      </Link>
+    <div className="max-w-4xl z-[100] py-16">
+      <Back background="bg-dark" textColor="text-white" />
       <motion.div
         initial={{
           opacity: 0,
