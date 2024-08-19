@@ -27,7 +27,7 @@ const Content = () => {
 
   const [hoveredIndex, setHoveredIndex] = useState(-1);
   return (
-    <div className="max-w-4xl z-[100] py-16">
+    <div className="max-w-4xl z-[100] py-10">
       <Back background="bg-dark" textColor="text-white" />
       <motion.div
         initial={{
@@ -60,7 +60,9 @@ const Content = () => {
           </p>
         </div>
         <div className="mt-20 ">
-          <h1 className="text-5xl">Meet the team!</h1>
+          <h1 className="text-5xl">
+            Meet the <span className="text-green">team!</span>{" "}
+          </h1>
           <div className="grid grid-cols-3 gap-24 mt-8">
             {team.map((member, index) => (
               <div

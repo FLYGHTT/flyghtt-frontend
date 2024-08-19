@@ -1,20 +1,14 @@
 "use client";
 import { useRouter } from "next/navigation";
-import { useAppContext } from "@/context/AppContext";
-import React, { useState } from "react";
-import { AppContextType } from "@/types";
+import React from "react";
+
 import { useAnimate } from "framer-motion";
 
 const useNavigate = () => {
   const router = useRouter();
   const [scope, animate] = useAnimate();
-  const { setClickPosition } = useAppContext() as AppContextType;
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>, path: string) => {
-    setClickPosition({
-      x: e.clientX,
-      y: e.clientY,
-    });
     animate(
       e.currentTarget,
       {
