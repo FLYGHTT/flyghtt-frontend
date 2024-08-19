@@ -1,4 +1,4 @@
-import { styles } from "@/lib/styles";
+import { styles } from "../styles";
 import Link from "next/link";
 import React, { useRef, useEffect } from "react";
 import { IoClose } from "react-icons/io5";

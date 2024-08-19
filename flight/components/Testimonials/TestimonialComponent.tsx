@@ -25,7 +25,7 @@ const TestimonialComponent = () => {
       <Content />
       <Background
         text="Testimonials"
-        className="text-[250px] mt-8 text-paleGreen"
+        className="text-[255px] mt-4 text-paleGreen"
       />
     </motion.div>
   );

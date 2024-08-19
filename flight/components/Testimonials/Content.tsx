@@ -30,7 +30,7 @@ const Content = () => {
         <h1 className="text-3xl font-bold my-4">Hear from our users</h1>
         <p className="text-xl">
           Our users are loving it, take your business to the next level with
-          Flyghtt
+          <span className="font-bold"> Flyghtt</span>
         </p>
       </motion.div>
       <Testimonials />

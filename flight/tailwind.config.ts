@@ -22,6 +22,7 @@ const config: Config = {
         lightGreen: "hsla(170, 100%, 87%, 1)",
         light:"hsla(172, 57%, 90%, 1)",
         yellow: "hsla(45, 97%, 50%, 1)",
+        lightPurple: "hsla(0, 24%, 94%, 1)"
       },
       animation: {
         scroll:

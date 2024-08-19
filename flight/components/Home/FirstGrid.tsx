@@ -1,10 +1,11 @@
 "use client";
 import React from "react";
-import { styles } from "../../lib/styles";
+import { styles } from "../styles";
 import { AiOutlineSun } from "react-icons/ai";
 import useNavigate from "@/hooks/useNavigate";
 import { useAppContext } from "@/context/AppContext";
 import { AppContextType } from "@/types";
+
 const FirstGrid = () => {
   const { handleClick, scope } = useNavigate();
   const { setShowLogin } = useAppContext() as AppContextType;
@@ -24,7 +25,9 @@ const FirstGrid = () => {
         <button className={styles.login}>
           <AiOutlineSun />
         </button>
-        <div className={styles.login}>Contact Us</div>
+        <div onClick={(e) => handleClick(e, "/contact-us")} className={styles.login}>
+          Contact Us
+        </div>
       </div>
     </div>
   );
