@@ -22,6 +22,12 @@ const Background = ({
           x: 0,
           y: 0,
         }}
+        exit={{
+          opacity: 0,
+          scale: 0.5,
+          // x: clickPosition.x - window.innerWidth / 2,
+          // y: clickPosition.y - window.innerHeight / 2,
+        }}
         transition={{
           type: "spring",
           stiffness: 300,

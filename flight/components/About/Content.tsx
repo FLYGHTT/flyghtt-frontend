@@ -43,6 +43,10 @@ const Content = () => {
           stiffness: 300,
           damping: 30,
         }}
+        exit={{
+          opacity: 0,
+          x: -400,
+        }}
       >
         <div>
           <h1 className="mt-20 text-5xl">Who are we?</h1>

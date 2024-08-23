@@ -11,9 +11,9 @@ const FirstGrid = () => {
   const { setShowLogin } = useAppContext() as AppContextType;
   return (
     <div className="row-span-4 w-full grid grid-cols-12 gap-8" ref={scope}>
-      <div className={`${styles.mat} col-span-5`}>About Us</div>
+      <div className={`${styles.mat} cursor-pointer col-span-5`}>About Us</div>
       <div
-        className={`${styles.mat} col-span-5  text-[120px]`}
+        className={`${styles.mat} cursor-pointer col-span-5 text-lightGray bg-darkGray  text-[120px]`}
         onClick={(e) => handleClick(e, "/about")}
       >
         About Us
