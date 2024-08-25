@@ -1,10 +1,12 @@
+"use client";
 import React from "react";
 import Home from "./Home";
-
+import { useAppContext } from "@/context";
 const ActivePage = () => {
+  const { activePage } = useAppContext();
   return (
     <div className="px-6 w-full h-full">
-      <Home />
+      {activePage === "home" && <Home />}
     </div>
   );
 };

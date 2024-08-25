@@ -1,8 +1,10 @@
 import React from "react";
 
 export interface AppContextType {
-  showLogin: boolean;
-  setShowLogin: React.Dispatch<React.SetStateAction<boolean>>;
+  activePage: string;
+  setActivePage: React.Dispatch<React.SetStateAction<string>>;
+  contextMenu: ContextMenuType;
+  setContextMenu: React.Dispatch<React.SetStateAction<ContextMenuType>>;
 }
 
 export interface Model {
@@ -13,3 +15,9 @@ export interface Model {
   isPinned: boolean;
   isFavorite: boolean;
 }
+export interface ContextMenuType {
+  visible: boolean;
+  x: number;
+  y: number;
+}
+

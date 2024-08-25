@@ -2,11 +2,13 @@ import { styles } from "../styles";
 import Link from "next/link";
 import React, { useRef, useEffect } from "react";
 import { IoClose } from "react-icons/io5";
-import { useAppContext } from "@/context/AppContext";
-import { AppContextType } from "@/types";
+
 import { motion } from "framer-motion";
-const Login = () => {
-  const { setShowLogin } = useAppContext() as AppContextType;
+const Login = ({
+  setShowLogin,
+}: {
+  setShowLogin: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
   const loginRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
