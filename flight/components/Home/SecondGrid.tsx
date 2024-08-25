@@ -20,9 +20,9 @@ const SecondGrid = () => {
       >
         <Image src={logo} alt="logo" priority />
         <p className="my-4 text-black">Take your startup to new heights</p>
-        <button className="uppercase w-1/2 bg-primary text-black py-4 mt-3 rounded-2xl ">
+        <Link href="/signup" className="uppercase w-1/2 bg-primary text-black py-4 mt-3 rounded-2xl flex justify-center ">
           Get Started
-        </button>
+        </Link>
       </div>
       <div
         className={`${styles.mat} col-span-4 text-[85px] overflow-hidden  `}
