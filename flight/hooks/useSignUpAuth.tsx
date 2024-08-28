@@ -24,6 +24,23 @@ const useSignUpAuth = () => {
   });
   const [empty, setEmpty] = useState("");
 
+  const [cookieError, setCookieError] = useState("");
+  const { mutate: cookieMutate } = useMutation({
+    mutationKey: ["setcookie"],
+    mutationFn: (data: { token: string }) =>
+      postData({
+        url: "http://localhost:3000/api/login",
+        data: data,
+      }),
+    onError: () => {
+      setCookieError("Something went wrong");
+    },
+    onSuccess: (data) => {
+      router.push("/verify-email");
+      return;
+    },
+  });
+
   const { mutate, isError, isPending } = useMutation({
     mutationKey: ["signUp"],
     mutationFn: (data: {
@@ -46,7 +63,14 @@ const useSignUpAuth = () => {
         return;
       }
       console.log(data);
-      router.push("/verify-email");
+
+      const cookieData = {
+        token: data.token,
+      };
+      cookieMutate(cookieData);
+
+      localStorage.setItem("flyghtt_token", cookieData.token);
+
     },
   });
 
@@ -163,6 +187,9 @@ const useSignUpAuth = () => {
     empty,
     isError,
     isPending,
+
+    cookieError,
+
   };
 };
 

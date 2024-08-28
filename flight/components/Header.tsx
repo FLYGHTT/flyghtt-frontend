@@ -9,6 +9,12 @@ import { motion } from "framer-motion";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
 import useGetCurrentUser from "@/hooks/useGetCurrentUser";
 import { useRouter } from "next/navigation";
+
+import { useMutation } from "@tanstack/react-query";
+import { postData } from "@/lib/http";
+
+import Error from "@/app/error";
+
 const Header = () => {
   const router = useRouter();
   const [clickedProfile, setClickedProfile] = useState(false);
@@ -16,6 +22,22 @@ const Header = () => {
   const { activePage, setActivePage } = useAppContext();
   const ref = useRef(null);
   const token = localStorage.getItem("flyghtt_token");
+
+  const { mutate: cookieMutate } = useMutation({
+    mutationKey: ["setcookie"],
+    mutationFn: (data: { token: string }) =>
+      postData({
+        url: "http://localhost:3000/api/logout",
+        data: data,
+      }),
+    onError: () => {
+      return <Error />;
+    },
+    onSuccess: () => {
+      router.push("/login");
+      return;
+    },
+  });
 
   useOutsideClick(ref, () => {
     setClickedProfile(false);
@@ -33,6 +55,12 @@ const Header = () => {
     setClickedProfile(!clickedProfile);
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("flyghtt_token");
+    cookieMutate({ token: "" });
+  };
+
+
   const { data: user, isError, isPending } = useGetCurrentUser(token || "");
 
   if (!token) {
@@ -48,8 +76,6 @@ const Header = () => {
   if (isError) {
     return <div>Error</div>;
   }
-
-  console.log(user, "user");
 
   return (
     <div className="w-full flex justify-between items-center p-6">
@@ -95,7 +121,12 @@ const Header = () => {
               <p className="hover:bg-green/20 p-2 px-4 cursor-pointer">
                 My Profile
               </p>
-              <p className="hover:bg-green/20 p-2 px-4 cursor-pointer">
+
+              <p
+                className="hover:bg-green/20 p-2 px-4 cursor-pointer"
+                onClick={handleLogout}
+              >
+
                 Log out
               </p>
             </motion.div>
