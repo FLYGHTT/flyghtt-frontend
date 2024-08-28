@@ -51,16 +51,20 @@ const useLoginAuth = () => {
         setError(data.message);
         return;
       }
-      localStorage.setItem("flyghtt_token", data.token);
-      if (!data.emailVerified) {
-        router.push("/verify-email");
-        return;
-      }
-      console.log(data);
       const cookieData = {
         token: data.token,
       };
       cookieMutate(cookieData);
+      localStorage.setItem("flyghtt_token", data.token);
+
+      if (!data.emailVerified) {
+        console.log(data, "useloginauth");
+        setTimeout(() => {
+          router.push("/verify-email");
+        }, 1000);
+        return;
+      }
+
       return;
     },
   });
