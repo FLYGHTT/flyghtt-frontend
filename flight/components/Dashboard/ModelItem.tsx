@@ -1,11 +1,11 @@
 "use client";
 import React, { useState } from "react";
-import Star from "./Star";
-import Pin from "./Pin";
+import Star from "../Star";
+import Pin from "../Pin";
 import { Model } from "@/types";
 import { useAppContext } from "@/context";
 import useContextMenu from "@/hooks/useContextMenu";
-import ContextMenu from "./ContextMenu";
+import ContextMenu from "../ContextMenu";
 const ModelItem = ({
   model,
   isFavorites,

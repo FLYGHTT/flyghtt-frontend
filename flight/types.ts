@@ -21,3 +21,12 @@ export interface ContextMenuType {
   y: number;
 }
 
+export interface SignUpInputs {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  remember: boolean;
+  newsletter: boolean;
+}

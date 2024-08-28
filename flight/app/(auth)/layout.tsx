@@ -1,11 +1,12 @@
 "use client";
 import React from "react";
-import SignUpForm from "@/components/SignUp/SignUpForm";
 import eagle from "@/assets/images/eagle.svg";
 import Image from "next/image";
 import Back from "@/components/Back";
 import { motion } from "framer-motion";
-const SignUp = () => {
+
+
+const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <motion.div
       initial={{
@@ -30,34 +31,17 @@ const SignUp = () => {
         <div className="bg-dark" />
         <div className="bg-white" />
       </div>
-      <div className="z-[10] flex flex-col">
-        <motion.h1
-          initial={{
-            x: -100,
-            opacity: 0,
-          }}
-          animate={{
-            x: 0,
-            opacity: 1,
-          }}
-          transition={{
-            delay: 0.5,
-          }}
-          className="text-green text-5xl font-bold"
-        >
-          SIGN UP
-        </motion.h1>
-        <SignUpForm />
-      </div>
+      {children}
       <Image
         src={eagle}
         alt="eagle"
         className="z-[100] absolute bottom-0 right-0"
         width={500}
         height={500}
+        priority
       />
     </motion.div>
   );
 };
 
-export default SignUp;
+export default Layout;

@@ -1,8 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import HeaderModels from "./HeaderModels";
-import { model } from "@/lib/data";
-import ModelItem from "./ModelItem";
 import Recents from "./Recents";
 import Favourites from "./Favourites";
 
