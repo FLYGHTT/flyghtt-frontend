@@ -16,7 +16,9 @@ const useLoginAuth = () => {
   const [error, setError] = useState("");
   const { mutate: cookieMutate } = useMutation({
     mutationKey: ["setcookie"],
+
     mutationFn: (data: { token: string }) =>
+
       postData({
         url: "http://localhost:3000/api/login",
         data: data,
@@ -25,24 +27,30 @@ const useLoginAuth = () => {
       setError("Something went wrong");
     },
     onSuccess: (data) => {
+
       if (loginData && loginData.emailVerified) {
         router.push("/dashboard");
       } else {
         router.push("/verify-email");
       }
+
       return;
     },
   });
 
   const {
     mutate,
+
     data: loginData,
+
     isError,
     isPending,
     error: mutateError,
   } = useMutation({
     mutationKey: ["login"],
+
     mutationFn: (data: { email: string; password: string }) =>
+
       postData({
         url: "https://flyghtt-backend.onrender.com/api/v1/authentication/login",
         data: data,
@@ -55,10 +63,12 @@ const useLoginAuth = () => {
         setError(data.message);
         return;
       }
+
       const cookieData = {
         token: data.token,
       };
       cookieMutate(cookieData);
+
       localStorage.setItem("flyghtt_token", data.token);
 
       return;

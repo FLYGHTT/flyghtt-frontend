@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import useVerifyForm from "@/hooks/useVerifyForm";
 import { postData } from "@/lib/http";
 import { useMutation } from "@tanstack/react-query";
+
 import { useRouter } from "next/navigation";
 const VerifyForm = () => {
   const { code, handleChange, handleKeyDown, handlePaste, handleRef } =
@@ -10,6 +11,7 @@ const VerifyForm = () => {
   const [error, setError] = useState("");
   const router = useRouter();
   const token = localStorage.getItem("flyghtt_token");
+
   const { mutate, data, isError, isPending } = useMutation({
     mutationKey: ["verify"],
     mutationFn: ({ data, token }: { data: { otp: number }; token: string }) =>
@@ -24,14 +26,16 @@ const VerifyForm = () => {
     onSuccess: (data) => {
       console.log(data);
       if (data && data.emailVerified) {
+
         router.push("/email-verified");
+
         setError("");
       } else {
         setError(data.message);
       }
     },
   });
- 
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -46,6 +50,7 @@ const VerifyForm = () => {
       otp: Number(code.join("")),
     };
     console.log(token, "tokenverifyyform");
+
     mutate({ data: data, token: token || "" });
   };
   return (
@@ -83,9 +88,11 @@ const VerifyForm = () => {
         Continue
       </button>
       <p className="text-red-500 text-xs mt-4">{error && error}</p>
+
       {isPending && (
         <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-green mt-3"></div>
       )}
+
     </form>
   );
 };

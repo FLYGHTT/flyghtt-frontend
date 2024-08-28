@@ -10,9 +10,9 @@ export async function middleware(req: NextRequest) {
 
   try {
     const user = await getCurrentUser(token);
-    console.log(user, "user data middleware");
+
     const { pathname } = req.nextUrl;
-    console.log(user.emailVerified, "email verified middleware");
+ 
     // Apply email verification logic only for specific routes
     if (
       pathname.startsWith("/verify-email") ||
@@ -20,7 +20,7 @@ export async function middleware(req: NextRequest) {
     ) {
       // Protect verify-email route: Only allow access if email is not verified
       if (pathname.startsWith("/verify-email") && user.emailVerified) {
-        console.log("redirecting to dashboard");
+
         return NextResponse.redirect(new URL("/dashboard", req.url));
       }
 
@@ -34,6 +34,7 @@ export async function middleware(req: NextRequest) {
   } catch (err) {
     console.error("Error in middleware:", err);
     return NextResponse.redirect(new URL("/login", req.url));
+
   }
 }
 

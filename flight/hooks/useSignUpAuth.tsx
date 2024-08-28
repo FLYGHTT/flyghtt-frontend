@@ -23,6 +23,7 @@ const useSignUpAuth = () => {
     remember: "",
   });
   const [empty, setEmpty] = useState("");
+
   const [cookieError, setCookieError] = useState("");
   const { mutate: cookieMutate } = useMutation({
     mutationKey: ["setcookie"],
@@ -39,6 +40,7 @@ const useSignUpAuth = () => {
       return;
     },
   });
+
   const { mutate, isError, isPending } = useMutation({
     mutationKey: ["signUp"],
     mutationFn: (data: {
@@ -61,12 +63,14 @@ const useSignUpAuth = () => {
         return;
       }
       console.log(data);
+
       const cookieData = {
         token: data.token,
       };
       cookieMutate(cookieData);
 
       localStorage.setItem("flyghtt_token", cookieData.token);
+
     },
   });
 
@@ -183,7 +187,9 @@ const useSignUpAuth = () => {
     empty,
     isError,
     isPending,
+
     cookieError,
+
   };
 };
 
