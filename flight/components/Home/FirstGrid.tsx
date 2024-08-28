@@ -1,13 +1,11 @@
+"use client"
 import React from "react";
 import { styles } from "../styles";
 import { AiOutlineSun } from "react-icons/ai";
 import useNavigate from "@/hooks/useNavigate";
+import Link from "next/link";
 
-const FirstGrid = ({
-  setShowLogin,
-}: {
-  setShowLogin: React.Dispatch<React.SetStateAction<boolean>>;
-}) => {
+const FirstGrid = () => {
   const { handleClick, scope } = useNavigate();
 
   return (
@@ -20,9 +18,9 @@ const FirstGrid = ({
         About Us
       </div>
       <div className="grid grid-rows-12 gap-2 w-full col-span-2 ">
-        <div className={`${styles.login} `} onClick={() => setShowLogin(true)}>
+        <Link href="/login" className={`${styles.login} `}>
           Log in
-        </div>
+        </Link>
         <button className={styles.login}>
           <AiOutlineSun />
         </button>
