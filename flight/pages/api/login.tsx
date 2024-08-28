@@ -1,11 +1,14 @@
-
 import { serialize } from "cookie";
-// import n
-export default async function handler(req, res) {
-  const {token }= req.body;
+import type { NextApiRequest, NextApiResponse } from "next";
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
+  const { token } = req.body;
+
   res.setHeader(
     "Set-Cookie",
-    serialize("flyghtt_token", JSON.stringify(token), {
+    serialize("flyghtt_token", token, {
       httpOnly: true, // Make the cookie HTTP-only
       secure: process.env.NODE_ENV === "production", // Use secure cookies in production
       maxAge: 3600, // Token expiration time in seconds

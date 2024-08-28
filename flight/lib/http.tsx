@@ -25,9 +25,21 @@ export const postData = async ({
     console.error("Error:", error);
   }
 };
-export const fetchData = async (url: string) => {
+export const fetchData = async ({
+  url,
+  token,
+}: {
+  url: string;
+  token: string;
+}) => {
   try {
-    const response = await fetch(url);
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return response.json();
   } catch (error) {
     console.error("Error:", error);

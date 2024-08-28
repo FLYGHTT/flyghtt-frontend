@@ -6,8 +6,11 @@ import { motion } from "framer-motion";
 import { authFormvariants } from "@/lib/variants";
 import useLoginAuth from "@/hooks/useLoginAuth";
 import Password from "../ui/Password";
+import Loader from "../ui/Loading";
 const LoginForm = () => {
-  const { inputs, handleChange, handleSubmit, error } = useLoginAuth();
+  const { inputs, handleChange, handleSubmit, error, isPending, isError } =
+    useLoginAuth();
+
   return (
     <motion.form
       onSubmit={(e) => handleSubmit(e)}
@@ -47,6 +50,9 @@ const LoginForm = () => {
           Login
         </button>
         {error && <span className="text-red-500 text-xs ml-2">{error}</span>}
+        {isPending && (
+          <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-green mt-3"></div>
+        )}
       </div>
     </motion.form>
   );

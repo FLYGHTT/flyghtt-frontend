@@ -6,7 +6,7 @@ import useAuth from "@/hooks/useSignUpAuth";
 import Password from "../ui/Password";
 import { authFormvariants } from "@/lib/variants";
 const SignUpForm = () => {
-  const { handleChange, handleSubmit, error, inputs, empty } = useAuth();
+  const { handleChange, handleSubmit, error, inputs, empty , isPending} = useAuth();
 
   return (
     <motion.form
@@ -126,6 +126,9 @@ const SignUpForm = () => {
           </Link>
         </span>
         {empty && <span className="text-red-500 text-xs  mt-4">{empty}</span>}
+        {isPending && (
+          <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-green mt-3"></div>
+        )}
       </div>
     </motion.form>
   );

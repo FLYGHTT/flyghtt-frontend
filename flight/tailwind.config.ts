@@ -25,6 +25,9 @@ const config: Config = {
         lightPurple: "hsla(0, 24%, 94%, 1)",
         darkPurple: "#BC47FF",
       },
+      backgroundImage:{
+        gradient1:"linear-gradient(to bottom, hsla(172, 57%, 90%, 1) 80%, hsla(170, 82%, 48%, 1) 20%);",
+      },
       animation: {
         scroll:
           "scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite",

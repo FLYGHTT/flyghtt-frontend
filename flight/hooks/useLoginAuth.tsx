@@ -25,8 +25,6 @@ const useLoginAuth = () => {
       setError("Something went wrong");
     },
     onSuccess: (data) => {
-      localStorage.setItem("flyghtt_token", data.token);
-
       router.push("/dashboard");
       return;
     },
@@ -66,13 +64,7 @@ const useLoginAuth = () => {
       return;
     },
   });
-  if (isPending) {
-    console.log("loading");
-  }
-  if (isError) {
-    console.log(mutateError);
-    setError(mutateError.message);
-  }
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputs((prev) => ({
       ...prev,
@@ -95,7 +87,7 @@ const useLoginAuth = () => {
     setError("");
     mutate(inputs);
   };
-  return { inputs, handleChange, handleSubmit, error };
+  return { inputs, handleChange, handleSubmit, error, isPending, isError };
 };
 
 export default useLoginAuth;

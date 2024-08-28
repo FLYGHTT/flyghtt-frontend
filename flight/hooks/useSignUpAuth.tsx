@@ -50,13 +50,6 @@ const useSignUpAuth = () => {
     },
   });
 
-  if (isPending) {
-    console.log("loading");
-  }
-  if (isError) {
-    console.log("error");
-  }
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputs((prev) => ({
       ...prev,
@@ -168,6 +161,8 @@ const useSignUpAuth = () => {
     validateInputs,
     handleSubmit,
     empty,
+    isError,
+    isPending,
   };
 };
 

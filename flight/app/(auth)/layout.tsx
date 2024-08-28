@@ -38,6 +38,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         className="z-[100] absolute bottom-0 right-0"
         width={500}
         height={500}
+        priority
       />
     </motion.div>
   );
