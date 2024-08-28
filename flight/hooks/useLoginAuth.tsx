@@ -25,14 +25,18 @@ const useLoginAuth = () => {
       setError("Something went wrong");
     },
     onSuccess: (data) => {
-      router.push("/dashboard");
+      if (loginData && loginData.emailVerified) {
+        router.push("/dashboard");
+      } else {
+        router.push("/verify-email");
+      }
       return;
     },
   });
 
   const {
     mutate,
-    data,
+    data: loginData,
     isError,
     isPending,
     error: mutateError,
@@ -56,14 +60,6 @@ const useLoginAuth = () => {
       };
       cookieMutate(cookieData);
       localStorage.setItem("flyghtt_token", data.token);
-
-      if (!data.emailVerified) {
-        console.log(data, "useloginauth");
-        setTimeout(() => {
-          router.push("/verify-email");
-        }, 1000);
-        return;
-      }
 
       return;
     },
