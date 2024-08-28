@@ -3,7 +3,7 @@ import type { Config } from "tailwindcss";
 const {
   default: flattenColorPalette,
 } = require("tailwindcss/lib/util/flattenColorPalette");
- 
+
 const config: Config = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -20,9 +20,13 @@ const config: Config = {
         green: "hsla(170, 82%, 48%, 1)",
         paleGreen: "hsla(170, 78%, 23%, 0.3)",
         lightGreen: "hsla(170, 100%, 87%, 1)",
-        light:"hsla(172, 57%, 90%, 1)",
+        light: "hsla(172, 57%, 90%, 1)",
         yellow: "hsla(45, 97%, 50%, 1)",
-        lightPurple: "hsla(0, 24%, 94%, 1)"
+        lightPurple: "hsla(0, 24%, 94%, 1)",
+        darkPurple: "#BC47FF",
+      },
+      backgroundImage:{
+        gradient1:"linear-gradient(to bottom, hsla(172, 57%, 90%, 1) 80%, hsla(170, 82%, 48%, 1) 20%);",
       },
       animation: {
         scroll:

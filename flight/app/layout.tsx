@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { AppContext } from "@/context/AppContext";
-
+import { AppProvider } from "@/context/AppContext";
+import QueryProvider from "./QueryProvider";
+// import FramerLayout from "./FramerLayout";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -18,7 +19,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <AppContext>{children}</AppContext>
+        {/* <FramerLayout> */}
+        <QueryProvider>
+          <AppProvider>{children}</AppProvider>
+        </QueryProvider>
+        {/* </FramerLayout> */}
       </body>
     </html>
   );

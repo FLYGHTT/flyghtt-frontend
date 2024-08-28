@@ -1,24 +1,28 @@
 "use client";
 import { AppContextType } from "@/types";
-import React, { useState, createContext, useContext } from "react";
+import React, { useState, createContext } from "react";
+import { ContextMenuType } from "@/types";
+export const AppContext = createContext<AppContextType | undefined>(undefined);
 
-const Context = createContext<AppContextType | undefined>(undefined);
-
-export const AppContext: React.FC<{
+export const AppProvider: React.FC<{
   children: React.ReactNode;
 }> = ({ children }) => {
-  const [showLogin, setShowLogin] = useState(false);
-
+  const [activePage, setActivePage] = useState("home");
+  const [contextMenu, setContextMenu] = useState<ContextMenuType>({
+    visible: false,
+    x: 0,
+    y: 0,
+  });
   return (
-    <Context.Provider
+    <AppContext.Provider
       value={{
-        showLogin,
-        setShowLogin,
+        activePage,
+        setActivePage,
+        contextMenu,
+        setContextMenu,
       }}
     >
       {children}
-    </Context.Provider>
+    </AppContext.Provider>
   );
 };
-
-export const useAppContext = () => useContext(Context);

@@ -9,12 +9,15 @@ export default function AboutComponent() {
       className="w-full overflow-hidden text-white py-10 flex flex-col items-center bg-darkGray relative min-h-screen "
       initial={{
         scale: 0.8,
+        opacity: 0,
       }}
       animate={{
         opacity: 1,
         scale: 1,
-        x: 0,
-        y: 0,
+      }}
+      exit={{
+        opacity: 0,
+        scale: 0.8,
       }}
       transition={{
         type: "spring",
@@ -24,7 +27,10 @@ export default function AboutComponent() {
     >
       <Content />
 
-      <Background text="About Us" className="text-[400px] -mx-40 text-lightGray" />
+      <Background
+        text="About Us"
+        className="text-[400px] -mx-40 text-lightGray"
+      />
     </motion.div>
   );
 }
