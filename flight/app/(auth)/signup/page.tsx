@@ -4,7 +4,7 @@ import SignUpForm from "@/components/Form/SignUpForm";
 
 import AuthHeading from "@/components/Form/AuthHeading";
 import useSignUpAuth from "@/hooks/useSignUpAuth";
-import Error from "@/app/error";
+import Error from "@/app/(root)/error";
 const SignUp = () => {
   const { isError } = useSignUpAuth();
   if (isError) {

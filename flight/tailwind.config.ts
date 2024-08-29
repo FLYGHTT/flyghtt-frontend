@@ -4,14 +4,45 @@ const {
   default: flattenColorPalette,
 } = require("tailwindcss/lib/util/flattenColorPalette");
 
-const config: Config = {
+const config = {
+  darkMode: ["class"],
   content: [
-    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
   ],
+  prefix: "",
   theme: {
+    container: {
+      center: true,
+      padding: "2rem",
+      screens: {
+        "2xl": "1400px",
+      },
+    },
     extend: {
+      keyframes: {
+        "accordion-down": {
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
+        },
+        scroll: {
+          to: {
+            transform: "translate(calc(-50% - 0.5rem))",
+          },
+        },
+      },
+      animation: {
+        "accordion-down": "accordion-down 0.2s ease-out",
+        "accordion-up": "accordion-up 0.2s ease-out",
+        scroll:
+          "scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite",
+      },
       colors: {
         primary: "#D9D9D9",
         darkGray: "hsla(0, 0%, 20%, 1)",
@@ -25,24 +56,16 @@ const config: Config = {
         lightPurple: "hsla(0, 24%, 94%, 1)",
         darkPurple: "#BC47FF",
       },
-      backgroundImage:{
-        gradient1:"linear-gradient(to bottom, hsla(172, 57%, 90%, 1) 80%, hsla(170, 82%, 48%, 1) 20%);",
-      },
-      animation: {
-        scroll:
-          "scroll var(--animation-duration, 40s) var(--animation-direction, forwards) linear infinite",
-      },
-      keyframes: {
-        scroll: {
-          to: {
-            transform: "translate(calc(-50% - 0.5rem))",
-          },
-        },
+      backgroundImage: {
+        gradient1:
+          "linear-gradient(to bottom, hsla(172, 57%, 90%, 1) 80%, hsla(170, 82%, 48%, 1) 20%);",
       },
     },
   },
-  plugins: [addVariablesForColors],
-};
+  plugins: [require("tailwindcss-animate"), addVariablesForColors],
+} satisfies Config;
+
+export default config;
 
 function addVariablesForColors({ addBase, theme }: any) {
   let allColors = flattenColorPalette(theme("colors"));
@@ -54,4 +77,3 @@ function addVariablesForColors({ addBase, theme }: any) {
     ":root": newVars,
   });
 }
-export default config;

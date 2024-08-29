@@ -31,10 +31,10 @@ const VerifyForm = () => {
       }
     },
   });
- 
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
+    // TODO: SUBMIT AUTOMATICALLY WHEN THE USER FILLS IN ALL THE FIELDS
     if (code.includes("")) {
       setError("Please fill in all fields");
       return;

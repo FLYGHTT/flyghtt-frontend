@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import { authFormvariants } from "@/lib/variants";
 import useLoginAuth from "@/hooks/useLoginAuth";
 import Password from "../ui/Password";
-import Loader from "../ui/Loading";
+
 const LoginForm = () => {
   const { inputs, handleChange, handleSubmit, error, isPending, isError } =
     useLoginAuth();

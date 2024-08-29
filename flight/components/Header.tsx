@@ -12,7 +12,7 @@ import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
 import { postData } from "@/lib/http";
 
-import Error from "@/app/error";
+import Error from "@/app/(root)/error";
 const Header = () => {
   const router = useRouter();
   const [clickedProfile, setClickedProfile] = useState(false);

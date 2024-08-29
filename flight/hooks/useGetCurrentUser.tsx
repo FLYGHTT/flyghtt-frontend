@@ -1,4 +1,4 @@
-import React from "react";
+
 import { useQuery } from "@tanstack/react-query";
 import { fetchData } from "@/lib/http";
 const useGetCurrentUser = (token: string) => {

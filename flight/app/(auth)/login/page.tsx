@@ -1,5 +1,5 @@
 "use client";
-import Error from "@/app/error";
+import Error from "@/app/(root)/error";
 import AuthHeading from "@/components/Form/AuthHeading";
 import LoginForm from "@/components/Form/LoginForm";
 import useLoginAuth from "@/hooks/useLoginAuth";

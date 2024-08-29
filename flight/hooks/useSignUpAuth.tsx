@@ -15,15 +15,10 @@ const useSignUpAuth = () => {
     newsletter: false,
   });
   const [error, setError] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
+    ...inputs,
     remember: "",
   });
-  const [empty, setEmpty] = useState("");
-  const [cookieError, setCookieError] = useState("");
+  const [unknownError, setUnknownError] = useState("");
   const { mutate: cookieMutate } = useMutation({
     mutationKey: ["setcookie"],
     mutationFn: (data: { token: string }) =>
@@ -32,9 +27,9 @@ const useSignUpAuth = () => {
         data: data,
       }),
     onError: () => {
-      setCookieError("Something went wrong");
+      setUnknownError("Something went wrong");
     },
-    onSuccess: (data) => {
+    onSuccess: () => {
       router.push("/verify-email");
       return;
     },
@@ -57,7 +52,7 @@ const useSignUpAuth = () => {
     },
     onSuccess: (data) => {
       if (data.message) {
-        setEmpty(data.message);
+        setUnknownError(data.message);
         return;
       }
       console.log(data);
@@ -90,10 +85,10 @@ const useSignUpAuth = () => {
       !confirmPassword.trim() ||
       !remember
     ) {
-      setEmpty("Please fill in all fields");
+      setUnknownError("Please fill in all fields");
       return false;
     } else {
-      setEmpty("");
+      setUnknownError("");
     }
 
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
@@ -180,10 +175,10 @@ const useSignUpAuth = () => {
     error,
     validateInputs,
     handleSubmit,
-    empty,
+    
     isError,
     isPending,
-    cookieError,
+    unknownError,
   };
 };
 

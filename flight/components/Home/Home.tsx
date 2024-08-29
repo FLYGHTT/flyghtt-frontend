@@ -1,8 +1,8 @@
 import React from "react";
 
-import ThirdGrid from "../components/Home/ThirdGrid";
-import SecondGrid from "../components/Home/SecondGrid";
-import FirstGrid from "../components/Home/FirstGrid";
+import ThirdGrid from "./ThirdGrid";
+import SecondGrid from "./SecondGrid";
+import FirstGrid from "./FirstGrid";
 
 const Home = () => {
   return (

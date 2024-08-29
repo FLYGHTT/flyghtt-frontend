@@ -4,8 +4,8 @@ import AddNew from "@/components/Dashboard/AddNew";
 import Models from "@/components/Dashboard/Models";
 import useGetCurrentUser from "@/hooks/useGetCurrentUser";
 import { useRouter } from "next/navigation";
-import Loading from "../loading";
-import Error from "../error";
+import Loading from "../(root)/loading";
+import Error from "../(root)/error";
 const Home = () => {
   const router = useRouter();
 
