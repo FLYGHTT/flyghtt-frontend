@@ -34,6 +34,7 @@ const useLoginAuth = () => {
     },
   });
   const {
+
     mutateAsync: loginMutate,
     isError,
     isPending,
@@ -46,7 +47,7 @@ const useLoginAuth = () => {
         return;
       }
 
-      console.log(data);
+
 
       return;
     },

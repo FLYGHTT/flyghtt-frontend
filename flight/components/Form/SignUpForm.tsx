@@ -7,6 +7,7 @@ import Password from "../ui/Password";
 import { authFormvariants } from "@/lib/variants";
 import { FaCog } from "react-icons/fa";
 const SignUpForm = () => {
+
   const {
     handleChange,
     handleSubmit,
@@ -16,6 +17,7 @@ const SignUpForm = () => {
     unknownError,
     cookiePending,
   } = useAuth();
+
 
   return (
     <motion.form
@@ -140,8 +142,10 @@ const SignUpForm = () => {
             Login
           </Link>
         </span>
+
         {unknownError && (
           <span className="text-red-500 text-xs  mt-4">{unknownError}</span>
+
         )}
       </div>
     </motion.form>

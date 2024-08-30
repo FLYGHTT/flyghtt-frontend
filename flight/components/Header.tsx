@@ -8,6 +8,7 @@ import { useAppContext } from "@/context";
 import { motion } from "framer-motion";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
 import { useRouter } from "next/navigation";
+
 import { useMutation } from "@tanstack/react-query";
 import http from "@/lib/http";
 
@@ -20,6 +21,7 @@ const Header = () => {
 
   const { activePage, setActivePage } = useAppContext();
   const ref = useRef(null);
+
 
   const { mutate: cookieMutate } = useMutation({
     mutationKey: ["setcookie"],
@@ -34,6 +36,7 @@ const Header = () => {
       return;
     },
   });
+
   useOutsideClick(ref, () => {
     setClickedProfile(false);
   });
@@ -49,6 +52,7 @@ const Header = () => {
   const handleClickProfile = () => {
     setClickedProfile(!clickedProfile);
   };
+
   const handleLogout = () => {
     localStorage.removeItem("flyghtt_token");
     const token = localStorage.getItem("flyghtt_token");
@@ -97,10 +101,12 @@ const Header = () => {
               <p className="hover:bg-green/20 p-2 px-4 cursor-pointer">
                 My Profile
               </p>
+
               <p
                 className="hover:bg-green/20 p-2 px-4 cursor-pointer"
                 onClick={handleLogout}
               >
+
                 Log out
               </p>
             </motion.div>

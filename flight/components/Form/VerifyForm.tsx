@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import useVerifyForm from "@/hooks/useVerifyForm";
 
+
 import { useRouter } from "next/navigation";
 import { useVerifyOtpMutation } from "@/lib/actions";
 import { FaCog } from "react-icons/fa";
@@ -10,6 +11,7 @@ const VerifyForm = () => {
     useVerifyForm();
   const [error, setError] = useState("");
   const router = useRouter();
+
   const { mutate, data, isError, isPending } = useVerifyOtpMutation(
     {
       onError: (error) => {
@@ -42,6 +44,7 @@ const VerifyForm = () => {
     console.log(code.join(""));
 
     mutate();
+
   };
   return (
     <form
@@ -80,6 +83,7 @@ const VerifyForm = () => {
         {isPending ? <FaCog className="animate-spin text-green" /> : <></>}
       </button>
       <p className="text-red-500 text-xs mt-4">{error && error}</p>
+
     </form>
   );
 };
