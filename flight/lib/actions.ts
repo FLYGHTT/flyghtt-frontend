@@ -1,14 +1,26 @@
 import { useQuery, useMutation, MutationOptions } from "@tanstack/react-query";
-import { queryClient } from "./http";
+
 import http from "./http";
-import { use } from "react";
-export const useCreateBusinessMutation = () => {
+
+export const useCreateBusinessMutation = (payload: MutationOptions) => {
+  const { onSuccess, ...options } = payload;
   return useMutation({
-    mutationFn: async (payload: { name: string; description: string }) =>
-      http.post("/business", payload),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["businesses"] });
+    mutationFn: async () => {
+      const response = await http.post("/business", payload, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      return response.data;
     },
+    onSuccess,
+    ...options,
+  });
+};
+export const useBusinessesQuery = () => {
+  return useQuery({
+    queryKey: ["businesses"],
+    queryFn: () => http.get("/business/user"),
   });
 };
 

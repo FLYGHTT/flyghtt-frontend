@@ -1,7 +1,7 @@
 "use client";
 import { useSearchParams } from "next/navigation";
 import React from "react";
-import { businesses } from "@/lib/data";
+// import { businesses } from "@/lib/data";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import tool from "@/assets/icons/tool.svg";
@@ -11,15 +11,28 @@ import trash from "@/assets/icons/trash.svg";
 import eye from "@/assets/icons/eye.svg";
 import edit from "@/assets/icons/edit.svg";
 import { BiLogOutCircle } from "react-icons/bi";
+import { useBusinessesQuery } from "@/lib/actions";
+import { getImageSrc } from "@/lib/utils";
+import Loading from "@/app/(root)/loading";
+import Error from "@/app/(root)/error";
 const Business = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const businessId = Number(searchParams?.get("id") || -1);
-
+  const businessId = searchParams?.get("id") || -1;
+  const { data, isPending, isError } = useBusinessesQuery();
+  const businesses = data?.data;
+  console.log(businesses, "businesses");
+  if (!businesses) return <div>No business to display</div>;
   const businessData = businesses.find((business) => {
-    return business.id === businessId;
+    console.log(business.id, "business.id", businessId, "businessId");
+    return business.businessId === businessId;
   });
-
+  if (isPending) {
+    return <Loading />;
+  }
+  if (isError) {
+    return <Error />;
+  }
   if (!businessData) {
     return <div>Business not found</div>;
   }
@@ -45,6 +58,9 @@ const Business = () => {
       role: "Administrator",
     },
   ];
+  const base64Data = businessData.businessLogoImageData;
+
+  const imageSrc = getImageSrc(base64Data);
   return (
     <div className=" overflow-scroll h-full mb-24 relative">
       <div
@@ -56,18 +72,29 @@ const Business = () => {
       <div className="p-8 px-10 pb-16">
         <div className="flex justify-between items-center ">
           <div className="flex gap-6  items-center">
-            <div className="bg-gray-200 rounded-md w-32 h-32"></div>
-
+            {base64Data ? (
+              <Image
+                src={imageSrc}
+                width={96}
+                height={96}
+                alt="business logo"
+                className="object-cover rounded-md"
+              />
+            ) : (
+              <div className="bg-gray-200 w-32 h-32 rounded-md"></div>
+            )}{" "}
             <div>
-              <h1 className="text-2xl font-bold mb-2">{businessData.name}</h1>
+              <h1 className="text-2xl font-bold mb-2">
+                {businessData.businessName}
+              </h1>
               <div className="flex gap-3 mb-2">
                 <p className="text-xs flex gap-2 items-center">
                   <Image src={user} width={15} height={15} alt="employees" />
-                  {businessData.employeeNo}
+                  {businessData.numberOfEmployees}
                 </p>
                 <p className="text-xs flex gap-2 items-center">
                   <Image src={tool} width={15} height={15} alt="tools" />
-                  {businessData.toolsNo}
+                  {businessData.numberOfBusinessTools}
                 </p>
               </div>
               <p className="text-sm text-gray-500">Date Created: July 2024 </p>

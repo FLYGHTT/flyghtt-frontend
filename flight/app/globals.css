@@ -13,6 +13,6 @@
   }
   
   .business-form_input {
-    @apply border   !important;
+    @apply border border-gray-500  !important;
   }
   

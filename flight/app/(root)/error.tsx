@@ -3,7 +3,7 @@ import Image from "next/image";
 import React from "react";
 const Error = () => {
   return (
-    <div className="flex items-center justify-center  flex-col h-screen w-full bg-white absolute">
+    <div className="flex items-center justify-center  flex-col h-full w-full bg-white ">
       <div className="flex items-center justify-center flex-col">
         <h1 className="text-3xl font-bold">Something wen&apos;t wrong...</h1>
         <p className="my-4">Our devs are on it, please try again later.</p>

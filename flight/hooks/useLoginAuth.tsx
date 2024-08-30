@@ -83,7 +83,7 @@ const useLoginAuth = () => {
         router.push("/dashboard");
       }, 500);
     } catch (error) {
-      setError("Invalid email or password");
+      setError("Something went wrong");
     }
   };
   return {
@@ -91,7 +91,8 @@ const useLoginAuth = () => {
     handleChange,
     handleSubmit,
     error,
-    isPending: isPending || cookiePending,
+    isPending: isPending,
+    cookiePending,
     isError,
   };
 };

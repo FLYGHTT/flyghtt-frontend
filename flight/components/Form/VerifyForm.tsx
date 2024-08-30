@@ -4,6 +4,7 @@ import useVerifyForm from "@/hooks/useVerifyForm";
 
 import { useRouter } from "next/navigation";
 import { useVerifyOtpMutation } from "@/lib/actions";
+import { FaCog } from "react-icons/fa";
 const VerifyForm = () => {
   const { code, handleChange, handleKeyDown, handlePaste, handleRef } =
     useVerifyForm();
@@ -72,14 +73,13 @@ const VerifyForm = () => {
       {/* TODO: resend email */}
       <button
         type="submit"
-        className="w-full bg-dark text-white py-2 mt-6 rounded-md flex items-center justify-center"
+        disabled={isPending}
+        className="bg-dark text-white py-2 mt-6 rounded-md w-[150px] disabled:cursor-not-allowed disabled:opacity-50 flex gap-3 items-center justify-center "
       >
-        Continue
+        {isPending ? "Please Wait" : "Continue"}
+        {isPending ? <FaCog className="animate-spin text-green" /> : <></>}
       </button>
       <p className="text-red-500 text-xs mt-4">{error && error}</p>
-      {isPending && (
-        <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-green mt-3"></div>
-      )}
     </form>
   );
 };
