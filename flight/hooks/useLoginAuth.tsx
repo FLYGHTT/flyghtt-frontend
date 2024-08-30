@@ -1,8 +1,9 @@
-import React, { use } from "react";
-import { postData } from "@/lib/http";
+import React from "react";
+import http from "@/lib/http";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
+import { useLoginMutation } from "@/lib/actions";
 interface LoginInputs {
   email: string;
   password: string;
@@ -14,54 +15,43 @@ const useLoginAuth = () => {
     password: "",
   });
   const [error, setError] = useState("");
-  const { mutate: cookieMutate } = useMutation({
-    mutationKey: ["setcookie"],
-    mutationFn: (data: { token: string }) =>
-      postData({
-        url: "http://localhost:3000/api/login",
-        data: data,
-      }),
+
+  const { mutateAsync: cookieMutate, isPending: cookiePending } = useMutation({
+    mutationFn: async (token: string) => {
+      try {
+        console.log(token, "tokencookie");
+
+        const response = await http.post("http://localhost:3000/api/login");
+
+        console.log(response.data, "Response from login API");
+      } catch (error) {
+        console.error("Error in login API request:", error);
+        throw error;
+      }
+    },
     onError: () => {
       setError("Something went wrong");
     },
-    onSuccess: (data) => {
-      if (loginData && loginData.emailVerified) {
-        router.push("/dashboard");
-      } else {
-        router.push("/verify-email");
-      }
-      return;
-    },
   });
-
   const {
-    mutate,
-    data: loginData,
+    mutateAsync: loginMutate,
     isError,
     isPending,
-    error: mutateError,
-  } = useMutation({
-    mutationKey: ["login"],
-    mutationFn: (data: { email: string; password: string }) =>
-      postData({
-        url: "https://flyghtt-backend.onrender.com/api/v1/authentication/login",
-        data: data,
-      }),
-    onError: () => {
-      setError("Invalid email or password");
-    },
-    onSuccess: (data) => {
+  } = useLoginMutation({
+    ...inputs,
+    onSuccess: (res) => {
+      const data = res.data;
       if (data.message) {
         setError(data.message);
         return;
       }
-      const cookieData = {
-        token: data.token,
-      };
-      cookieMutate(cookieData);
-      localStorage.setItem("flyghtt_token", data.token);
+
+      console.log(data);
 
       return;
+    },
+    onError: () => {
+      setError("Invalid email or password");
     },
   });
 
@@ -78,16 +68,32 @@ const useLoginAuth = () => {
     }
     return true;
   };
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!validateInputs(inputs)) {
       setError("Please fill in all fields");
       return;
     }
     setError("");
-    mutate(inputs);
+    try {
+      const res = await loginMutate();
+      localStorage.setItem("flyghtt_token", res.data.token);
+      await cookieMutate(res.data.token);
+      setTimeout(() => {
+        router.push("/dashboard");
+      }, 500);
+    } catch (error) {
+      setError("Invalid email or password");
+    }
   };
-  return { inputs, handleChange, handleSubmit, error, isPending, isError };
+  return {
+    inputs,
+    handleChange,
+    handleSubmit,
+    error,
+    isPending: isPending || cookiePending,
+    isError,
+  };
 };
 
 export default useLoginAuth;

@@ -1,23 +1,13 @@
-"use client";
+"use client"
 import React from "react";
 import AddNew from "@/components/Dashboard/AddNew";
 import Models from "@/components/Dashboard/Models";
-import useGetCurrentUser from "@/hooks/useGetCurrentUser";
-import { useRouter } from "next/navigation";
 import Loading from "../(root)/loading";
 import Error from "../(root)/error";
+import { useCurrentUserQuery } from "@/lib/actions";
 const Home = () => {
-  const router = useRouter();
-
-  const token = localStorage.getItem("flyghtt_token");
-
-  console.log(token, "token");
-  const { data: user, isError, isPending } = useGetCurrentUser(token || "");
-  if (!token) {
-    router.push("/login");
-    console.log("no token");
-    return null;
-  }
+  const { data, isError, isPending } = useCurrentUserQuery();
+  const user = data?.data;
   if (isPending || !user) {
     return <Loading />;
   }

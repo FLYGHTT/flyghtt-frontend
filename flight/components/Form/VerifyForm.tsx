@@ -1,36 +1,34 @@
 "use client";
 import React, { useState } from "react";
 import useVerifyForm from "@/hooks/useVerifyForm";
-import { postData } from "@/lib/http";
-import { useMutation } from "@tanstack/react-query";
+
 import { useRouter } from "next/navigation";
+import { useVerifyOtpMutation } from "@/lib/actions";
 const VerifyForm = () => {
   const { code, handleChange, handleKeyDown, handlePaste, handleRef } =
     useVerifyForm();
   const [error, setError] = useState("");
   const router = useRouter();
-  const token = localStorage.getItem("flyghtt_token");
-  const { mutate, data, isError, isPending } = useMutation({
-    mutationKey: ["verify"],
-    mutationFn: ({ data, token }: { data: { otp: number }; token: string }) =>
-      postData({
-        data: data,
-        token: token,
-        url: "https://flyghtt-backend.onrender.com/api/v1/authentication/verify/otp",
-      }),
-    onError: (error) => {
-      console.log(error);
+  const { mutate, data, isError, isPending } = useVerifyOtpMutation(
+    {
+      onError: (error) => {
+        console.log(error);
+      },
+      onSuccess: (res) => {
+        const data = res.data;
+        console.log(data);
+        if (data && data.emailVerified) {
+          router.push("/email-verified");
+          setError("");
+        } else {
+          setError(data.message || "Verification failed.");
+        }
+      },
     },
-    onSuccess: (data) => {
-      console.log(data);
-      if (data && data.emailVerified) {
-        router.push("/email-verified");
-        setError("");
-      } else {
-        setError(data.message);
-      }
-    },
-  });
+    {
+      otp: Number(code.join("")),
+    }
+  );
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -42,11 +40,7 @@ const VerifyForm = () => {
     setError("");
     console.log(code.join(""));
 
-    const data = {
-      otp: Number(code.join("")),
-    };
-    console.log(token, "tokenverifyyform");
-    mutate({ data: data, token: token || "" });
+    mutate();
   };
   return (
     <form

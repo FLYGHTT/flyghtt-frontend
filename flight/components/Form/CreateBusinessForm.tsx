@@ -51,7 +51,7 @@ const CreateBusinessForm = () => {
   };
   function onSubmit(values: z.infer<typeof BusinessSchema>) {
     const blob = values.logo;
-    console.log("values", values);
+    
   }
   return (
     <Form {...form}>
