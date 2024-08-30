@@ -11,22 +11,32 @@ import trash from "@/assets/icons/trash.svg";
 import eye from "@/assets/icons/eye.svg";
 import edit from "@/assets/icons/edit.svg";
 import { BiLogOutCircle } from "react-icons/bi";
-import { useBusinessesQuery } from "@/lib/actions";
+import { useBusinessesQuery, useDeleteBusinessMutation } from "@/lib/actions";
 import { getImageSrc } from "@/lib/utils";
 import Loading from "@/app/(root)/loading";
 import Error from "@/app/(root)/error";
+import { queryClient } from "@/lib/http";
 const Business = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const businessId = searchParams?.get("id") || -1;
   const { data, isPending, isError } = useBusinessesQuery();
+  const { mutate } = useDeleteBusinessMutation({
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["businesses"] });
+      setTimeout(() => {
+      router.push("/dashboard/businesses");
+      }, 1000);
+    },
+  });
   const businesses = data?.data;
-  console.log(businesses, "businesses");
+
   if (!businesses) return <div>No business to display</div>;
   const businessData = businesses.find((business) => {
     console.log(business.id, "business.id", businessId, "businessId");
     return business.businessId === businessId;
   });
+
   if (isPending) {
     return <Loading />;
   }
@@ -36,6 +46,10 @@ const Business = () => {
   if (!businessData) {
     return <div>Business not found</div>;
   }
+  const handleDelete = () => {
+    mutate(businessData.businessId);
+  };
+
   const tools = [
     {
       name: "Porter's Strategic Tool",
@@ -101,7 +115,10 @@ const Business = () => {
             </div>
           </div>
           <div className="flex flex-col items-center gap-2">
-            <div className="bg-gray-200 p-2 w-fit rounded-md mb-2">
+            <div
+              className="bg-gray-200 p-2 w-fit rounded-md mb-2 cursor-pointer"
+              onClick={handleDelete}
+            >
               <Image src={trash} alt="delete" width={20} height={20} />
             </div>
             <button className="bg-green w-[200px] rounded-md py-2">

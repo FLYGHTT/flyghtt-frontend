@@ -98,3 +98,14 @@ export const useVerifyOtpMutation = (
     ...options,
   });
 };
+
+export const useDeleteBusinessMutation = (payload: MutationOptions) => {
+  const { onSuccess, ...options } = payload;
+  return useMutation({
+    mutationFn: async (data) => {
+      return http.delete(`/business/${data}`);
+    },
+    onSuccess,
+    ...options,
+  });
+};

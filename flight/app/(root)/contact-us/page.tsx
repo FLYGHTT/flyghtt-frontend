@@ -1,13 +1,13 @@
 "use client";
 import React from "react";
 import { styles } from "@/components/styles";
-import Link from "next/link";
+
 import Back from "@/components/Back";
-import { FaAngleRight, FaArrowRight } from "react-icons/fa";
-import instagram from "../../assets/icons/instagram1.svg";
-import x from "../../assets/icons/x.svg";
-import tiktok from "../../assets/icons/tiktok.svg";
-import facebook from "../../assets/icons/facebook.svg";
+import {  FaArrowRight } from "react-icons/fa";
+import instagram from "@/assets/icons/instagram1.svg";
+import x from "@/assets/icons/x.svg";
+import tiktok from "@/assets/icons/tiktok.svg";
+import facebook from "@/assets/icons/facebook.svg";
 import Image from "next/image";
 import { motion } from "framer-motion";
 const Contact = () => {

@@ -12,7 +12,8 @@ import { useMutation } from "@tanstack/react-query";
 import http from "@/lib/http";
 
 import Error from "@/app/(root)/error";
-import { useCurrentUserQuery } from "@/lib/actions";
+import Username from "./Username";
+
 const Header = () => {
   const router = useRouter();
   const [clickedProfile, setClickedProfile] = useState(false);
@@ -54,16 +55,6 @@ const Header = () => {
     cookieMutate(token || "");
   };
 
-  const { data, isError, isPending } = useCurrentUserQuery();
-  const user = data?.data;
-  if (isPending || !user) {
-    return null;
-  }
-
-  if (isError) {
-    return <div>Error</div>;
-  }
-
   return (
     <div className="w-full flex justify-between items-center p-6">
       <div className="flex gap-6">
@@ -90,9 +81,7 @@ const Header = () => {
         <Image src={message} alt="message" width={20} height={20} />
         <div className="flex items-center gap-2 relative">
           {/* <Image src={ellipse} alt="ellipse" width={60} height={60} /> */}
-          <h1>
-            {user.firstName} {user.lastName}
-          </h1>
+          <Username />
           <FaAngleDown
             className="cursor-pointer select-none"
             onClick={handleClickProfile}

@@ -2,12 +2,8 @@
 import { motion } from "framer-motion";
 import Background from "@/components/Background";
 import Content from "@/components/About/Content";
-import useNavigate from "@/hooks/useNavigate";
-// import useNavigate from "@/hooks/useNavigate";
-export default function About() {
-  const { handleExit } = useNavigate();
 
-  const { parentRef } = useNavigate();
+export default function About() {
   return (
     <div>
       <motion.div
