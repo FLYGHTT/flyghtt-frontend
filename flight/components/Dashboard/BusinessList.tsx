@@ -8,7 +8,6 @@ import { usePathname } from "next/navigation";
 import Image from "next/image";
 import { useBusinessesQuery } from "@/lib/actions";
 import { getImageSrc } from "@/lib/utils";
-import Loading from "@/app/(root)/loading";
 import Error from "@/app/(root)/error";
 import { Skeleton } from "../ui/skeleton";
 const BusinessList = () => {
