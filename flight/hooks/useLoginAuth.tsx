@@ -32,8 +32,10 @@ const useLoginAuth = () => {
     onError: () => {
       setError("Something went wrong");
     },
+
   });
   const {
+
     mutateAsync: loginMutate,
     isError,
     isPending,
@@ -41,12 +43,11 @@ const useLoginAuth = () => {
     ...inputs,
     onSuccess: (res) => {
       const data = res.data;
+
       if (data.message) {
         setError(data.message);
         return;
       }
-
-      console.log(data);
 
       return;
     },

@@ -19,8 +19,10 @@ const useSignUpAuth = () => {
     ...inputs,
     remember: "",
   });
+
   const [unknownError, setUnknownError] = useState("");
   const { mutateAsync: cookieMutate } = useMutation({
+
     mutationKey: ["setcookie"],
     mutationFn: async (token: string) => {
       try {
@@ -184,7 +186,9 @@ const useSignUpAuth = () => {
 
     isError,
     isPending,
+
     unknownError,
+
   };
 };
 

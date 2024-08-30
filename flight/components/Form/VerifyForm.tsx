@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import useVerifyForm from "@/hooks/useVerifyForm";
 
+
 import { useRouter } from "next/navigation";
 import { useVerifyOtpMutation } from "@/lib/actions";
 const VerifyForm = () => {
@@ -9,6 +10,7 @@ const VerifyForm = () => {
     useVerifyForm();
   const [error, setError] = useState("");
   const router = useRouter();
+
   const { mutate, data, isError, isPending } = useVerifyOtpMutation(
     {
       onError: (error) => {
@@ -40,7 +42,6 @@ const VerifyForm = () => {
     setError("");
     console.log(code.join(""));
 
-    mutate();
   };
   return (
     <form
@@ -77,9 +78,11 @@ const VerifyForm = () => {
         Continue
       </button>
       <p className="text-red-500 text-xs mt-4">{error && error}</p>
+
       {isPending && (
         <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-green mt-3"></div>
       )}
+
     </form>
   );
 };
