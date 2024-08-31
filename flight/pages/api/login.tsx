@@ -1,11 +1,26 @@
 import { serialize } from "cookie";
 import type { NextApiRequest, NextApiResponse } from "next";
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { token } = req.body;
+  // Get the 'Authorization' header
+  const authHeader = req.headers.authorization;
 
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+    // Handle missing or malformed authorization header
+    return res
+      .status(401)
+      .json({ message: "Authorization header is missing or incorrect" });
+  }
+
+  const token = authHeader.split(" ")[1];
+
+  console.log(req.headers);
+  console.log(token, "tokenloginapi");
+
+  // Set the token in a cookie
   res.setHeader(
     "Set-Cookie",
     serialize("flyghtt_token", token, {
@@ -17,5 +32,6 @@ export default async function handler(
     })
   );
 
+  // Send a success response
   res.status(200).json({ message: "Login successful" });
 }

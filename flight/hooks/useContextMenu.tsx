@@ -1,6 +1,6 @@
+"use client"
 import React, { useCallback, useRef } from "react";
 import { useAppContext } from "../context";
-
 const useContextMenu = () => {
   const menuRef = useRef<HTMLDivElement>(null);
   const { setContextMenu, contextMenu } = useAppContext();

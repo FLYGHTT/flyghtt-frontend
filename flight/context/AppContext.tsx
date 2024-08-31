@@ -13,6 +13,7 @@ export const AppProvider: React.FC<{
     x: 0,
     y: 0,
   });
+  const [businessId, setBusinessId] = useState<number | null>(null);
   return (
     <AppContext.Provider
       value={{
@@ -20,6 +21,8 @@ export const AppProvider: React.FC<{
         setActivePage,
         contextMenu,
         setContextMenu,
+        businessId,
+        setBusinessId,
       }}
     >
       {children}

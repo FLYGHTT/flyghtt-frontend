@@ -6,10 +6,17 @@ import { motion } from "framer-motion";
 import { authFormvariants } from "@/lib/variants";
 import useLoginAuth from "@/hooks/useLoginAuth";
 import Password from "../ui/Password";
-import Loader from "../ui/Loading";
+import { FaCog } from "react-icons/fa";
+
 const LoginForm = () => {
-  const { inputs, handleChange, handleSubmit, error, isPending, isError } =
-    useLoginAuth();
+  const {
+    inputs,
+    handleChange,
+    handleSubmit,
+    error,
+    isPending,
+    cookiePending,
+  } = useLoginAuth();
 
   return (
     <motion.form
@@ -45,14 +52,17 @@ const LoginForm = () => {
       <div className="w-full flex items-center justify-center flex-col gap-2">
         <button
           type="submit"
-          className="bg-dark text-white py-2 mt-6 rounded-md w-[150px]"
+          disabled={(isPending || cookiePending)}
+          className="bg-dark text-white py-2 mt-6 rounded-md w-[150px] disabled:cursor-not-allowed disabled:opacity-50 flex gap-3 items-center justify-center "
         >
-          Login
+          {isPending || cookiePending ? "Please Wait" : "Log in"}
+          {isPending || cookiePending ? (
+            <FaCog className="animate-spin text-green" />
+          ) : (
+            <></>
+          )}
         </button>
         {error && <span className="text-red-500 text-xs ml-2">{error}</span>}
-        {isPending && (
-          <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-green mt-3"></div>
-        )}
       </div>
     </motion.form>
   );

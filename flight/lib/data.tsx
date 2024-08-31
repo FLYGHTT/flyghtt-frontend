@@ -77,7 +77,7 @@ export const plans = [
   },
 ];
 import home from "@/assets/icons/home.svg";
-import business from "@/assets/icons/business.svg";
+import businessicon from "@/assets/icons/business.svg";
 import premium from "@/assets/icons/premium.svg";
 import tool from "@/assets/icons/tool.svg";
 import draft from "@/assets/icons/draft.svg";
@@ -87,32 +87,39 @@ export const sidebartop = [
   {
     title: "Home",
     icon: home,
+    link: "/dashboard",
   },
   {
     title: "My Businesses",
-    icon: business,
+    icon: businessicon,
+    link: "/dashboard/businesses",
   },
   {
     title: "My Tools",
     icon: tool,
+    link: "/dashboard/tools",
   },
   {
     title: "My Drafts",
     icon: draft,
+    link: "/dashboard/drafts",
   },
 ];
 export const sidebarbottom = [
   {
     title: "Settings",
     icon: settings,
+    link: "/dashboard/settings",
   },
   {
     title: "Upgrade plan",
     icon: premium,
+    link: "/dashboard/upgrade",
   },
   {
     title: "Explore community",
     icon: explore,
+    link: "/dashboard/community",
   },
 ];
 export const model = {
@@ -132,4 +139,21 @@ export const models = [
   { ...model, id: 2 },
   { ...model, id: 3 },
   { ...model, id: 4 },
+];
+
+ const business = {
+  id: 1,
+  name: "CAFEY Foods",
+  employeeNo: "5-10",
+  location: "Lagos, Nigeria",
+  toolsNo: "5",
+  description:
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+};
+
+export const businesses = [
+  business,
+  { ...business, id: 2 },
+  { ...business, id: 3 },
+  { ...business, id: 4 },
 ];

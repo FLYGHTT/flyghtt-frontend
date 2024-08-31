@@ -5,6 +5,8 @@ export interface AppContextType {
   setActivePage: React.Dispatch<React.SetStateAction<string>>;
   contextMenu: ContextMenuType;
   setContextMenu: React.Dispatch<React.SetStateAction<ContextMenuType>>;
+  businessId: number | null;
+  setBusinessId: React.Dispatch<React.SetStateAction<number | null>>;
 }
 
 export interface Model {

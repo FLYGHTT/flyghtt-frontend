@@ -7,13 +7,13 @@ import { FaAngleDown } from "react-icons/fa";
 import { useAppContext } from "@/context";
 import { motion } from "framer-motion";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
-import useGetCurrentUser from "@/hooks/useGetCurrentUser";
 import { useRouter } from "next/navigation";
 
 import { useMutation } from "@tanstack/react-query";
-import { postData } from "@/lib/http";
+import http from "@/lib/http";
 
-import Error from "@/app/error";
+import Error from "@/app/(root)/error";
+import Username from "./Username";
 
 const Header = () => {
   const router = useRouter();
@@ -21,15 +21,13 @@ const Header = () => {
 
   const { activePage, setActivePage } = useAppContext();
   const ref = useRef(null);
-  const token = localStorage.getItem("flyghtt_token");
+
 
   const { mutate: cookieMutate } = useMutation({
     mutationKey: ["setcookie"],
-    mutationFn: (data: { token: string }) =>
-      postData({
-        url: "http://localhost:3000/api/logout",
-        data: data,
-      }),
+    mutationFn: (token: string) =>
+      http.post("http://localhost:3000/api/logout", token),
+
     onError: () => {
       return <Error />;
     },
@@ -57,25 +55,9 @@ const Header = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("flyghtt_token");
-    cookieMutate({ token: "" });
+    const token = localStorage.getItem("flyghtt_token");
+    cookieMutate(token || "");
   };
-
-
-  const { data: user, isError, isPending } = useGetCurrentUser(token || "");
-
-  if (!token) {
-    router.push("/login");
-    console.log("no token");
-    return null;
-  }
-
-  if (isPending || !user) {
-    return null;
-  }
-
-  if (isError) {
-    return <div>Error</div>;
-  }
 
   return (
     <div className="w-full flex justify-between items-center p-6">
@@ -103,9 +85,7 @@ const Header = () => {
         <Image src={message} alt="message" width={20} height={20} />
         <div className="flex items-center gap-2 relative">
           {/* <Image src={ellipse} alt="ellipse" width={60} height={60} /> */}
-          <h1>
-            {user.firstName} {user.lastName}
-          </h1>
+          <Username />
           <FaAngleDown
             className="cursor-pointer select-none"
             onClick={handleClickProfile}
