@@ -8,6 +8,7 @@ const Testimonials = () => {
     <AnimatePresence mode="wait">
       <TestimonialComponent />
     </AnimatePresence>
+   
   );
 };
 

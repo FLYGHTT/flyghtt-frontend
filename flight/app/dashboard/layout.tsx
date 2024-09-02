@@ -1,5 +1,6 @@
-import Header from "@/components/Header";
+const Header = dynamic(() => import("@/components/Header"), { ssr: false });
 import Sidebar from "@/components/Sidebar";
+import dynamic from "next/dynamic";
 import React from "react";
 
 const layout = ({ children }: { children: React.ReactNode }) => {

@@ -32,3 +32,24 @@ export interface SignUpInputs {
   remember: boolean;
   newsletter: boolean;
 }
+export interface LoginInputs {
+  email: string;
+  password: string;
+}
+export interface Business {
+  businessId: string;
+  businessName: string;
+  description: string;
+  numberOfEmployees: number;
+  createdAt: Date;
+  numberOfBusinessTools: number;
+  businessLogoImageData: string;
+}
+
+export interface User {
+  userId: string;
+  emailVerified: boolean;
+  enabled: boolean;
+  role: string;
+  token?: string;
+}

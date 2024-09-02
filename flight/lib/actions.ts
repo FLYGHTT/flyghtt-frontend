@@ -1,47 +1,81 @@
-import { useQuery, useMutation, MutationOptions } from "@tanstack/react-query";
+import {
+  useQuery,
+  useMutation,
+  MutationOptions,
+  UseMutationOptions,
+} from "@tanstack/react-query";
 
 import http from "./http";
+import { Business, LoginInputs, SignUpInputs, User } from "@/types";
+// Queries
+export const useBusinessesQuery = () => {
+  return useQuery<{
+    data: Business[];
+  }>({
+    queryKey: ["businesses"],
+    queryFn: () => http.get("/business/user"),
+  });
+};
 
-export const useCreateBusinessMutation = (payload: MutationOptions) => {
+export const useCurrentUserQuery = () => {
+  return useQuery({
+    queryKey: ["currentUser"],
+    queryFn: () => http.get("/users"),
+  });
+};
+//  Mutations
+export const useLoginMutation = (
+  payload: MutationOptions<
+    | User
+    | {
+        message: string;
+      },
+    unknown,
+    LoginInputs
+  >
+) => {
   const { onSuccess, ...options } = payload;
-  return useMutation({
-    mutationFn: async () => {
-      const response = await http.post("/business", payload, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+
+  return useMutation<
+    | User
+    | {
+        message: string;
+      },
+    unknown,
+    LoginInputs
+  >({
+    mutationFn: async (data) => {
+      const response = await http.post("/authentication/login", data);
       return response.data;
     },
     onSuccess,
     ...options,
   });
 };
-export const useBusinessesQuery = () => {
-  return useQuery({
-    queryKey: ["businesses"],
-    queryFn: () => http.get("/business/user"),
-  });
-};
 
-export const useLoginMutation = (payload: MutationOptions) => {
+export const useSignUpMutation = (
+  payload: MutationOptions<
+    | User
+    | {
+        message: string;
+      },
+    unknown,
+    SignUpInputs
+  >
+) => {
   const { onSuccess, ...options } = payload;
 
-  return useMutation({
-    mutationFn: async () => {
-      return http.post("/authentication/login", payload);
-    },
-    onSuccess,
-    ...options,
-  });
-};
-
-export const useSignUpMutation = (payload: MutationOptions, data) => {
-  const { onSuccess, ...options } = payload;
-  console.log(payload, "payload");
-  return useMutation({
-    mutationFn: async () => {
-      return http.post("/authentication/sign-up", data);
+  return useMutation<
+    | User
+    | {
+        message: string;
+      },
+    unknown,
+    SignUpInputs
+  >({
+    mutationFn: async (data) => {
+      const response = await http.post("/authentication/sign-up", data);
+      return response.data;
     },
     onSuccess,
     ...options,
@@ -58,11 +92,28 @@ export const useSetCookieMutation = (payload: MutationOptions) => {
     ...options,
   });
 };
-
-export const useCurrentUserQuery = () => {
-  return useQuery({
-    queryKey: ["currentUser"],
-    queryFn: () => http.get("/users"),
+export const useDeleteBusinessMutation = (
+  payload: UseMutationOptions<
+    (index: string) => Promise<{
+      data: Business[];
+    }>,
+    unknown,
+    string
+  >
+) => {
+  const { onSuccess, ...options } = payload;
+  return useMutation<
+    (index: string) => Promise<{
+      data: Business[];
+    }>,
+    unknown,
+    string
+  >({
+    mutationFn: async (index: string) => {
+      return http.delete(`/business/${index}`);
+    },
+    onSuccess,
+    ...options,
   });
 };
 
@@ -81,29 +132,80 @@ export const useCookieMutation = (
     ...options,
   });
 };
-
-export const useVerifyOtpMutation = (
-  payload: MutationOptions,
-  data: {
-    otp: number;
-  }
+export const useCreateBusinessMutation = (
+  payload: MutationOptions<
+    | Business
+    | {
+        message: string;
+      },
+    {
+      response: {
+        data: {
+          message: string;
+        };
+      };
+    },
+    {
+      businessName: string;
+      description: string;
+      businessLogo: File;
+    }
+  >
 ) => {
   const { onSuccess, ...options } = payload;
-  console.log(data, "Actionsotpdata");
-  return useMutation({
-    mutationFn: async () => {
-      return http.post("/authentication/verify/otp", data);
+  return useMutation<
+    | Business
+    | {
+        message: string;
+      },
+    {
+      response: {
+        data: {
+          message: string;
+        };
+      };
+    },
+    {
+      businessName: string;
+      description: string;
+      businessLogo: File;
+    }
+  >({
+    mutationFn: async (data) => {
+      const response = await http.post("/business", data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      return response.data;
     },
     onSuccess,
     ...options,
   });
 };
 
-export const useDeleteBusinessMutation = (payload: MutationOptions) => {
+export const useVerifyOtpMutation = (
+  payload: MutationOptions<
+    | User
+    | {
+        message: string;
+      },
+    unknown,
+    number
+  >
+) => {
   const { onSuccess, ...options } = payload;
-  return useMutation({
+
+  return useMutation<
+    | User
+    | {
+        message: string;
+      },
+    unknown,
+    number
+  >({
     mutationFn: async (data) => {
-      return http.delete(`/business/${data}`);
+      return http.post("/authentication/verify/otp", data);
     },
     onSuccess,
     ...options,

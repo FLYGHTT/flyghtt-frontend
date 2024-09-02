@@ -31,6 +31,7 @@ const FirstGrid = () => {
           Contact Us
         </div>
       </div>
+      
     </div>
   );
 };

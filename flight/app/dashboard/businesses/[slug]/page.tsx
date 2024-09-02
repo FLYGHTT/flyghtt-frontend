@@ -25,7 +25,7 @@ const Business = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["businesses"] });
       setTimeout(() => {
-      router.push("/dashboard/businesses");
+        router.push("/dashboard/businesses");
       }, 1000);
     },
   });
@@ -33,7 +33,6 @@ const Business = () => {
 
   if (!businesses) return <div>No business to display</div>;
   const businessData = businesses.find((business) => {
-    console.log(business.id, "business.id", businessId, "businessId");
     return business.businessId === businessId;
   });
 

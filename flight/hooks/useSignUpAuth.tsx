@@ -1,3 +1,4 @@
+"use client"
 import React, { useState } from "react";
 import { SignUpInputs } from "@/types";
 import { useMutation } from "@tanstack/react-query";
@@ -22,7 +23,6 @@ const useSignUpAuth = () => {
 
   const [unknownError, setUnknownError] = useState("");
   const { mutateAsync: cookieMutate, isPending: cookiePending } = useMutation({
-
     mutationKey: ["setcookie"],
     mutationFn: async (token: string) => {
       try {
@@ -45,30 +45,27 @@ const useSignUpAuth = () => {
   });
 
   const {
-    mutateAsync: signupMutate,
+    mutate: signupMutate,
     isError,
     isPending,
-  } = useSignUpMutation(
-    {
-      onError: (error) => {
-        console.log(error);
-      },
-      onSuccess: (res) => {
-        const data = res.data;
-        if (data.message) {
-          setUnknownError(data.message);
-          return;
-        }
-      },
+  } = useSignUpMutation({
+    onError: () => {
+      setUnknownError("Something went wrong");
     },
-    {
-      firstName: inputs.firstName,
-      lastName: inputs.lastName,
-      email: inputs.email,
-      password: inputs.password,
-      role: "USER",
-    }
-  );
+    onSuccess: (data) => {
+      if (data && "message" in data) {
+        setUnknownError(data.message);
+        return;
+      }
+      if (data && data.token) {
+        localStorage.setItem("flyghtt_token", data.token);
+        cookieMutate(data.token);
+      }
+      setTimeout(() => {
+        router.push("/dashboard");
+      }, 500);
+    },
+  });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputs((prev) => ({
@@ -159,22 +156,8 @@ const useSignUpAuth = () => {
     e.preventDefault();
     const isValid = validateInputs(inputs);
     if (!isValid) return;
-
-    try {
-      const res = await signupMutate();
-      localStorage.setItem("flyghtt_token", res.data.token);
-      await cookieMutate(res.data.token);
-      setTimeout(() => {
-        router.push("/verify-email");
-      }, 500);
-    } catch (error) {
-      setUnknownError("Invalid email or password");
-    }
-
-    return;
+    signupMutate(inputs);
   };
-  console.log(inputs);
-  console.log(error);
 
   return {
     inputs,
@@ -188,7 +171,6 @@ const useSignUpAuth = () => {
     isPending,
 
     unknownError,
-
   };
 };
 

@@ -1,13 +1,11 @@
+"use client";
 import React from "react";
 import http from "@/lib/http";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
 import { useLoginMutation } from "@/lib/actions";
-interface LoginInputs {
-  email: string;
-  password: string;
-}
+import { LoginInputs } from "@/types";
 const useLoginAuth = () => {
   const router = useRouter();
   const [inputs, setInputs] = useState<LoginInputs>({
@@ -29,27 +27,34 @@ const useLoginAuth = () => {
         throw error;
       }
     },
+    onSuccess: () => {
+      console.log("Success");
+      router.push("/dashboard");
+    },
     onError: () => {
       setError("Something went wrong");
     },
   });
   const {
-
-    mutateAsync: loginMutate,
+    mutate: loginMutate,
     isError,
     isPending,
   } = useLoginMutation({
-    ...inputs,
-    onSuccess: (res) => {
-      const data = res.data;
-      if (data.message) {
+    onSuccess: (data) => {
+      if (data && "message" in data) {
         setError(data.message);
         return;
       }
 
-
+      if (data && data.token) {
+        localStorage.setItem("flyghtt_token", data.token);
+        cookieMutate(data.token);
+      }
 
       return;
+    },
+    onMutate: () => {
+      console.log("onMutate");
     },
     onError: () => {
       setError("Invalid email or password");
@@ -76,16 +81,7 @@ const useLoginAuth = () => {
       return;
     }
     setError("");
-    try {
-      const res = await loginMutate();
-      localStorage.setItem("flyghtt_token", res.data.token);
-      await cookieMutate(res.data.token);
-      setTimeout(() => {
-        router.push("/dashboard");
-      }, 500);
-    } catch (error) {
-      setError("Something went wrong");
-    }
+    loginMutate(inputs);
   };
   return {
     inputs,

@@ -2,7 +2,6 @@
 import { motion } from "framer-motion";
 import Background from "@/components/Background";
 import Content from "@/components/About/Content";
-
 export default function About() {
   return (
     <div>
@@ -13,15 +12,10 @@ export default function About() {
           scale: 0.8,
           opacity: 0,
         }}
-        // onClick={(e) => handleExit(e, { opacity: 0, scale: 0.8 })}
         animate={{
           opacity: 1,
           scale: 1,
         }}
-        // exit={{
-        //   opacity: 0,
-        //   scale: 0.8,
-        // }}
         transition={{
           type: "spring",
           stiffness: 300,
