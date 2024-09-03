@@ -1,4 +1,4 @@
-const Header = dynamic(() => import("@/components/Header"), { ssr: false });
+import Header from "@/components/Header";
 import Sidebar from "@/components/Sidebar";
 import dynamic from "next/dynamic";
 import React from "react";

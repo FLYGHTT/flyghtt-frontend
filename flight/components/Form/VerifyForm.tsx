@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import useVerifyForm from "@/hooks/useVerifyForm";
 
 import { useRouter } from "next/navigation";
-import { useVerifyOtpMutation } from "@/lib/actions";
+import { useVerifyOtpMutation } from "@/hooks/reactQueryHooks";
 import { FaCog } from "react-icons/fa";
 const VerifyForm = () => {
   const { code, handleChange, handleKeyDown, handlePaste, handleRef } =

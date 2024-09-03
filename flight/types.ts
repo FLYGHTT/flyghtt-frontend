@@ -53,3 +53,10 @@ export interface User {
   role: string;
   token?: string;
 }
+export interface LoggedInUser {
+  userId: string;
+  emailVerified: boolean;
+  email: string;
+  firstName: string;
+  lastName: string;
+}

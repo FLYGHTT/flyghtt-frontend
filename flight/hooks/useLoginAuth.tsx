@@ -1,11 +1,10 @@
-"use client";
 import React from "react";
-import http from "@/lib/http";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
-import { useLoginMutation } from "@/lib/actions";
+import { useLoginMutation } from "@/hooks/reactQueryHooks";
 import { LoginInputs } from "@/types";
+import { handleSetCookie } from "@/lib/actions";
 const useLoginAuth = () => {
   const router = useRouter();
   const [inputs, setInputs] = useState<LoginInputs>({
@@ -14,41 +13,22 @@ const useLoginAuth = () => {
   });
   const [error, setError] = useState("");
 
-  const { mutateAsync: cookieMutate, isPending: cookiePending } = useMutation({
-    mutationFn: async (token: string) => {
-      try {
-        console.log(token, "tokencookie");
-
-        const response = await http.post("http://localhost:3000/api/login");
-
-        console.log(response.data, "Response from login API");
-      } catch (error) {
-        console.error("Error in login API request:", error);
-        throw error;
-      }
-    },
-    onSuccess: () => {
-      console.log("Success");
-      router.push("/dashboard");
-    },
-    onError: () => {
-      setError("Something went wrong");
-    },
-  });
   const {
     mutate: loginMutate,
     isError,
     isPending,
   } = useLoginMutation({
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
       if (data && "message" in data) {
         setError(data.message);
         return;
       }
-
+      console.log(data, "data");
       if (data && data.token) {
         localStorage.setItem("flyghtt_token", data.token);
-        cookieMutate(data.token);
+        handleSetCookie(data.token);
+        console.log("Success");
+        router.push("/dashboard");
       }
 
       return;
@@ -57,7 +37,7 @@ const useLoginAuth = () => {
       console.log("onMutate");
     },
     onError: () => {
-      setError("Invalid email or password");
+      setError("Something went wrong, are your credentials correct?");
     },
   });
 
@@ -89,7 +69,7 @@ const useLoginAuth = () => {
     handleSubmit,
     error,
     isPending: isPending,
-    cookiePending,
+
     isError,
   };
 };

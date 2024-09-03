@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { AppProvider } from "@/context/AppContext";
 import QueryProvider from "./QueryProvider";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,7 +21,19 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <QueryProvider>
-          <AppProvider>{children}</AppProvider>
+          <AppProvider>
+            {children}
+            <Toaster
+              toastOptions={{
+                style: {
+                  background: "hsla(170, 82%, 48%, 1)",
+                  color: "#fff",
+                  fontSize: "16px",
+                  fontFamily: "Poppins",
+                },
+              }}
+            />
+          </AppProvider>
         </QueryProvider>
       </body>
     </html>

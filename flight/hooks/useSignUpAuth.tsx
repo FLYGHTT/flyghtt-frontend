@@ -1,10 +1,11 @@
-"use client"
+"use client";
 import React, { useState } from "react";
 import { SignUpInputs } from "@/types";
 import { useMutation } from "@tanstack/react-query";
 import http from "@/lib/http";
 import { useRouter } from "next/navigation";
-import { useSignUpMutation } from "@/lib/actions";
+import { useSignUpMutation } from "@/hooks/reactQueryHooks";
+import { handleSetCookie } from "@/lib/actions";
 const useSignUpAuth = () => {
   const router = useRouter();
   const [inputs, setInputs] = useState<SignUpInputs>({
@@ -22,27 +23,6 @@ const useSignUpAuth = () => {
   });
 
   const [unknownError, setUnknownError] = useState("");
-  const { mutateAsync: cookieMutate, isPending: cookiePending } = useMutation({
-    mutationKey: ["setcookie"],
-    mutationFn: async (token: string) => {
-      try {
-        console.log(token, "tokencookie");
-
-        const response = await http.post("http://localhost:3000/api/login");
-
-        console.log(response.data, "Response from login API");
-      } catch (error) {
-        console.error("Error in login API request:", error);
-        throw error;
-      }
-    },
-    onError: () => {
-      setUnknownError("Something went wrong");
-    },
-    onSuccess: () => {
-      return;
-    },
-  });
 
   const {
     mutate: signupMutate,
@@ -59,11 +39,10 @@ const useSignUpAuth = () => {
       }
       if (data && data.token) {
         localStorage.setItem("flyghtt_token", data.token);
-        cookieMutate(data.token);
-      }
-      setTimeout(() => {
+        handleSetCookie(data.token);
         router.push("/dashboard");
-      }, 500);
+        return;
+      }
     },
   });
 
@@ -166,7 +145,7 @@ const useSignUpAuth = () => {
     error,
     validateInputs,
     handleSubmit,
-    cookiePending,
+
     isError,
     isPending,
 

@@ -1,213 +1,55 @@
-import {
-  useQuery,
-  useMutation,
-  MutationOptions,
-  UseMutationOptions,
-} from "@tanstack/react-query";
-
+"use server";
+import { serialize } from "cookie";
 import http from "./http";
-import { Business, LoginInputs, SignUpInputs, User } from "@/types";
-// Queries
-export const useBusinessesQuery = () => {
-  return useQuery<{
-    data: Business[];
-  }>({
-    queryKey: ["businesses"],
-    queryFn: () => http.get("/business/user"),
+import { cookies } from "next/headers";
+import { LoggedInUser, User } from "@/types";
+export const getBusinessById = async (id: string) => {
+  try {
+    const response = await http.get(`/business/${id}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getBusinesses = async () => {
+  try {
+    const response = await http.get("/business/user");
+    console.log(response.data, "businesses");
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const handleSetCookie = (token: string) => {
+  cookies().set("flyghtt_token", token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    maxAge: 3600, // Cookie expiry set to 1 hour
+    sameSite: "lax",
+    path: "/",
   });
 };
 
-export const useCurrentUserQuery = () => {
-  return useQuery({
-    queryKey: ["currentUser"],
-    queryFn: () => http.get("/users"),
-  });
-};
-//  Mutations
-export const useLoginMutation = (
-  payload: MutationOptions<
-    | User
-    | {
-        message: string;
-      },
-    unknown,
-    LoginInputs
-  >
-) => {
-  const { onSuccess, ...options } = payload;
-
-  return useMutation<
-    | User
-    | {
-        message: string;
-      },
-    unknown,
-    LoginInputs
-  >({
-    mutationFn: async (data) => {
-      const response = await http.post("/authentication/login", data);
-      return response.data;
-    },
-    onSuccess,
-    ...options,
-  });
+export const handleDeleteCookie = () => {
+  cookies().delete("flyghtt_token");
 };
 
-export const useSignUpMutation = (
-  payload: MutationOptions<
-    | User
-    | {
-        message: string;
-      },
-    unknown,
-    SignUpInputs
-  >
-) => {
-  const { onSuccess, ...options } = payload;
-
-  return useMutation<
-    | User
-    | {
-        message: string;
-      },
-    unknown,
-    SignUpInputs
-  >({
-    mutationFn: async (data) => {
-      const response = await http.post("/authentication/sign-up", data);
-      return response.data;
-    },
-    onSuccess,
-    ...options,
-  });
-};
-export const useSetCookieMutation = (payload: MutationOptions) => {
-  const { ...options } = payload;
-
-  return useMutation({
-    mutationFn: async () => {
-      return http.post("http://localhost:3000/api/login", payload);
-    },
-
-    ...options,
-  });
-};
-export const useDeleteBusinessMutation = (
-  payload: UseMutationOptions<
-    (index: string) => Promise<{
-      data: Business[];
-    }>,
-    unknown,
-    string
-  >
-) => {
-  const { onSuccess, ...options } = payload;
-  return useMutation<
-    (index: string) => Promise<{
-      data: Business[];
-    }>,
-    unknown,
-    string
-  >({
-    mutationFn: async (index: string) => {
-      return http.delete(`/business/${index}`);
-    },
-    onSuccess,
-    ...options,
-  });
-};
-
-export const useCookieMutation = (
-  payload: MutationOptions & { token: string }
-) => {
-  const { token, ...options } = payload;
-  return useMutation({
-    mutationFn: async () => {
-      return http.post("http://localhost:3000/api/login", null, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-    },
-    ...options,
-  });
-};
-export const useCreateBusinessMutation = (
-  payload: MutationOptions<
-    | Business
-    | {
-        message: string;
-      },
+export const getCurrentUser = async () => {
+  const CookieStore = cookies();
+  const token = CookieStore.get("flyghtt_token")?.value;
+  if (!token) {
+    throw new Error("No token found");
+  }
+  const response = await http.get<LoggedInUser>(
+    "https://flyghtt-backend.onrender.com/api/v1/users",
     {
-      response: {
-        data: {
-          message: string;
-        };
-      };
-    },
-    {
-      businessName: string;
-      description: string;
-      businessLogo: File;
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
     }
-  >
-) => {
-  const { onSuccess, ...options } = payload;
-  return useMutation<
-    | Business
-    | {
-        message: string;
-      },
-    {
-      response: {
-        data: {
-          message: string;
-        };
-      };
-    },
-    {
-      businessName: string;
-      description: string;
-      businessLogo: File;
-    }
-  >({
-    mutationFn: async (data) => {
-      const response = await http.post("/business", data, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      return response.data;
-    },
-    onSuccess,
-    ...options,
-  });
-};
-
-export const useVerifyOtpMutation = (
-  payload: MutationOptions<
-    | User
-    | {
-        message: string;
-      },
-    unknown,
-    number
-  >
-) => {
-  const { onSuccess, ...options } = payload;
-
-  return useMutation<
-    | User
-    | {
-        message: string;
-      },
-    unknown,
-    number
-  >({
-    mutationFn: async (data) => {
-      return http.post("/authentication/verify/otp", data);
-    },
-    onSuccess,
-    ...options,
-  });
+  );
+  return response.data;
 };
