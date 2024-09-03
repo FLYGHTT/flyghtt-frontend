@@ -7,17 +7,8 @@ import Password from "../ui/Password";
 import { authFormvariants } from "@/lib/variants";
 import { FaCog } from "react-icons/fa";
 const SignUpForm = () => {
-
-  const {
-    handleChange,
-    handleSubmit,
-    error,
-    inputs,
-    isPending,
-    unknownError,
-    cookiePending,
-  } = useAuth();
-
+  const { handleChange, handleSubmit, error, inputs, isPending, unknownError } =
+    useAuth();
 
   return (
     <motion.form
@@ -124,17 +115,13 @@ const SignUpForm = () => {
       </span>
 
       <div className="w-full flex flex-col items-center justify-center">
-      <button
+        <button
           type="submit"
-          disabled={(isPending || cookiePending)}
+          disabled={isPending}
           className="bg-dark text-white py-2 mt-6 rounded-md w-[150px] disabled:cursor-not-allowed disabled:opacity-50 flex gap-3 items-center justify-center "
         >
-          {isPending || cookiePending ? "Please Wait" : "Sign up"}
-          {isPending || cookiePending ? (
-            <FaCog className="animate-spin text-green" />
-          ) : (
-            <></>
-          )}
+          {isPending ? "Please Wait" : "Sign up"}
+          {isPending ? <FaCog className="animate-spin text-green" /> : <></>}
         </button>
         <span className="mt-4 text-xs flex justify-center gap-2">
           Already have an account?{" "}
@@ -145,7 +132,6 @@ const SignUpForm = () => {
 
         {unknownError && (
           <span className="text-red-500 text-xs  mt-4">{unknownError}</span>
-
         )}
       </div>
     </motion.form>

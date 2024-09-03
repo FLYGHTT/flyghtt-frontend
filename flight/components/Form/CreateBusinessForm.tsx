@@ -10,31 +10,32 @@ import { Textarea } from "../ui/textarea";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { BusinessSchema } from "@/lib/validations/create-business";
 import Image from "next/image";
-import { useCreateBusinessMutation } from "@/lib/actions";
+import { useCreateBusinessMutation } from "@/hooks/reactQueryHooks";
 import { FaCog } from "react-icons/fa";
 import { queryClient } from "@/lib/http";
+import toast from "react-hot-toast";
 const CreateBusinessForm = () => {
   const [files, setFiles] = useState<File[]>([]);
   const [error, setError] = useState("");
   const router = useRouter();
-  const [submittedValues, setSubmittedValues] = useState({});
-  const {
-    mutate,
-    isPending,
-    data: mutateData,
-  } = useCreateBusinessMutation({
-    ...submittedValues,
+
+  const { mutate, isPending } = useCreateBusinessMutation({
     onSuccess: (data) => {
-      console.log(data, "dataaaaaaaaaaaaaaaaaaa");
-      if (data.message) {
+      if ("message" in data) {
         setError(data.message);
         return;
       }
       queryClient.invalidateQueries({ queryKey: ["businesses"] });
       router.push("/dashboard/businesses");
+      toast.success("Business created successfully", {
+        id: "create-business-success",
+      });
     },
     onError: (data) => {
       setError(data.response.data.message);
+      toast.error(data.response.data.message, {
+        id: "create-business-error",
+      });
     },
   });
   const emptyFile = new File([], "");
@@ -69,8 +70,7 @@ const CreateBusinessForm = () => {
     }
   };
   function onSubmit(values: z.infer<typeof BusinessSchema>) {
-    setSubmittedValues(values);
-    mutate();
+    mutate(values);
   }
   return (
     <Form {...form}>

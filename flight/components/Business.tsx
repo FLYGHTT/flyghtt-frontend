@@ -1,7 +1,7 @@
 "use client";
-import { useSearchParams } from "next/navigation";
+
 import React from "react";
-// import { businesses } from "@/lib/data";
+
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import tool from "@/assets/icons/tool.svg";
@@ -11,30 +11,30 @@ import trash from "@/assets/icons/trash.svg";
 import eye from "@/assets/icons/eye.svg";
 import edit from "@/assets/icons/edit.svg";
 import { BiLogOutCircle } from "react-icons/bi";
-import { useBusinessesQuery, useDeleteBusinessMutation } from "@/lib/actions";
+import {
+  useBusinessesQuery,
+  useDeleteBusinessMutation,
+  useGetBusinessByIdQuery,
+} from "@/hooks/reactQueryHooks";
 import { getImageSrc } from "@/lib/utils";
 import Loading from "@/app/(root)/loading";
 import Error from "@/app/(root)/error";
 import { queryClient } from "@/lib/http";
-const Business = () => {
-  const searchParams = useSearchParams();
+import toast from "react-hot-toast";
+import type { Business } from "@/types";
+const Business = ({ id }: { id: string }) => {
   const router = useRouter();
-  const businessId = searchParams?.get("id") || -1;
-  const { data, isPending, isError } = useBusinessesQuery();
+
+  const { data: businessData, isPending, isError } = useGetBusinessByIdQuery(id);
   const { mutate } = useDeleteBusinessMutation({
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["businesses"] });
-      setTimeout(() => {
-      router.push("/dashboard/businesses");
-      }, 1000);
-    },
-  });
-  const businesses = data?.data;
 
-  if (!businesses) return <div>No business to display</div>;
-  const businessData = businesses.find((business) => {
-    console.log(business.id, "business.id", businessId, "businessId");
-    return business.businessId === businessId;
+      router.push("/dashboard/businesses");
+      toast.success("Business deleted successfully", {
+        id: "delete-business-success",
+      });
+    },
   });
 
   if (isPending) {
@@ -43,6 +43,7 @@ const Business = () => {
   if (isError) {
     return <Error />;
   }
+
   if (!businessData) {
     return <div>Business not found</div>;
   }
@@ -76,7 +77,7 @@ const Business = () => {
 
   const imageSrc = getImageSrc(base64Data);
   return (
-    <div className=" overflow-scroll h-full mb-24 relative">
+    <div className="overflow-y-auto max-h-[85vh] relative">
       <div
         onClick={() => router.back()}
         className={`  mb-1 w-fit rounded-full p-2 bg-light cursor-pointer`}

@@ -1,4 +1,4 @@
-import { useCurrentUserQuery } from "@/lib/actions";
+import { useCurrentUserQuery } from "@/hooks/reactQueryHooks";
 const useGetCurrentUser = () => {
   const { data, isError, error, isPending } = useCurrentUserQuery();
   if (isError) {

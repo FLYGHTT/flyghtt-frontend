@@ -1,3 +1,4 @@
+"use client"
 import React from "react";
 import { plans } from "@/lib/data";
 import { SiTicktick } from "react-icons/si";

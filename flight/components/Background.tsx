@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { motion } from "framer-motion";
 const Background = ({
@@ -12,9 +13,6 @@ const Background = ({
       <motion.h1
         initial={{
           opacity: 0,
-          scale: 0.5,
-          // x: clickPosition.x - window.innerWidth / 2,
-          // y: clickPosition.y - window.innerHeight / 2,
         }}
         animate={{
           opacity: 1,
@@ -25,8 +23,6 @@ const Background = ({
         exit={{
           opacity: 0,
           scale: 0.5,
-          // x: clickPosition.x - window.innerWidth / 2,
-          // y: clickPosition.y - window.innerHeight / 2,
         }}
         transition={{
           type: "spring",

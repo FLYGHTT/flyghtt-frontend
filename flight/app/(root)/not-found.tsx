@@ -1,4 +1,4 @@
-"use client";
+
 import Background from "@/components/Background";
 import Link from "next/link";
 import React from "react";

@@ -99,11 +99,11 @@ export const sidebartop = [
     icon: tool,
     link: "/dashboard/tools",
   },
-  {
-    title: "My Drafts",
-    icon: draft,
-    link: "/dashboard/drafts",
-  },
+  // {
+  //   title: "My Drafts",
+  //   icon: draft,
+  //   link: "/dashboard/drafts",
+  // },
 ];
 export const sidebarbottom = [
   {

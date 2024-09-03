@@ -1,5 +1,5 @@
+"use client"
 import React from "react";
-
 import { motion } from "framer-motion";
 import { Testimonials } from "./Testimonials";
 import Back from "../Back";

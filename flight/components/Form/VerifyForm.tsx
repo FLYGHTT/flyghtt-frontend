@@ -2,9 +2,8 @@
 import React, { useState } from "react";
 import useVerifyForm from "@/hooks/useVerifyForm";
 
-
 import { useRouter } from "next/navigation";
-import { useVerifyOtpMutation } from "@/lib/actions";
+import { useVerifyOtpMutation } from "@/hooks/reactQueryHooks";
 import { FaCog } from "react-icons/fa";
 const VerifyForm = () => {
   const { code, handleChange, handleKeyDown, handlePaste, handleRef } =
@@ -12,26 +11,21 @@ const VerifyForm = () => {
   const [error, setError] = useState("");
   const router = useRouter();
 
-  const { mutate, data, isError, isPending } = useVerifyOtpMutation(
-    {
-      onError: (error) => {
-        console.log(error);
-      },
-      onSuccess: (res) => {
-        const data = res.data;
-        console.log(data);
-        if (data && data.emailVerified) {
-          router.push("/email-verified");
-          setError("");
-        } else {
+  const { mutate, data, isError, isPending } = useVerifyOtpMutation({
+    onError: (error) => {
+      console.log(error);
+    },
+    onSuccess: (res) => {
+      if (data && "emailVerified" in data) {
+        router.push("/email-verified");
+        setError("");
+      } else {
+        if (data && "message" in data) {
           setError(data.message || "Verification failed.");
         }
-      },
+      }
     },
-    {
-      otp: Number(code.join("")),
-    }
-  );
+  });
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -43,8 +37,7 @@ const VerifyForm = () => {
     setError("");
     console.log(code.join(""));
 
-    mutate();
-
+    mutate(Number(code.join("")));
   };
   return (
     <form
@@ -83,7 +76,6 @@ const VerifyForm = () => {
         {isPending ? <FaCog className="animate-spin text-green" /> : <></>}
       </button>
       <p className="text-red-500 text-xs mt-4">{error && error}</p>
-
     </form>
   );
 };

@@ -8,6 +8,7 @@ const page = () => {
     <AnimatePresence mode="wait">
       <PlanComponent />
     </AnimatePresence>
+   
   );
 };
 

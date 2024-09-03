@@ -14,6 +14,7 @@ export const AppProvider: React.FC<{
     y: 0,
   });
   const [businessId, setBusinessId] = useState<number | null>(null);
+  
   return (
     <AppContext.Provider
       value={{

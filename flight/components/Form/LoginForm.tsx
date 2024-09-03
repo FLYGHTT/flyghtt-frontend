@@ -9,14 +9,8 @@ import Password from "../ui/Password";
 import { FaCog } from "react-icons/fa";
 
 const LoginForm = () => {
-  const {
-    inputs,
-    handleChange,
-    handleSubmit,
-    error,
-    isPending,
-    cookiePending,
-  } = useLoginAuth();
+  const { inputs, handleChange, handleSubmit, error, isPending } =
+    useLoginAuth();
 
   return (
     <motion.form
@@ -52,15 +46,11 @@ const LoginForm = () => {
       <div className="w-full flex items-center justify-center flex-col gap-2">
         <button
           type="submit"
-          disabled={(isPending || cookiePending)}
+          disabled={isPending}
           className="bg-dark text-white py-2 mt-6 rounded-md w-[150px] disabled:cursor-not-allowed disabled:opacity-50 flex gap-3 items-center justify-center "
         >
-          {isPending || cookiePending ? "Please Wait" : "Log in"}
-          {isPending || cookiePending ? (
-            <FaCog className="animate-spin text-green" />
-          ) : (
-            <></>
-          )}
+          {isPending ? "Please Wait" : "Log in"}
+          {isPending ? <FaCog className="animate-spin text-green" /> : <></>}
         </button>
         {error && <span className="text-red-500 text-xs ml-2">{error}</span>}
       </div>
