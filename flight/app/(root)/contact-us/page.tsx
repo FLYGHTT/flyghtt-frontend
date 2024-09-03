@@ -3,7 +3,7 @@ import React from "react";
 import { styles } from "@/components/styles";
 
 import Back from "@/components/Back";
-import {  FaArrowRight } from "react-icons/fa";
+import { FaArrowRight } from "react-icons/fa";
 import instagram from "@/assets/icons/instagram1.svg";
 import x from "@/assets/icons/x.svg";
 import tiktok from "@/assets/icons/tiktok.svg";
@@ -30,7 +30,9 @@ const Contact = () => {
       }}
       className="flex items-center justify-center h-screen  px-16"
     >
-      <Back background="bg-lightPurple" />
+      <div className="absolute top-10 left-60">
+        <Back className="bg-lightPurple " />
+      </div>
 
       <div className="flex  items-center h-fit mt-8">
         <div className="flex flex-col items-center">

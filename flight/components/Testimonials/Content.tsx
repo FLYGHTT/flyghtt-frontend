@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React from "react";
 import { motion } from "framer-motion";
 import { Testimonials } from "./Testimonials";
@@ -6,7 +6,10 @@ import Back from "../Back";
 const Content = () => {
   return (
     <div className="w-full h-full flex flex-col items-center  z-[100] justify-center text-black  ">
-      <Back background="bg-lightGreen z-[100] " />
+      <div className="absolute top-10 left-60">
+        <Back className="bg-lightGreen z-[100]" />
+      </div>
+
       <motion.div
         initial={{
           opacity: 0,

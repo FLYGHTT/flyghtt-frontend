@@ -5,7 +5,6 @@ import Image from "next/image";
 import Back from "@/components/Back";
 import { motion } from "framer-motion";
 
-
 const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <motion.div
@@ -22,10 +21,10 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         stiffness: 300,
         damping: 30,
       }}
-      className="h-screen flex items-center justify-center overflow-hidden relative"
+      className="h-screen flex items-center justify-center overflow-hidden relative p-6 "
     >
-      <div className="z-[10]">
-        <Back background="bg-black" textColor="text-white" />
+      <div className="z-[10]  absolute top-10 left-60 text-white">
+        <Back className="bg-black text-white" />
       </div>
       <div className="grid grid-cols-2 absolute w-full h-full">
         <div className="bg-dark" />
