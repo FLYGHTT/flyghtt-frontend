@@ -60,3 +60,28 @@ export interface LoggedInUser {
   firstName: string;
   lastName: string;
 }
+export interface Item {
+  id: number;
+  title: string;
+  itemDSC: string;
+}
+export interface Column {
+  id: number;
+  heading: string;
+  description: string;
+  items: Item[];
+}
+export interface ModelInputs {
+  id: number;
+  modelName: string;
+  modelDescription: string;
+  externalReferences: string[];
+}
+
+export interface Model {
+  id: number;
+  modelName: string;
+  modelDescription: string;
+  externalReferences: string[];
+  columns: Column[];
+}

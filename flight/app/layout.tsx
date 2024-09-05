@@ -4,7 +4,8 @@ import "./globals.css";
 import { AppProvider } from "@/context/AppContext";
 import QueryProvider from "./QueryProvider";
 import { Toaster } from "react-hot-toast";
-
+import "/node_modules/react-grid-layout/css/styles.css";
+import "/node_modules/react-resizable/css/styles.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
