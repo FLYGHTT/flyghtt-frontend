@@ -26,8 +26,8 @@ const Page = () => {
           <Back className="bg-dark text-white" />
         </div>
         <div className="flex items-center px-48 w-full">
-          <div className="bg-dark text-xl text-white rounded-full  p-4 px-16 flex items-center justify-center">
-            Create new model
+          <div className="bg-dark text-xl text-white rounded-md  p-4 px-16 flex items-center justify-center">
+            Save Model
           </div>
         </div>
       </div>

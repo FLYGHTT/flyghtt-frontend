@@ -54,13 +54,13 @@ textarea {
 }
 
 
-textarea {
-  background-color: #eef2f7; /* Light grey for textarea */
+/* textarea {
+  background-color: #eef2f7; 
   border: none;
   border-radius: 5px;
   padding: 8px;
   width: 100%;
-}
+} */
 
 .floating-label-input {
   background-color: #f8f9fa; /* Light background */

@@ -78,17 +78,18 @@ const Columns = ({
     ],
   });
 
-  const onLayoutChange = (layout) => {
-    setLayouts((prevLayouts) => ({
-      ...prevLayouts,
-      lg: layout,
-    }));
-  };
+  // const onLayoutChange = (layout) => {
+  //   setLayouts((prevLayouts) => ({
+  //     ...prevLayouts,
+  //     lg: layout,
+  //   }));
+  // };
   const getColumnHeight = (column: Column) => {
     const baseHeight = 1; // Base height for the column
     const itemHeight = 1; // Height for each item in the column
     return baseHeight + column.items.length * itemHeight;
   };
+  console.log(columns);
   return (
     <div className="h-full w-full">
       <ResponsiveGridLayout
