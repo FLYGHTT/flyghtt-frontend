@@ -9,7 +9,7 @@ export interface AppContextType {
   setBusinessId: React.Dispatch<React.SetStateAction<number | null>>;
 }
 
-export interface Model {
+export interface DisplayedModel {
   id: number;
   name: string;
   status: string;
