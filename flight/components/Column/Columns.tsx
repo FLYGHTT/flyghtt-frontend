@@ -4,6 +4,8 @@ import FloatingLabelInput from "@/components/ui/FloatingLabelInput";
 import { styles } from "@/components/styles";
 import { Column } from "@/types";
 import { WidthProvider, Responsive } from "react-grid-layout";
+import ColumnHeading from "./ColumnHeading";
+import ColumnDescription from "./ColumnDescription";
 // import "react-grid-layout/css/styles.css";
 // import "react-resizable/css/styles.css";
 
@@ -16,18 +18,6 @@ const Columns = ({
   columns: Column[];
   setColumns: React.Dispatch<React.SetStateAction<Column[]>>;
 }) => {
-  const [showDescriptionIndex, setShowDescriptionIndex] = useState<
-    number | null
-  >(null);
-
-  const handleShowDescription = (columnIndex: number) => {
-    setShowDescriptionIndex(columnIndex);
-  };
-
-  const handleShowDescriptionIndex = (id: number) => () => {
-    setShowDescriptionIndex(id);
-  };
-
   const handleItemChange = (
     e:
       | React.ChangeEvent<HTMLInputElement>
@@ -64,10 +54,6 @@ const Columns = ({
     );
   };
 
-  const handleFormatDescription = (desc: string) => {
-    return desc.length > 200 ? `${desc.slice(0, 200)}...` : desc;
-  };
-
   // Define grid layout for the columns
   const [layouts, setLayouts] = useState({
     lg: [
@@ -89,7 +75,7 @@ const Columns = ({
     const itemHeight = 1; // Height for each item in the column
     return baseHeight + column.items.length * itemHeight;
   };
-  console.log(columns);
+
   return (
     <div className="h-full w-full">
       <ResponsiveGridLayout
@@ -122,57 +108,27 @@ const Columns = ({
             <div className="group absolute top-0 left-0 drag-handle h-4 z-[10] justify-center cursor-move w-full flex ">
               <div className="group-hover:block hidden  mt-0.5 h-2 rounded-md w-[20%]  bg-purple-800"></div>
             </div>
-            <div className="flex justify-between items-center mt-2">
-              <div className="w-[60%]">
-                <FloatingLabelInput
-                  label="Model column heading"
-                  id={`heading-${columnIndex}`}
-                  showLabel={false}
-                  name="heading"
-                  value={column.heading}
-                  onChange={(e) => handleChange(e, columnIndex)}
-                  className="text-xl font-semibold floating-label-input"
-                />
-              </div>
-              <div className="flex gap-4 items-center text-sm cursor-pointer">
-                {!column.description && (
-                  <p
-                    className="text-green text-xs"
-                    onClick={() => handleShowDescription(columnIndex)}
-                  >
-                    Add a description +
-                  </p>
-                )}
-                <FaRegTrashCan className="cursor-pointer" />
-              </div>
-            </div>
-            {column.description && !(showDescriptionIndex === columnIndex) && (
-              <p className="text-xs text-gray-600 break-words">
-                {handleFormatDescription(column.description)}
-              </p>
-            )}
-            {showDescriptionIndex === columnIndex && (
-              <textarea
-                id="description"
-                className={`${styles.input} h-30 placeholder:text-sm text-sm`}
-                placeholder="Enter description"
-                value={column.description}
-                onBlur={() => setShowDescriptionIndex(null)}
-                onChange={(e) => handleChange(e, columnIndex)}
-                name="description"
-              />
-            )}
+            <ColumnHeading
+              column={column}
+              columnIndex={columnIndex}
+              handleChange={handleChange}
+            />
+            <ColumnDescription
+              column={column}
+              columnIndex={columnIndex}
+              handleChange={handleChange}
+            />
             <div className="mt-5">
               {column.items.map((item, index) => (
-                <div className="mt-2" key={index}>
+                <div className="mt-3" key={index}>
                   <div className="flex gap-2 items-center">
                     <div className="bg-gray-500 text-white rounded-full w-6 h-6 text-sm justify-center flex items-center">
                       {index + 1}
                     </div>
                     <div>
                       <FloatingLabelInput
-                        label="Model column item "
-                        showLabel={false}
+                        label="Column item "
+                        showLabel={true}
                         value={item.title}
                         name="title"
                         id={`title-${columnIndex}-${index}`}
@@ -181,26 +137,8 @@ const Columns = ({
                         }
                         className="font-semibold"
                       />
-                      {!item.itemDSC && !(showDescriptionIndex === item.id) && (
-                        <p
-                          className="text-green text-xs cursor-pointer"
-                          onClick={handleShowDescriptionIndex(item.id)}
-                        >
-                          Add a description +
-                        </p>
-                      )}
                     </div>
                   </div>
-                  {(item.itemDSC || showDescriptionIndex === item.id) && (
-                    <textarea
-                      id="description"
-                      className={`${styles.input} placeholder:text-sm mt-0 text-sm`}
-                      placeholder="Enter description"
-                      value={item.itemDSC}
-                      onChange={(e) => handleItemChange(e, columnIndex, index)}
-                      name="itemDSC"
-                    />
-                  )}
                 </div>
               ))}
             </div>

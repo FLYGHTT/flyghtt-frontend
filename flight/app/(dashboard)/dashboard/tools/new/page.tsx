@@ -2,7 +2,7 @@
 
 import Back from "@/components/Back";
 import React, { useState } from "react";
-import NewToolHeader from "./NewToolHeader";
+import ModelHeader from "./ModelHeader";
 import { IoMdAddCircleOutline } from "react-icons/io";
 
 import { newcolumn, newmodelInputs } from "@/lib/constants";
@@ -16,11 +16,15 @@ const Page = () => {
   const [modelInputs, setModelInputs] = useState<ModelInputs>(newmodelInputs);
 
   const handleAddColumn = () => {
-    setColumns((prevColumns) => [...prevColumns, newcolumn]);
+    setColumns((prevColumns) => [
+      ...prevColumns,
+      { ...newcolumn, id: Math.random() },
+    ]);
   };
-
+  console.log(columns, "Columns");
+  console.log(modelInputs, "Model Inputs");
   return (
-    <div className="w-full relative overflow-auto max-h-[90vh] overflow-x-hidden">
+    <div className="w-full relative overflow-auto max-h-[95vh] overflow-x-hidden">
       <div className="flex ">
         <div className="absolute left-0 top-0 ">
           <Back className="bg-dark text-white" />
@@ -31,13 +35,13 @@ const Page = () => {
           </div>
         </div>
       </div>
-      <NewToolHeader
+      <ModelHeader
         setModalInputs={setModelInputs}
         modelInputs={modelInputs}
       />
       <div className="mt-4">
         <p
-          className="text-sm text-green flex gap-2 items-center cursor-pointer"
+          className="text-sm text-green flex gap-2 items-center cursor-pointer w-fit"
           onClick={handleAddColumn}
         >
           Add new model column

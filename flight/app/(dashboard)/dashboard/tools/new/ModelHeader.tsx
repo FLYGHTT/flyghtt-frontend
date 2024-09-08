@@ -1,12 +1,12 @@
 "use client";
 import React, { useState } from "react";
-
+import { MdModeEdit } from "react-icons/md";
 import { motion } from "framer-motion";
 import { IoMdAddCircleOutline } from "react-icons/io";
 import FloatingLabelTextArea from "@/components/ui/FloatingLabelTextArea";
 import { ModelInputs } from "@/types";
 import FloatingLabelInput from "@/components/ui/FloatingLabelInput";
-const NewToolHeader = ({
+const ModelHeader = ({
   setModalInputs,
   modelInputs,
 }: {
@@ -44,13 +44,16 @@ const NewToolHeader = ({
       externalReferences,
     }));
   };
-  const handleShowDescription = () => {
+  const handleHideDescription = () => {
     setShowDescription(false);
+  };
+  const handleShowDescription = () => {
+    setShowDescription(true);
   };
   const handleFormatDescription = (desc: string) => {
     return desc.length > 200 ? `${desc.slice(0, 200)}...` : desc;
   };
-
+  console.log(showDescription, "Show Description");
   return (
     <div className="flex gap-6   mt-12   h-fit z-[100]">
       <div className="w-[65%] ">
@@ -62,14 +65,28 @@ const NewToolHeader = ({
           onChange={handleChange}
           className="text-xl font-bold"
         />
-        {modelInputs.modelDescription && !showDescription && (
-          <>
-          <h1 className="text-gray-500 font-semibold text-sm">Description</h1>
-            <p className="mt-2 text-sm text-gray-800 break-words">
-              {handleFormatDescription(modelInputs.modelDescription)}
-            </p>
-          </>
+        {!showDescription && (
+          <div className="flex justify-between items-center max-w-full">
+            <div className="max-w-full">
+              <div className="flex gap-3 items-center">
+                {" "}
+                <h1 className="text-gray-500 font-semibold text-sm">
+                  Model Description
+                </h1>
+                <MdModeEdit
+                  className="cursor-pointer text-sm text-gray-600"
+                  onClick={handleShowDescription}
+                />
+              </div>
+              <p className="mt-2 text-sm text-gray-800 break-words max-w-full">
+                {modelInputs.modelDescription
+                  ? handleFormatDescription(modelInputs.modelDescription)
+                  : "No description"}
+              </p>
+            </div>
+          </div>
         )}
+
         <div className="mt-4">
           {showDescription && (
             <FloatingLabelTextArea
@@ -78,7 +95,7 @@ const NewToolHeader = ({
               value={modelInputs.modelDescription}
               name="modelDescription"
               onChange={handleChange}
-              onBlur={handleShowDescription}
+              onBlur={handleHideDescription}
             />
           )}
         </div>
@@ -115,4 +132,4 @@ const NewToolHeader = ({
   );
 };
 
-export default NewToolHeader;
+export default ModelHeader;

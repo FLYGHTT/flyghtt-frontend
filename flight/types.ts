@@ -63,7 +63,6 @@ export interface LoggedInUser {
 export interface Item {
   id: number;
   title: string;
-  itemDSC: string;
 }
 export interface Column {
   id: number;
