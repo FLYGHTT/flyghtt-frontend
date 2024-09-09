@@ -21,5 +21,5 @@ export const newmodelInputs = {
   id: 0,
   modelName: "",
   modelDescription: "",
-  externalReferences: [],
+  linkReference: "",
 };

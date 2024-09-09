@@ -74,13 +74,13 @@ export interface ModelInputs {
   id: number;
   modelName: string;
   modelDescription: string;
-  externalReferences: string[];
+  linkReference: string;
 }
 
 export interface Model {
   id: number;
   modelName: string;
   modelDescription: string;
-  externalReferences: string[];
+  linkReference: string;
   columns: Column[];
 }

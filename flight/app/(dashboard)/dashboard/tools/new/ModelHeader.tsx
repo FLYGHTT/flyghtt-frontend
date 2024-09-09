@@ -14,7 +14,6 @@ const ModelHeader = ({
   setModalInputs: React.Dispatch<React.SetStateAction<ModelInputs>>;
 }) => {
   const [showLinkInput, setShowLinkInput] = useState(false);
-  const [linkInputs, setLinkInputs] = useState<string>("");
   const [showDescription, setShowDescription] = useState(true);
   const handleShowLinkInput = () => {
     setShowLinkInput(!showLinkInput);
@@ -29,21 +28,7 @@ const ModelHeader = ({
       [e.target.name]: e.target.value || "",
     }));
   };
-  const handleLinkReferenceChange = (
-    e: React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    setLinkInputs(e.target.value);
-  };
-  const handleBlur = (
-    e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const externalReferences = linkInputs.split(",");
-    console.log(externalReferences);
-    setModalInputs((prevState) => ({
-      ...prevState,
-      externalReferences,
-    }));
-  };
+
   const handleHideDescription = () => {
     setShowDescription(false);
   };
@@ -53,9 +38,9 @@ const ModelHeader = ({
   const handleFormatDescription = (desc: string) => {
     return desc.length > 200 ? `${desc.slice(0, 200)}...` : desc;
   };
-  console.log(showDescription, "Show Description");
+
   return (
-    <div className="flex gap-6   mt-12   h-fit z-[100]">
+    <div className="flex gap-6 mt-2  h-fit z-[100]">
       <div className="w-[65%] ">
         <FloatingLabelInput
           label="Model name"
@@ -109,13 +94,13 @@ const ModelHeader = ({
             animate={{ opacity: 1, height: "100%" }}
             transition={{ duration: 0.5, ease: "easeInOut" }}
           >
-            <FloatingLabelTextArea
-              label="External references"
+            <FloatingLabelInput
+              label="External reference"
               showLabel={true}
-              value={linkInputs}
-              onChange={handleLinkReferenceChange}
-              onBlur={handleBlur}
+              value={modelInputs.linkReference}
+              onChange={handleChange}
               className="text-sm"
+              name="linkReference"
             />
           </motion.div>
         ) : (

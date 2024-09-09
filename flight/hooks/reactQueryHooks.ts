@@ -221,3 +221,13 @@ export const useVerifyOtpMutation = (
     ...options,
   });
 };
+
+export const useSubmitModelMutation = (payload: MutationOptions) => {
+  const { onSuccess, ...options } = payload;
+
+  return useMutation({
+    mutationFn: async (data) => {
+      return http.post("/tools/all", data);
+    },
+  });
+};
