@@ -1,11 +1,7 @@
-"use client";
-import React, { useState } from "react";
-import { MdModeEdit } from "react-icons/md";
-import { motion } from "framer-motion";
-import { IoMdAddCircleOutline } from "react-icons/io";
-import FloatingLabelTextArea from "@/components/ui/FloatingLabelTextArea";
+import React from "react";
 import { ModelInputs } from "@/types";
-import FloatingLabelInput from "@/components/ui/FloatingLabelInput";
+import { Input } from "@/components/ui/GlowInput";
+import { TextArea } from "@/components/ui/GlowTextArea";
 const ModelHeader = ({
   setModalInputs,
   modelInputs,
@@ -13,11 +9,6 @@ const ModelHeader = ({
   modelInputs: ModelInputs;
   setModalInputs: React.Dispatch<React.SetStateAction<ModelInputs>>;
 }) => {
-  const [showLinkInput, setShowLinkInput] = useState(false);
-  const [showDescription, setShowDescription] = useState(true);
-  const handleShowLinkInput = () => {
-    setShowLinkInput(!showLinkInput);
-  };
   const handleChange = (
     e:
       | React.ChangeEvent<HTMLInputElement>
@@ -29,89 +20,60 @@ const ModelHeader = ({
     }));
   };
 
-  const handleHideDescription = () => {
-    setShowDescription(false);
-  };
-  const handleShowDescription = () => {
-    setShowDescription(true);
-  };
-  const handleFormatDescription = (desc: string) => {
-    return desc.length > 200 ? `${desc.slice(0, 200)}...` : desc;
-  };
-
   return (
-    <div className="flex gap-6 mt-2  h-fit z-[100]">
-      <div className="w-[65%] ">
-        <FloatingLabelInput
-          label="Model name"
-          showLabel={true}
-          value={modelInputs.modelName}
-          name="modelName"
-          onChange={handleChange}
-          className="text-xl font-bold"
-        />
-        {!showDescription && (
-          <div className="flex justify-between items-center max-w-full">
-            <div className="max-w-full">
-              <div className="flex gap-3 items-center">
-                {" "}
-                <h1 className="text-gray-500 font-semibold text-sm">
-                  Model Description
-                </h1>
-                <MdModeEdit
-                  className="cursor-pointer text-sm text-gray-600"
-                  onClick={handleShowDescription}
-                />
-              </div>
-              <p className="mt-2 text-sm text-gray-800 break-words max-w-full">
-                {modelInputs.modelDescription
-                  ? handleFormatDescription(modelInputs.modelDescription)
-                  : "No description"}
-              </p>
-            </div>
-          </div>
-        )}
-
-        <div className="mt-4">
-          {showDescription && (
-            <FloatingLabelTextArea
-              label="Model description"
-              showLabel={true}
-              value={modelInputs.modelDescription}
-              name="modelDescription"
-              onChange={handleChange}
-              onBlur={handleHideDescription}
-            />
-          )}
+    <div className="gap-6 mt-2  h-fit  bg-green/10 w-[60vw] rounded-xl p-8">
+      <div className="w-full flex  ">
+        <label
+          htmlFor="modelName"
+          className="w-[20%] text-gray-600 font-semibold text-sm"
+        >
+          Model Name
+        </label>
+        <div className="w-[80%]">
+          <Input
+            id="modelName"
+            placeholder="e.g. Customer churn prediction"
+            value={modelInputs.modelName}
+            name="modelName"
+            onChange={handleChange}
+            className="text-xl font-bold placeholder:text-sm placeholder:font-normal"
+          />
         </div>
       </div>
 
-      <div className="w-[35%]">
-        {showLinkInput ? (
-          <motion.div
-            className="relative w-full"
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "100%" }}
-            transition={{ duration: 0.5, ease: "easeInOut" }}
-          >
-            <FloatingLabelInput
-              label="External reference"
-              showLabel={true}
-              value={modelInputs.linkReference}
-              onChange={handleChange}
-              className="text-sm"
-              name="linkReference"
-            />
-          </motion.div>
-        ) : (
-          <p
-            className="text-sm text-green flex gap-2 cursor-pointer z-[100] items-center h-fit w-full"
-            onClick={handleShowLinkInput}
-          >
-            Add links to external references
-            <IoMdAddCircleOutline className="" />
-          </p>
-        )}
+      <div className="mt-4 w-full flex ">
+        <label
+          htmlFor="modelDescription"
+          className="w-[20%] text-gray-600 font-semibold text-sm"
+        >
+          Description
+        </label>
+        <div className="w-[80%]">
+          <TextArea
+            value={modelInputs.modelDescription}
+            name="modelDescription"
+            placeholder="Enter description"
+            onChange={handleChange}
+            className=" "
+          />
+        </div>
+      </div>
+      <div className="w-full flex mt-4 ">
+        <label
+          htmlFor="linkReference"
+          className="w-[20%] text-gray-600 font-semibold text-sm"
+        >
+          External reference
+        </label>
+        <div className="w-[80%]">
+          <Input
+            id="linkReference"
+            value={modelInputs.linkReference}
+            name="linkReference"
+            placeholder="Paste link here"
+            onChange={handleChange}
+          />
+        </div>
       </div>
     </div>
   );

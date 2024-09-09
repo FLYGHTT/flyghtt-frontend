@@ -48,17 +48,19 @@ const CTInterface = () => {
     mutate(newModel);
   };
   return (
-    <div className="w-full relative overflow-y-auto max-h-[90%] col-span-10 px-10 p-6">
+    <div className="w-full relative overflow-y-auto max-h-[90%] col-span-10 px-10 p-6 ">
       <ModelHeader setModalInputs={setModelInputs} modelInputs={modelInputs} />
       <div className="mt-4">
         <p
-          className="text-sm text-green flex gap-2 items-center cursor-pointer w-fit"
+          className="text-sm text-gray-700 flex gap-2 items-center cursor-pointer w-fit"
           onClick={handleAddColumn}
         >
           Add new model column
           <IoMdAddCircleOutline />
         </p>
-        <Columns columns={columns} setColumns={setColumns} />
+        {columns.length > 0 && (
+          <Columns columns={columns} setColumns={setColumns} />
+        )}
       </div>
     </div>
   );
