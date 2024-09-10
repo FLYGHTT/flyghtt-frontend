@@ -8,8 +8,8 @@ import { useRouter } from "next/navigation";
 import { useModal } from "@/components/Modal";
 import DiscardChanges from "@/components/DiscardChanges";
 import PublishPopup from "./PublishPopup";
+import PublishModel from "@/components/PublishModel";
 const CreateToolHeader = () => {
-  const [showPopup, setShowPopup] = useState(false);
   const router = useRouter();
   const { openModal } = useModal();
   const handleBack = () => {
@@ -18,8 +18,8 @@ const CreateToolHeader = () => {
   const openDiscardModal = () => {
     openModal(<DiscardChanges />);
   };
-  const handleShowPopup = () => {
-    setShowPopup(!showPopup);
+  const openPublishModal = () => {
+    openModal(<PublishModel />);
   };
 
   return (
@@ -48,15 +48,15 @@ const CreateToolHeader = () => {
           Save as Draft
         </button>
         <hr className="border border-t-gray-300 h-[30px]" />
-        <div className="relative w-fit h-fit z-[10]">
-          <button
-            className="p-2 px-4 bg-green text-white rounded-lg flex gap-2 items-center justify-center"
-            onClick={handleShowPopup}
-          >
-            Publish <FaChevronDown size={12} />
-          </button>
-          {showPopup && <PublishPopup onClose={handleShowPopup} />}
-        </div>
+        <button className="p-2 px-4 border-2 relative border-gray-300 rounded-lg">
+          Preview
+        </button>
+        <button
+          className="p-2 px-4 bg-green text-white rounded-lg flex gap-2 items-center justify-center"
+          onClick={openPublishModal}
+        >
+          Publish
+        </button>
       </div>
     </div>
   );
