@@ -1,17 +1,22 @@
 "use client";
-import { createContext, useState, useContext } from "react";
+import { createContext, useState, useContext, useEffect, useMemo } from "react";
 import { createPortal } from "react-dom";
 import { motion } from "framer-motion";
 import { AnimatePresence } from "framer-motion";
 import { IoMdClose } from "react-icons/io";
+
+// Define the ModalContext type
 interface ModalContextType {
   isModalOpen: boolean;
   modalContent: React.ReactNode;
   openModal: (content: React.ReactNode) => void;
   closeModal: () => void;
 }
+
+// Create the ModalContext
 const ModalContext = createContext<ModalContextType | undefined>(undefined);
 
+// Custom hook to use the modal context
 export const useModal = () => {
   const context = useContext(ModalContext);
   if (!context) {
@@ -20,10 +25,9 @@ export const useModal = () => {
   return context;
 };
 
+// ModalProvider component that manages modal state
 export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
-  const [modalContent, setModalContent] = useState<React.ReactNode | null>(
-    null
-  );
+  const [modalContent, setModalContent] = useState<React.ReactNode | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = (content: React.ReactNode) => {
@@ -42,9 +46,19 @@ export const ModalProvider = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
+// Modal component to render the modal content
 export const Modal = () => {
   const { isModalOpen, modalContent, closeModal } = useModal();
+  const [mounted, setMounted] = useState(false);
 
+  // Ensure that modal is only rendered on the client side
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null; // Don't render the modal server-side
+
+  // Render the modal on the client side using createPortal
   return createPortal(
     <AnimatePresence>
       {isModalOpen && (

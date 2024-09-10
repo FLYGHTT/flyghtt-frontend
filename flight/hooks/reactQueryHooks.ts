@@ -6,7 +6,7 @@ import {
 } from "@tanstack/react-query";
 
 import http from "../lib/http";
-import { Business, LoginInputs, SignUpInputs, User } from "@/types";
+import { Business, LoginInputs, Model, SignUpInputs, User } from "@/types";
 
 // Queries
 export const useBusinessesQuery = () => {
@@ -222,12 +222,28 @@ export const useVerifyOtpMutation = (
   });
 };
 
-export const useSubmitModelMutation = (payload: MutationOptions) => {
+export const useSubmitModelMutation = (
+  payload: MutationOptions<
+    {
+      message: string;
+    },
+    unknown,
+    Model
+  >
+) => {
   const { onSuccess, ...options } = payload;
 
-  return useMutation({
+  return useMutation<
+    {
+      message: string;
+    },
+    unknown,
+    Model
+  >({
     mutationFn: async (data) => {
       return http.post("/tools/all", data);
     },
+    onSuccess,
+    ...options,
   });
 };

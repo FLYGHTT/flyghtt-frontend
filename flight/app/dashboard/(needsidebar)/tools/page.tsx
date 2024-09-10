@@ -4,11 +4,9 @@ import Header from "@/components/Header";
 const Page = () => {
   return (
     <>
-      {" "}
-      <Header />
       <div className="p-7 ">
         <h1 className="text-xl font-bold">My Tools</h1>
-        <CreateNew title="New Tool" path="/dashboard/tools/new" />
+        <CreateNew title="New Tool" path="/dashboard/create-tool" />
         <div className="w-[50%] flex flex-col gap-3">
           <div className="flex items-center p-4 my-2  justify-between shadow-md">
             <h3>Private tools (4)</h3>

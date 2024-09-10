@@ -1,20 +1,16 @@
+"use client";
 import React, { useState } from "react";
 import { WidthProvider, Responsive } from "react-grid-layout";
 import { HoverDiv } from "../HoverDiv";
 import { Input } from "../ui/GlowInput";
 import ColumnItems from "./ColumnItems";
 import { Column } from "@/types";
-import "react-grid-layout/css/styles.css"; // Make sure these are imported
-
+import "react-grid-layout/css/styles.css";
+import { useAppContext } from "@/context";
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
-const Columns = ({
-  columns,
-  setColumns,
-}: {
-  columns: Column[];
-  setColumns: React.Dispatch<React.SetStateAction<Column[]>>;
-}) => {
+const Columns = () => {
+  const { setColumns, columns } = useAppContext();
   const handleItemChange = (
     e:
       | React.ChangeEvent<HTMLInputElement>

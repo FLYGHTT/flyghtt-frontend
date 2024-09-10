@@ -2,6 +2,9 @@
 import { AppContextType } from "@/types";
 import React, { useState, createContext, useRef } from "react";
 import { ContextMenuType } from "@/types";
+import { Column } from "@/types";
+import { ModelInputs } from "@/types";
+import { newmodelInputs } from "@/lib/constants";
 export const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppProvider: React.FC<{
@@ -13,19 +16,21 @@ export const AppProvider: React.FC<{
     y: 0,
   });
   const [businessId, setBusinessId] = useState<number | null>(null);
-  const [openModal, setOpenModal] = useState<boolean>(false);
-  console.log("openModal", openModal);
-  const modalRef = useRef<HTMLDialogElement>(null);
+
+  const [columns, setColumns] = useState<Column[]>([]);
+  const [modelInputs, setModelInputs] = useState<ModelInputs>(newmodelInputs);
+
   return (
     <AppContext.Provider
       value={{
-        openModal,
-        setOpenModal,
+        columns,
+        setColumns,
+        modelInputs,
+        setModelInputs,
         contextMenu,
         setContextMenu,
         businessId,
         setBusinessId,
-        modalRef
       }}
     >
       {children}

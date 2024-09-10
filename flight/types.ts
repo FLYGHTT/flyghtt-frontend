@@ -5,9 +5,10 @@ export interface AppContextType {
   setContextMenu: React.Dispatch<React.SetStateAction<ContextMenuType>>;
   businessId: number | null;
   setBusinessId: React.Dispatch<React.SetStateAction<number | null>>;
-  openModal: boolean;
-  setOpenModal: React.Dispatch<React.SetStateAction<boolean>>;
-  modalRef: React.RefObject<HTMLDialogElement>;
+  columns: Column[];
+  setColumns: React.Dispatch<React.SetStateAction<Column[]>>;
+  modelInputs: ModelInputs;
+  setModelInputs: React.Dispatch<React.SetStateAction<ModelInputs>>;
 }
 
 export interface DisplayedModel {
@@ -79,9 +80,15 @@ export interface ModelInputs {
 }
 
 export interface Model {
-  id: number;
-  modelName: string;
-  modelDescription: string;
-  linkReference: string;
-  columns: Column[];
+  id?: number;
+  name: string;
+  description: string;
+  link: string;
+  commentable: boolean;
+  columns: {
+    name: string;
+    description: string;
+    factors: string[];
+  }[];
+  public: boolean;
 }

@@ -1,7 +1,7 @@
 import CreateToolHeader from "@/components/Dashboard/CreateTool/CTHeader";
 import CTInterface from "@/components/Dashboard/CreateTool/CTInterface";
 import CreateToolSidebar from "@/components/Dashboard/CreateTool/CTSidebar";
-import { HoverDiv } from "@/components/HoverDiv";
+
 import React from "react";
 
 const Page = () => {

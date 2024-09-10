@@ -2,7 +2,7 @@
 
 import Back from "@/components/Back";
 import React, { useState } from "react";
-import ModelHeader from "./ModelHeader";
+import ModelHeader from "../../../components/Dashboard/CreateTool/ModelHeader";
 import { IoMdAddCircleOutline } from "react-icons/io";
 
 import { newcolumn, newmodelInputs } from "@/lib/constants";

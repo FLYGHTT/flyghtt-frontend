@@ -1,20 +1,17 @@
+"use client";
 import React from "react";
 import { ModelInputs } from "@/types";
 import { Input } from "@/components/ui/GlowInput";
 import { TextArea } from "@/components/ui/GlowTextArea";
-const ModelHeader = ({
-  setModalInputs,
-  modelInputs,
-}: {
-  modelInputs: ModelInputs;
-  setModalInputs: React.Dispatch<React.SetStateAction<ModelInputs>>;
-}) => {
+import { useAppContext } from "@/context";
+const ModelHeader = () => {
+  const { modelInputs, setModelInputs } = useAppContext();
   const handleChange = (
     e:
       | React.ChangeEvent<HTMLInputElement>
       | React.ChangeEvent<HTMLTextAreaElement>
   ) => {
-    setModalInputs((prevState) => ({
+    setModelInputs((prevState) => ({
       ...prevState,
       [e.target.name]: e.target.value || "",
     }));
