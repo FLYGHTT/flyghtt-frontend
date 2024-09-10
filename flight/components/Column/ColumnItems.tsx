@@ -40,7 +40,7 @@ const ColumnItems = ({
         </div>
       ))}
       <IoMdAddCircleOutline
-        className="cursor-pointer ml-1 text-lg text-gray-500"
+        className="cursor-pointer  text-xl text-gray-500"
         onClick={() => handleAdd(index)}
       />
     </div>

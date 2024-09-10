@@ -8,12 +8,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 const Sidebar = () => {
   const pathname = usePathname();
-  const { setActivePage, activePage } = useAppContext();
-  const handleActivePage = (title: string) => {
-    const page = title.toLowerCase();
-    setActivePage(page);
-  };
-  console.log(pathname)
+
   return (
     <aside className="w-[20%] p-2 h-screen ">
       <div className="flex justify-center h-[15%]">
@@ -24,11 +19,10 @@ const Sidebar = () => {
           {sidebartop.map((item, index) => {
             const active = item.link.split("/")[2];
             const path = pathname?.split("/")[2];
- 
-            console.log(active)
-            const isActive = active === path
-            const href =
-              item.link === "/" ? `/dashboard`: item.link;
+
+            console.log(active);
+            const isActive = active === path;
+            const href = item.link === "/" ? `/dashboard` : item.link;
             return (
               <Link
                 href={href}
@@ -36,7 +30,6 @@ const Sidebar = () => {
                   isActive ? "bg-green/30" : "hover:bg-green/10 "
                 }`}
                 key={index}
-                onClick={() => handleActivePage(item.title)}
               >
                 <Image
                   src={item.icon}

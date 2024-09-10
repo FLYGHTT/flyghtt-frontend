@@ -5,10 +5,14 @@ import React from "react";
 
 const layout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <>
-    <Header/>
-    {children}
-    </>
+    <div className="flex w-full p-3">
+      <Sidebar />
+      <div className="w-full">
+        <Header />
+
+        {children}
+      </div>
+    </div>
   );
 };
 
