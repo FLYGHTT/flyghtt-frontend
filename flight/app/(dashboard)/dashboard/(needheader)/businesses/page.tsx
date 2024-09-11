@@ -15,7 +15,7 @@ const Businesses = async () => {
   return (
     <div className="p-7">
       <h1 className="text-xl font-bold">My Businesses</h1>
-      <CreateNew title="New Business" path="/create-business" />
+      <CreateNew title="New Business" path="/dashboard/businesses/new" />
    
       <HydrationBoundary state={dehydrate(queryClient)}>
         <BusinessList />

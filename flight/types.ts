@@ -9,7 +9,7 @@ export interface AppContextType {
   setBusinessId: React.Dispatch<React.SetStateAction<number | null>>;
 }
 
-export interface Model {
+export interface DisplayedModel {
   id: number;
   name: string;
   status: string;
@@ -59,4 +59,28 @@ export interface LoggedInUser {
   email: string;
   firstName: string;
   lastName: string;
+}
+export interface Item {
+  id: number;
+  title: string;
+}
+export interface Column {
+  id: number;
+  heading: string;
+  description: string;
+  items: Item[];
+}
+export interface ModelInputs {
+  id: number;
+  modelName: string;
+  modelDescription: string;
+  externalReferences: string[];
+}
+
+export interface Model {
+  id: number;
+  modelName: string;
+  modelDescription: string;
+  externalReferences: string[];
+  columns: Column[];
 }

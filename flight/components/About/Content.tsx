@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState } from "react";
 import Image from "next/image";
 
@@ -28,7 +28,10 @@ const Content = () => {
   const [hoveredIndex, setHoveredIndex] = useState(-1);
   return (
     <div className="max-w-4xl z-[100] py-10">
-      <Back background="bg-dark" textColor="text-white" />
+      <div className="absolute top-10 left-60">
+        <Back className="bg-dark text-white" />
+      </div>
+
       <motion.div
         initial={{
           opacity: 0,

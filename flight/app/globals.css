@@ -5,14 +5,74 @@
 /* Create Business */
 
 .business-form_image-label {
-    @apply flex h-24 w-24 items-center justify-center rounded-full  !important;
-  }
-  
-  .business-form_image-input {
-    @apply cursor-pointer border-none bg-transparent outline-none file:text-blue-500 !important;
-  }
-  
-  .business-form_input {
-    @apply border border-gray-500  !important;
-  }
-  
+  @apply flex h-24 w-24 items-center justify-center rounded-full  !important;
+}
+
+.business-form_image-input {
+  @apply cursor-pointer border-none bg-transparent outline-none file:text-blue-500 !important;
+}
+
+.business-form_input {
+  @apply border border-gray-500  !important;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.border {
+  border: 1px solid #e0e0e0;
+}
+
+.cursor-move {
+  cursor: move;
+}
+
+textarea {
+  resize: none;
+}
+/* Override the placeholder style for drag/resize */
+.react-grid-placeholder {
+  background-color: transparent !important; /* Remove the default orange background */
+  border: 2px dashed #4a90e2 !important; /* Custom border (blue dashed in this case) */
+  border-radius: 8px; /* Add border radius if needed */
+  opacity: 0.8; /* Add transparency */
+}
+.column {
+  background-color: #f8f9fa; /* Light background */
+  border-radius: 10px; /* Rounded corners */
+  border: 2px solid #4a90e2; /* Light blue border */
+  padding: 16px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.column:hover {
+  transform: scale(1.02); /* Slightly scale on hover */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1); /* Add shadow on hover */
+}
+
+
+/* textarea {
+  background-color: #eef2f7; 
+  border: none;
+  border-radius: 5px;
+  padding: 8px;
+  width: 100%;
+} */
+
+.floating-label-input {
+  background-color: #f8f9fa; /* Light background */
+  border: 1px solid #dfe3e6; /* Subtle border */
+  padding: 10px;
+  border-radius: 5px;
+  width: 100%;
+  transition: border 0.3s ease;
+}
+
+.floating-label-input:focus {
+  border: 1px solid #4a90e2; /* Blue border on focus */
+  outline: none;
+}
+

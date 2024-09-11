@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React from "react";
 import { plans } from "@/lib/data";
 import { SiTicktick } from "react-icons/si";
@@ -9,7 +9,9 @@ import Image from "next/image";
 const Content = () => {
   return (
     <div className="w-full h-screen flex flex-col pt-16 items-center justify-center z-[100] ">
-      <Back background="bg-dark" textColor="text-white" />
+      <div className="absolute top-10 left-60">
+        <Back className="bg-dark" />
+      </div>
       <motion.h1
         initial={{ opacity: 0, y: 200 }}
         animate={{
