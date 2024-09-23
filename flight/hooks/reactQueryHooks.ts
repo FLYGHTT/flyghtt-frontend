@@ -69,7 +69,13 @@ export const useSignUpMutation = (
     | {
         message: string;
       },
-    unknown,
+    {
+      response: {
+        data: {
+          message: string;
+        };
+      };
+    },
     SignUpInputs
   >
 ) => {
@@ -80,7 +86,13 @@ export const useSignUpMutation = (
     | {
         message: string;
       },
-    unknown,
+    {
+      response: {
+        data: {
+          message: string;
+        };
+      };
+    },
     SignUpInputs
   >({
     mutationFn: async (data) => {
@@ -200,8 +212,16 @@ export const useVerifyOtpMutation = (
     | {
         message: string;
       },
-    unknown,
-    number
+    {
+      response: {
+        data: {
+          message: string;
+        };
+      };
+    },
+    {
+      otp: number;
+    }
   >
 ) => {
   const { onSuccess, ...options } = payload;
@@ -211,11 +231,25 @@ export const useVerifyOtpMutation = (
     | {
         message: string;
       },
-    unknown,
-    number
+    {
+      response: {
+        data: {
+          message: string;
+        };
+      };
+    },
+    {
+      otp: number;
+    }
   >({
     mutationFn: async (data) => {
-      return http.post("/authentication/verify/otp", data);
+      const response = await http.post("/authentication/verify/otp", data, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      console.log(response, "response");
+      return response.data;
     },
     onSuccess,
     ...options,

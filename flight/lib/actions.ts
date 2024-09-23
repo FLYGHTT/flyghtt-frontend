@@ -36,10 +36,11 @@ export const handleDeleteCookie = () => {
   cookies().delete("flyghtt_token");
 };
 
-export const getCurrentUser = async () => {
+export const getCurrentUser = async (token?: string) => {
   const CookieStore = cookies();
-  const token = CookieStore.get("flyghtt_token")?.value;
-  if (!token) {
+  const cookieToken = CookieStore.get("flyghtt_token")?.value;
+
+  if (!token && !cookieToken) {
     throw new Error("No token found");
   }
   const response = await http.get<LoggedInUser>(
@@ -47,7 +48,7 @@ export const getCurrentUser = async () => {
     {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token || cookieToken}`,
       },
     }
   );

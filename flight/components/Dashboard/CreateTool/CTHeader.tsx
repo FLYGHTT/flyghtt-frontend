@@ -3,22 +3,40 @@ import React, { useState } from "react";
 import { IoIosArrowBack } from "react-icons/io";
 import eagle from "@/assets/images/logo.svg";
 import Image from "next/image";
-import { FaChevronDown } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { useModal } from "@/components/Modal";
 import DiscardChanges from "@/components/DiscardChanges";
-import PublishPopup from "./PublishPopup";
+import html2canvas from "html2canvas-pro";
 import PublishModel from "@/components/PublishModel";
+import { useAppContext } from "@/context";
+import toast from "react-hot-toast";
 const CreateToolHeader = () => {
+  const { modelInputs, modelHeaderRef, setModelSnapshot } = useAppContext();
   const router = useRouter();
   const { openModal } = useModal();
   const handleBack = () => {
-    router.back();
+    router.push("/dashboard");
+  };
+
+  const captureSnapshot = async (ref: React.MutableRefObject<null>) => {
+    if (ref.current) {
+      const canvas = await html2canvas(ref.current);
+      setModelSnapshot(canvas.toDataURL("image/png")); // Save the snapshot as a data URL
+    }
   };
   const openDiscardModal = () => {
+    if (modelInputs.modelName === "" || modelInputs.modelDescription === "") {
+      router.push("/dashboard");
+      return;
+    }
     openModal(<DiscardChanges />);
   };
-  const openPublishModal = () => {
+  const openPublishModal = async () => {
+    if (modelInputs.modelName === "" || modelInputs.modelDescription === "") {
+      toast.error("No model name or description provided");
+      return;
+    }
+    await captureSnapshot(modelHeaderRef);
     openModal(<PublishModel />);
   };
 

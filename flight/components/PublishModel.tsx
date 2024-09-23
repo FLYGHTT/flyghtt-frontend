@@ -12,7 +12,7 @@ import { useModal } from "./Modal";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 const PublishModel = () => {
-  const { modelInputs, columns } = useAppContext();
+  const { modelInputs, columns, modelSnapshot } = useAppContext();
   const { closeModal } = useModal();
   const { mutateAsync, isPending } = useSubmitModelMutation({
     onSuccess: () => {
@@ -79,7 +79,8 @@ const PublishModel = () => {
     <div className="max-w-[400px]">
       <div className="flex flex-col items-center gap-2">
         <Image src={publish} alt="publish" className="w-14 h-14  " />
-        <p className="text-gray-600 mt-1">Publish Model</p>
+
+        <p className=" mt-1">Publish Model</p>
 
         <RadioGroup
           value={additionalFields.visibility}

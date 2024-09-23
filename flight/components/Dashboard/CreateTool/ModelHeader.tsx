@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/GlowInput";
 import { TextArea } from "@/components/ui/GlowTextArea";
 import { useAppContext } from "@/context";
 const ModelHeader = () => {
-  const { modelInputs, setModelInputs } = useAppContext();
+  const { modelInputs, setModelInputs, modelHeaderRef } = useAppContext();
   const handleChange = (
     e:
       | React.ChangeEvent<HTMLInputElement>
@@ -18,7 +18,10 @@ const ModelHeader = () => {
   };
 
   return (
-    <div className="gap-6 mt-2  h-fit  bg-green/10 w-[60vw] rounded-xl p-8">
+    <div
+      className="gap-6 mt-2  h-fit  bg-green/10 w-[60vw] rounded-xl p-8"
+      ref={modelHeaderRef}
+    >
       <div className="w-full flex  ">
         <label
           htmlFor="modelName"

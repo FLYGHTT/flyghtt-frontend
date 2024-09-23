@@ -78,7 +78,7 @@ const Columns = () => {
 
   const getColumnHeight = (column: Column) => {
     const baseHeight = 1;
-    const itemHeight = 1;
+    const itemHeight = 0.7
     return baseHeight + column.items.length * itemHeight;
   };
 

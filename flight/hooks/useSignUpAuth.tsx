@@ -1,8 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import { SignUpInputs } from "@/types";
-import { useMutation } from "@tanstack/react-query";
-import http from "@/lib/http";
 import { useRouter } from "next/navigation";
 import { useSignUpMutation } from "@/hooks/reactQueryHooks";
 import { handleSetCookie } from "@/lib/actions";
@@ -16,6 +14,7 @@ const useSignUpAuth = () => {
     confirmPassword: "",
     remember: false,
     newsletter: false,
+    role: "USER",
   });
   const [error, setError] = useState({
     ...inputs,
@@ -29,7 +28,12 @@ const useSignUpAuth = () => {
     isError,
     isPending,
   } = useSignUpMutation({
-    onError: () => {
+    onError: (error) => {
+      if (error && "response" in error && error.response.data.message) {
+        console.log("error", error);
+        setUnknownError(error.response.data.message);
+        return;
+      }
       setUnknownError("Something went wrong");
     },
     onSuccess: (data) => {
@@ -38,9 +42,17 @@ const useSignUpAuth = () => {
         return;
       }
       if (data && data.token) {
+        console.log("data", data);
         localStorage.setItem("flyghtt_token", data.token);
         handleSetCookie(data.token);
-        router.push("/dashboard");
+        if (data.emailVerified) {
+          console.log("verified");
+          router.push("/dashboard");
+        } else {
+          setTimeout(() => {
+            router.push("/verify-email");
+          }, 1000);
+        }
         return;
       }
     },

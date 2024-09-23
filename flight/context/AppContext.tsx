@@ -1,9 +1,8 @@
 "use client";
-import { AppContextType } from "@/types";
+
 import React, { useState, createContext, useRef } from "react";
-import { ContextMenuType } from "@/types";
-import { Column } from "@/types";
-import { ModelInputs } from "@/types";
+import { ModelInputs, ContextMenuType, Column, AppContextType } from "@/types";
+
 import { newmodelInputs } from "@/lib/constants";
 export const AppContext = createContext<AppContextType | undefined>(undefined);
 
@@ -19,7 +18,8 @@ export const AppProvider: React.FC<{
 
   const [columns, setColumns] = useState<Column[]>([]);
   const [modelInputs, setModelInputs] = useState<ModelInputs>(newmodelInputs);
-
+  const modelHeaderRef = useRef(null);
+  const [modelSnapshot, setModelSnapshot] = useState<string | null>(null);
   return (
     <AppContext.Provider
       value={{
@@ -31,6 +31,9 @@ export const AppProvider: React.FC<{
         setContextMenu,
         businessId,
         setBusinessId,
+        modelHeaderRef,
+        modelSnapshot,
+        setModelSnapshot,
       }}
     >
       {children}

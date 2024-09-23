@@ -9,6 +9,9 @@ export interface AppContextType {
   setColumns: React.Dispatch<React.SetStateAction<Column[]>>;
   modelInputs: ModelInputs;
   setModelInputs: React.Dispatch<React.SetStateAction<ModelInputs>>;
+  modelHeaderRef: React.MutableRefObject<null>;
+  modelSnapshot: string | null;
+  setModelSnapshot: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 export interface DisplayedModel {
@@ -33,7 +36,9 @@ export interface SignUpInputs {
   confirmPassword: string;
   remember: boolean;
   newsletter: boolean;
+  role: string;
 }
+
 export interface LoginInputs {
   email: string;
   password: string;

@@ -11,7 +11,6 @@ const Page = () => {
       <div className="grid grid-cols-12 overflow-hidden  h-screen row-span-11">
         <CreateToolSidebar />
         <CTInterface />
-       
       </div>
     </div>
   );
