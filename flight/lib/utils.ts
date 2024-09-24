@@ -18,3 +18,4 @@ export const getImageSrc = (base64Data: string) => {
   }
   return `data:${mimeType};base64,${base64Data}`;
 };
+

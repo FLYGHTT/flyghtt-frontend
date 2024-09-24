@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState, createContext, useRef } from "react";
-import { ModelInputs, ContextMenuType, Column, AppContextType } from "@/types";
-
-import { newmodelInputs } from "@/lib/constants";
+import { ContextMenuType, AppContextType, Tool } from "@/types";
+import { newTool } from "@/lib/constants";
+import { convertToolColumnsToArray } from "@/lib/convertToolColumns";
 export const AppContext = createContext<AppContextType | undefined>(undefined);
 
 export const AppProvider: React.FC<{
@@ -15,18 +15,19 @@ export const AppProvider: React.FC<{
     y: 0,
   });
   const [businessId, setBusinessId] = useState<number | null>(null);
-
-  const [columns, setColumns] = useState<Column[]>([]);
-  const [modelInputs, setModelInputs] = useState<ModelInputs>(newmodelInputs);
+  const [tool, setTool] = useState<Tool>(newTool);
   const modelHeaderRef = useRef(null);
+  const [toolColumns, setToolColumns] = useState(
+    convertToolColumnsToArray(tool.columns)
+  );
   const [modelSnapshot, setModelSnapshot] = useState<string | null>(null);
   return (
     <AppContext.Provider
       value={{
-        columns,
-        setColumns,
-        modelInputs,
-        setModelInputs,
+        toolColumns,
+        setToolColumns,
+        tool,
+        setTool,
         contextMenu,
         setContextMenu,
         businessId,

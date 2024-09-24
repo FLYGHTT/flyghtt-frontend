@@ -1,19 +1,24 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect, use } from "react";
 import ModelHeader from "./ModelHeader";
 import { IoMdAddCircleOutline } from "react-icons/io";
 
-import { newcolumn, newmodelInputs } from "@/lib/constants";
-
 import Columns from "@/components/Column/Columns";
 import { useAppContext } from "@/context";
+import { convertToolColumnsToString } from "@/lib/convertToolColumns";
+import { defaultColumns } from "@/lib/constants";
 const CTInterface = () => {
-  const { setColumns, columns } = useAppContext();
+  const { tool, setTool, toolColumns, setToolColumns } = useAppContext();
+  console.log(tool);
+
   const handleAddColumn = () => {
-    setColumns((prevColumns) => [
-      ...prevColumns,
-      { ...newcolumn, id: Math.random() },
-    ]);
+    setTool((prevTool) => ({
+      ...prevTool,
+      columns: `${prevTool.columns}\n${convertToolColumnsToString(
+        defaultColumns
+      )}`,
+    }));
+    setToolColumns((prevState) => [...prevState, ...defaultColumns]);
   };
 
   return (
@@ -27,7 +32,9 @@ const CTInterface = () => {
           Add new model column
           <IoMdAddCircleOutline />
         </p>
-        {columns.length > 0 && <Columns />}
+        {toolColumns.length > 0 && (
+          <Columns columns={toolColumns} setColumns={setToolColumns} />
+        )}
       </div>
     </div>
   );

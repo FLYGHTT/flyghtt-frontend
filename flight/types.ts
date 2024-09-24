@@ -5,10 +5,10 @@ export interface AppContextType {
   setContextMenu: React.Dispatch<React.SetStateAction<ContextMenuType>>;
   businessId: number | null;
   setBusinessId: React.Dispatch<React.SetStateAction<number | null>>;
-  columns: Column[];
-  setColumns: React.Dispatch<React.SetStateAction<Column[]>>;
-  modelInputs: ModelInputs;
-  setModelInputs: React.Dispatch<React.SetStateAction<ModelInputs>>;
+  tool: Tool;
+  setTool: React.Dispatch<React.SetStateAction<Tool>>;
+  toolColumns: Column[];
+  setToolColumns: React.Dispatch<React.SetStateAction<Column[]>>;
   modelHeaderRef: React.MutableRefObject<null>;
   modelSnapshot: string | null;
   setModelSnapshot: React.Dispatch<React.SetStateAction<string | null>>;
@@ -67,33 +67,34 @@ export interface LoggedInUser {
   firstName: string;
   lastName: string;
 }
-export interface Item {
-  id: number;
-  title: string;
-}
-export interface Column {
-  id: number;
-  heading: string;
-  description: string;
-  items: Item[];
-}
-export interface ModelInputs {
-  id: number;
-  modelName: string;
-  modelDescription: string;
-  linkReference: string;
-}
 
-export interface Model {
-  id?: number;
+export interface Tool {
+  toolId: string;
   name: string;
   description: string;
   link: string;
   commentable: boolean;
-  columns: {
-    name: string;
-    description: string;
-    factors: string[];
-  }[];
+  columns: string;
   public: boolean;
+  createdAt: Date;
+}
+export interface Column {
+  name: string;
+  description: string;
+  factors: Factor[];
+}
+export interface Factor {
+  name: string;
+  value: string;
+}
+
+export interface ConvertedTool {
+  toolId: string;
+  name: string;
+  description: string;
+  link: string;
+  commentable: boolean;
+  columns: Column[];
+  public: boolean;
+  createdAt: Date;
 }

@@ -1,22 +1,26 @@
 "use client";
 import React, { useState } from "react";
 import { WidthProvider, Responsive } from "react-grid-layout";
-import { HoverDiv } from "../HoverDiv";
 import { Input } from "../ui/GlowInput";
 import ColumnItems from "./ColumnItems";
 import { Column } from "@/types";
 import "react-grid-layout/css/styles.css";
-import { useAppContext } from "@/context";
+
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
-const Columns = () => {
-  const { setColumns, columns } = useAppContext();
+const Columns = ({
+  columns,
+  setColumns,
+}: {
+  columns: Column[];
+  setColumns: React.Dispatch<React.SetStateAction<Column[]>>;
+}) => {
   const handleItemChange = (
     e:
       | React.ChangeEvent<HTMLInputElement>
       | React.ChangeEvent<HTMLTextAreaElement>,
     columnIndex: number,
-    itemIndex: number
+    factorIndex: number
   ) => {
     const { name, value } = e.target;
     setColumns((prevState) =>
@@ -24,8 +28,8 @@ const Columns = () => {
         idx === columnIndex
           ? {
               ...column,
-              items: column.items.map((item, i) =>
-                i === itemIndex ? { ...item, [name]: value } : item
+              factors: column.factors.map((item, i) =>
+                i === factorIndex ? { ...item, [name]: value } : item
               ),
             }
           : column
@@ -52,7 +56,7 @@ const Columns = () => {
         idx === index
           ? {
               ...column,
-              items: [...column.items, { id: Math.random(), title: "" }],
+              factors: [...column.factors, { name: "", value: "" }],
             }
           : column
       )
@@ -78,10 +82,10 @@ const Columns = () => {
 
   const getColumnHeight = (column: Column) => {
     const baseHeight = 1;
-    const itemHeight = 0.7
-    return baseHeight + column.items.length * itemHeight;
+    const itemHeight = 1;
+    return baseHeight + column.factors.length * itemHeight;
   };
-
+  console.log(columns);
   return (
     <div className="h-fit w-full bg-[#f8f9fa] rounded-xl mt-4 p-6">
       <ResponsiveGridLayout
@@ -123,11 +127,11 @@ const Columns = () => {
               </label>
               <div className="w-[80%]">
                 <Input
-                  name="heading"
-                  placeholder="Enter heading"
+                  name="name"
+                  placeholder="Enter Column Name"
                   className="text-lg font-semibold placeholder:text-sm placeholder:font-normal"
-                  id={`heading-${columnIndex}`}
-                  value={column.heading}
+                  id={`name-${columnIndex}`}
+                  value={column.name}
                   onChange={(e) => handleChange(e, columnIndex)}
                 />
               </div>
@@ -145,16 +149,16 @@ const Columns = () => {
                   className=""
                   id={`description-${columnIndex}`}
                   value={column.description}
-                  placeholder="Enter description"
+                  placeholder="Enter Description"
                   onChange={(e) => handleChange(e, columnIndex)}
                 />
               </div>
             </div>
             <ColumnItems
-              column={column}
-              index={columnIndex}
-              handleChange={handleItemChange}
-              handleAdd={handleAddNewColumnItem}
+              factors={column.factors}
+              columnIndex={columnIndex}
+              onChange={handleItemChange}
+              onAdd={handleAddNewColumnItem}
             />
           </div>
         ))}

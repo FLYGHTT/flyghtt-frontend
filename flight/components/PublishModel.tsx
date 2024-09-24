@@ -11,8 +11,9 @@ import { useSubmitModelMutation } from "@/hooks/reactQueryHooks";
 import { useModal } from "./Modal";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { convertToolColumnsToString } from "@/lib/convertToolColumns";
 const PublishModel = () => {
-  const { modelInputs, columns, modelSnapshot } = useAppContext();
+  const { tool, toolColumns } = useAppContext();
   const { closeModal } = useModal();
   const { mutateAsync, isPending } = useSubmitModelMutation({
     onSuccess: () => {
@@ -42,22 +43,16 @@ const PublishModel = () => {
   };
   const router = useRouter();
   const submitModel = async () => {
-    const newModel = {
-      name: modelInputs.modelName,
-      description: modelInputs.modelDescription,
-      link: modelInputs.linkReference,
+    const newTool = {
+      toolName: tool.name,
+      toolDescription: tool.description,
+      link: tool.link,
       commentable: additionalFields.commentable,
-      columns: columns.map((column) => {
-        return {
-          name: column.heading,
-          description: column.description,
-          factors: column.items.map((item) => item.title),
-        };
-      }),
+      columns: convertToolColumnsToString(toolColumns),
       public: additionalFields.visibility === "public",
     };
     toast.promise(
-      mutateAsync(newModel),
+      mutateAsync(newTool),
       {
         loading: "Publishing model...",
         success: "Model published successfully!",
@@ -72,7 +67,7 @@ const PublishModel = () => {
     );
 
     closeModal();
-    await mutateAsync(newModel);
+    await mutateAsync(newTool);
     router.push("/dashboard/tools");
   };
   return (

@@ -1,25 +1,31 @@
-export const newcolumn = {
-  id: Math.random(),
-  heading: "",
+import { convertToolColumnsToString } from "./convertToolColumns";
+export const defaultColumns = [
+  {
+    name: "",
+    description: "",
+    factors: [
+      {
+        name: "",
+        value: "",
+      },
+      {
+        name: "",
+        value: "",
+      },
+      {
+        name: "",
+        value: "",
+      },
+    ],
+  },
+];
+export const newTool = {
+  toolId: "",
+  name: "",
   description: "",
-  items: [
-    {
-      id: Math.random(),
-      title: "",
-    },
-    {
-      id: Math.random(),
-      title: "",
-    },
-    {
-      id: Math.random(),
-      title: "",
-    },
-  ],
-};
-export const newmodelInputs = {
-  id: 0,
-  modelName: "",
-  modelDescription: "",
-  linkReference: "",
+  link: "",
+  commentable: false,
+  columns: convertToolColumnsToString(defaultColumns),
+  public: false,
+  createdAt: new Date(),
 };

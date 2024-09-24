@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import { IoIosArrowBack } from "react-icons/io";
 import eagle from "@/assets/images/logo.svg";
 import Image from "next/image";
@@ -11,7 +11,7 @@ import PublishModel from "@/components/PublishModel";
 import { useAppContext } from "@/context";
 import toast from "react-hot-toast";
 const CreateToolHeader = () => {
-  const { modelInputs, modelHeaderRef, setModelSnapshot } = useAppContext();
+  const { tool, modelHeaderRef, setModelSnapshot } = useAppContext();
   const router = useRouter();
   const { openModal } = useModal();
   const handleBack = () => {
@@ -21,22 +21,22 @@ const CreateToolHeader = () => {
   const captureSnapshot = async (ref: React.MutableRefObject<null>) => {
     if (ref.current) {
       const canvas = await html2canvas(ref.current);
-      setModelSnapshot(canvas.toDataURL("image/png")); // Save the snapshot as a data URL
+      setModelSnapshot(canvas.toDataURL("image/png"));
     }
   };
   const openDiscardModal = () => {
-    if (modelInputs.modelName === "" || modelInputs.modelDescription === "") {
+    if (tool.name === "" || tool.description === "") {
       router.push("/dashboard");
       return;
     }
     openModal(<DiscardChanges />);
   };
   const openPublishModal = async () => {
-    if (modelInputs.modelName === "" || modelInputs.modelDescription === "") {
-      toast.error("No model name or description provided");
+    if (tool.name === "" || tool.description === "") {
+      toast.error("Cannot publish model without a name or description");
       return;
     }
-    await captureSnapshot(modelHeaderRef);
+    // await captureSnapshot(modelHeaderRef);
     openModal(<PublishModel />);
   };
 
