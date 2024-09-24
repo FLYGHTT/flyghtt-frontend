@@ -24,7 +24,6 @@ export default function RootLayout({
       <body className={inter.className}>
         <QueryProvider>
           <ModalProvider>
-            {" "}
             <AppProvider>
               <Modal />
               {children}
@@ -35,6 +34,7 @@ export default function RootLayout({
                     color: "#fff",
                     fontSize: "16px",
                     fontFamily: "Poppins",
+                    minWidth: "max-content",
                   },
                 }}
               />

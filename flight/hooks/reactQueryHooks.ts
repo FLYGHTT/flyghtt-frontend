@@ -6,7 +6,7 @@ import {
 } from "@tanstack/react-query";
 
 import http from "../lib/http";
-import { Business, LoginInputs, Model, SignUpInputs, User } from "@/types";
+import { Business, LoginInputs, SignUpInputs, Tool, User } from "@/types";
 
 // Queries
 export const useBusinessesQuery = () => {
@@ -31,6 +31,15 @@ export const useCurrentUserQuery = () => {
   return useQuery({
     queryKey: ["currentUser"],
     queryFn: () => http.get("/users"),
+  });
+};
+export const useGetToolsQuery = () => {
+  return useQuery<Tool[]>({
+    queryKey: ["tools"],
+    queryFn: async () => {
+      const response = await http.get(`/tools`);
+      return response.data;
+    },
   });
 };
 //  Mutations
@@ -255,14 +264,21 @@ export const useVerifyOtpMutation = (
     ...options,
   });
 };
-
+interface SubmittedModel {
+  toolName: string;
+  toolDescription: string;
+  link: string;
+  commentable: boolean;
+  columns: string;
+  public: boolean;
+}
 export const useSubmitModelMutation = (
   payload: MutationOptions<
     {
       message: string;
     },
     unknown,
-    Model
+    SubmittedModel
   >
 ) => {
   const { onSuccess, ...options } = payload;
@@ -272,10 +288,10 @@ export const useSubmitModelMutation = (
       message: string;
     },
     unknown,
-    Model
+    SubmittedModel
   >({
     mutationFn: async (data) => {
-      return http.post("/tools/all", data);
+      return http.post("/tools", data);
     },
     onSuccess,
     ...options,

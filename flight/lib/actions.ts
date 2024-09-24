@@ -21,6 +21,14 @@ export const getBusinesses = async () => {
     throw error;
   }
 };
+export const getTools = async () => {
+  try {
+    const response = await http.get("/tools");
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
 
 export const handleSetCookie = (token: string) => {
   cookies().set("flyghtt_token", token, {

@@ -4,9 +4,11 @@ import React from "react";
 import { queryClient } from "@/lib/http";
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 const Page = async ({
-  searchParams: { id },
+  params: { id },
 }: {
-  searchParams: { id: string };
+  params: {
+    id: string;
+  };
 }) => {
   await queryClient.prefetchQuery({
     queryKey: ["businesses", id],

@@ -29,7 +29,9 @@ const useLoginAuth = () => {
         localStorage.setItem("flyghtt_token", data.token);
         handleSetCookie(data.token);
         console.log("Success");
-        router.push("/dashboard");
+        setTimeout(() => {
+          router.push("/dashboard");
+        }, 1000);
       }
 
       return;

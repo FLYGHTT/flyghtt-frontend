@@ -12,12 +12,18 @@ import { useModal } from "./Modal";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { convertToolColumnsToString } from "@/lib/convertToolColumns";
+import { newTool } from "@/lib/constants";
+import { queryClient } from "@/lib/http";
 const PublishModel = () => {
-  const { tool, toolColumns } = useAppContext();
+  const { tool, toolColumns, setTool } = useAppContext();
   const { closeModal } = useModal();
   const { mutateAsync, isPending } = useSubmitModelMutation({
     onSuccess: () => {
-      console.log("Model published successfully");
+      queryClient.invalidateQueries({
+        queryKey: ["tools"],
+      });
+      setTool(newTool);
+      router.push("/dashboard/tools");
     },
   });
   if (isPending) {
@@ -43,7 +49,7 @@ const PublishModel = () => {
   };
   const router = useRouter();
   const submitModel = async () => {
-    const newTool = {
+    const submittedTool = {
       toolName: tool.name,
       toolDescription: tool.description,
       link: tool.link,
@@ -52,11 +58,11 @@ const PublishModel = () => {
       public: additionalFields.visibility === "public",
     };
     toast.promise(
-      mutateAsync(newTool),
+      mutateAsync(submittedTool),
       {
         loading: "Publishing model...",
         success: "Model published successfully!",
-        error: (err) => `Failed to publish model: ${err.message}`,
+        error: (err) => `Error: ${err.response.data.message}`,
       },
       {
         success: {
@@ -67,8 +73,7 @@ const PublishModel = () => {
     );
 
     closeModal();
-    await mutateAsync(newTool);
-    router.push("/dashboard/tools");
+    await mutateAsync(submittedTool);
   };
   return (
     <div className="max-w-[400px]">
