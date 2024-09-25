@@ -11,18 +11,27 @@ const VerifyForm = () => {
   const [error, setError] = useState("");
   const router = useRouter();
 
-  const { mutate, data, isError, isPending } = useVerifyOtpMutation({
+  const { mutate, isPending } = useVerifyOtpMutation({
     onError: (error) => {
+      if (error && "response" in error && error.response.data.message) {
+        setError(error.response.data.message);
+        return;
+      }
       console.log(error);
+      setError("Verification failed.");
     },
-    onSuccess: (res) => {
+    onSuccess: (data) => {
+      console.log(data, "data");
       if (data && "emailVerified" in data) {
-        router.push("/email-verified");
+        setTimeout(() => {
+          router.push("/email-verified");
+        }, 1000);
         setError("");
       } else {
         if (data && "message" in data) {
-          setError(data.message || "Verification failed.");
+          setError(data.message);
         }
+        setError("Verification failed.");
       }
     },
   });
@@ -35,9 +44,11 @@ const VerifyForm = () => {
       return;
     }
     setError("");
-    console.log(code.join(""));
 
-    mutate(Number(code.join("")));
+    const data = {
+      otp: Number(code.join("")),
+    };
+    mutate(data);
   };
   return (
     <form

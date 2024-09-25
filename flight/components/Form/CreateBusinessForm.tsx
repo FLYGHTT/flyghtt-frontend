@@ -2,7 +2,14 @@
 import React, { ChangeEvent, useState } from "react";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
-import { Form, FormControl, FormField, FormItem, FormLabel } from "../ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../ui/form";
 import pluscircle from "@/assets/icons/plus-circle.svg";
 import { useRouter } from "next/navigation";
 import { Input } from "../ui/input";
@@ -14,6 +21,7 @@ import { useCreateBusinessMutation } from "@/hooks/reactQueryHooks";
 import { FaCog } from "react-icons/fa";
 import { queryClient } from "@/lib/http";
 import toast from "react-hot-toast";
+import { revalidatePath } from "next/cache";
 const CreateBusinessForm = () => {
   const [files, setFiles] = useState<File[]>([]);
   const [error, setError] = useState("");
@@ -25,6 +33,7 @@ const CreateBusinessForm = () => {
         setError(data.message);
         return;
       }
+    
       queryClient.invalidateQueries({ queryKey: ["businesses"] });
       router.push("/dashboard/businesses");
       toast.success("Business created successfully", {
@@ -93,6 +102,7 @@ const CreateBusinessForm = () => {
                   {...field}
                 />
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -112,6 +122,7 @@ const CreateBusinessForm = () => {
                   {...field}
                 />
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />

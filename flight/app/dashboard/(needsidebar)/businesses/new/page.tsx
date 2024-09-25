@@ -8,7 +8,7 @@ const Page = () => {
       <GoBack />
       <div className="p-7">
         <h1 className="text-xl font-bold">My Businesses</h1>
-        <CreateBusinessForm />{" "}
+        <CreateBusinessForm />
       </div>
     </div>
   );

@@ -5,9 +5,13 @@ import React from "react";
 
 const layout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="flex p-6 gap-6 h-screen overflow-hidden">
+    <div className="flex w-full p-3">
       <Sidebar />
-      <div className="w-[80%]">{children}</div>
+      <div className="w-full">
+        <Header />
+
+        {children}
+      </div>
     </div>
   );
 };

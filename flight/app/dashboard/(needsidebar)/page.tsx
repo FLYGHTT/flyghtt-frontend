@@ -6,7 +6,7 @@ const Home = async () => {
   const user = await getCurrentUser();
   const { firstName } = user;
   return (
-    <div>
+    <div className="p-6">
       <h1 className="text-2xl">
         Welcome <b>{firstName}!</b>
       </h1>

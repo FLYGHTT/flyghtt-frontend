@@ -58,7 +58,7 @@ const BusinessList = () => {
         return (
           <Link
             key={index}
-            href={`${pathname}/${business.businessName}?id=${business.businessId}`}
+            href={`${pathname}/${business.businessId}`}
           >
             <div className="flex items-center justify-between cursor-pointer bg-white shadow-md p-4 rounded-lg my-3 mb-5">
               <div className="flex items-center">

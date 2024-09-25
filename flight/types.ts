@@ -1,12 +1,17 @@
 import React from "react";
 
 export interface AppContextType {
-  activePage: string;
-  setActivePage: React.Dispatch<React.SetStateAction<string>>;
   contextMenu: ContextMenuType;
   setContextMenu: React.Dispatch<React.SetStateAction<ContextMenuType>>;
   businessId: number | null;
   setBusinessId: React.Dispatch<React.SetStateAction<number | null>>;
+  tool: Tool;
+  setTool: React.Dispatch<React.SetStateAction<Tool>>;
+  toolColumns: Column[];
+  setToolColumns: React.Dispatch<React.SetStateAction<Column[]>>;
+  modelHeaderRef: React.MutableRefObject<null>;
+  modelSnapshot: string | null;
+  setModelSnapshot: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 export interface DisplayedModel {
@@ -31,7 +36,9 @@ export interface SignUpInputs {
   confirmPassword: string;
   remember: boolean;
   newsletter: boolean;
+  role: string;
 }
+
 export interface LoginInputs {
   email: string;
   password: string;
@@ -60,27 +67,34 @@ export interface LoggedInUser {
   firstName: string;
   lastName: string;
 }
-export interface Item {
-  id: number;
-  title: string;
+
+export interface Tool {
+  toolId: string;
+  name: string;
+  description: string;
+  link: string;
+  commentable: boolean;
+  columns: string;
+  public: boolean;
+  createdAt: Date;
 }
 export interface Column {
-  id: number;
-  heading: string;
+  name: string;
   description: string;
-  items: Item[];
+  factors: Factor[];
 }
-export interface ModelInputs {
-  id: number;
-  modelName: string;
-  modelDescription: string;
-  externalReferences: string[];
+export interface Factor {
+  name: string;
+  value: string;
 }
 
-export interface Model {
-  id: number;
-  modelName: string;
-  modelDescription: string;
-  externalReferences: string[];
+export interface ConvertedTool {
+  toolId: string;
+  name: string;
+  description: string;
+  link: string;
+  commentable: boolean;
   columns: Column[];
+  public: boolean;
+  createdAt: Date;
 }

@@ -2,14 +2,14 @@ import { NextRequest, NextResponse } from "next/server";
 import { getCurrentUser } from "./lib/actions";
 export async function middleware(req: NextRequest) {
   const token = req.cookies.get("flyghtt_token");
-
+  console.log(token, "token");
   if (!token) {
     return NextResponse.redirect(new URL("/login", req.url));
   }
 
   try {
-    const user = await getCurrentUser();
-
+    const user = await getCurrentUser(token.value);
+    console.log(user, "user");
     const { pathname } = req.nextUrl;
 
     // Apply email verification logic only for specific routes

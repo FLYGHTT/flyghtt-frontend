@@ -21,6 +21,14 @@ export const getBusinesses = async () => {
     throw error;
   }
 };
+export const getTools = async () => {
+  try {
+    const response = await http.get("/tools");
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
 
 export const handleSetCookie = (token: string) => {
   cookies().set("flyghtt_token", token, {
@@ -36,10 +44,11 @@ export const handleDeleteCookie = () => {
   cookies().delete("flyghtt_token");
 };
 
-export const getCurrentUser = async () => {
+export const getCurrentUser = async (token?: string) => {
   const CookieStore = cookies();
-  const token = CookieStore.get("flyghtt_token")?.value;
-  if (!token) {
+  const cookieToken = CookieStore.get("flyghtt_token")?.value;
+
+  if (!token && !cookieToken) {
     throw new Error("No token found");
   }
   const response = await http.get<LoggedInUser>(
@@ -47,7 +56,7 @@ export const getCurrentUser = async () => {
     {
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${token || cookieToken}`,
       },
     }
   );

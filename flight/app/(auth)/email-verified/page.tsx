@@ -3,9 +3,11 @@ import React from "react";
 import { FaCheck } from "react-icons/fa";
 import { motion } from "framer-motion";
 import { authFormvariants } from "@/lib/variants";
+import { useRouter } from "next/navigation";
 const EmailVerified = () => {
+  const router = useRouter();
   const handleProceed = () => {
-    window.location.href = "/dashboard";
+    router.push("/dashboard");
   };
   return (
     <motion.div

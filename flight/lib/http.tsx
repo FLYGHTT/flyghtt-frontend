@@ -1,6 +1,5 @@
 import axios from "axios";
-import cookie from "cookie";
-import Cookies from "js-cookie"; // Import js-cookie for handling cookies on the client side
+
 import { QueryClient } from "@tanstack/react-query";
 
 export const queryClient = new QueryClient({
@@ -23,7 +22,7 @@ http.interceptors.request.use((config) => {
   if (typeof window === "undefined") {
     return config;
   }
-  const token = localStorage.getItem("flyghtt_token"); 
+  const token = localStorage.getItem("flyghtt_token");
   console.log(token, "http");
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;

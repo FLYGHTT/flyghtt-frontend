@@ -1,7 +1,8 @@
+"use client";
 import React from "react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useMutation } from "@tanstack/react-query";
+
 import { useLoginMutation } from "@/hooks/reactQueryHooks";
 import { LoginInputs } from "@/types";
 import { handleSetCookie } from "@/lib/actions";
@@ -28,7 +29,9 @@ const useLoginAuth = () => {
         localStorage.setItem("flyghtt_token", data.token);
         handleSetCookie(data.token);
         console.log("Success");
-        router.push("/dashboard");
+        setTimeout(() => {
+          router.push("/dashboard");
+        }, 1000);
       }
 
       return;
