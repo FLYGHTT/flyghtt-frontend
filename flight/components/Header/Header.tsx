@@ -4,14 +4,14 @@ import message from "@/assets/icons/message.svg";
 import Image from "next/image";
 
 import { getCurrentUser } from "@/lib/actions";
-import HeaderNav from "./HeaderNav";
+import MiniNav from "./MiniNav";
 const Header = async () => {
   const user = await getCurrentUser();
   const { firstName, lastName } = user;
 
   return (
     <div className="w-full flex justify-between items-center p-6">
-      <HeaderNav />
+      <MiniNav />
       <div className="flex gap-14 items-center justify-end">
         <Image src={message} alt="message" width={20} height={20} />
         <div className="flex items-center gap-2 relative">

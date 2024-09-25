@@ -1,6 +1,6 @@
 import React from "react";
-import AddNew from "@/components/Dashboard/AddNew";
-import Models from "@/components/Dashboard/Models";
+import AddNew from "@/components/AddNewTool";
+import Models from "@/components/ModelTable/ModelTable";
 import { getCurrentUser } from "@/lib/actions";
 const Home = async () => {
   const user = await getCurrentUser();

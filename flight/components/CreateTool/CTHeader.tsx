@@ -5,9 +5,9 @@ import eagle from "@/assets/images/logo.svg";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useModal } from "@/components/Modal";
-import DiscardChanges from "@/components/DiscardChanges";
+import DiscardChanges from "@/components/Modals/DiscardChanges";
 import html2canvas from "html2canvas-pro";
-import PublishModel from "@/components/PublishModel";
+import PublishModel from "@/components/Modals/PublishModel";
 import { useAppContext } from "@/context";
 import toast from "react-hot-toast";
 const CreateToolHeader = () => {

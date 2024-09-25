@@ -2,10 +2,9 @@
 import React, { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
-import { useRouter } from "next/navigation";
+
 import { FaAngleDown } from "react-icons/fa";
 const ProfileLogout = () => {
-  const router = useRouter();
   const ref = useRef(null);
 
   const [clickedProfile, setClickedProfile] = useState(false);

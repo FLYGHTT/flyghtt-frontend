@@ -1,4 +1,4 @@
-"use client";
+
 import React from "react";
 import pin from "@/assets/icons/pin.svg";
 import Image from "next/image";

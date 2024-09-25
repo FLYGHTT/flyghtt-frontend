@@ -1,7 +1,7 @@
 import React from "react";
 import { BiLogOutCircle } from "react-icons/bi";
 import { useRouter } from "next/navigation";
-const Back = ({ className }: { className: string }) => {
+const Back = ({ className }: { className?: string }) => {
   const router = useRouter();
   const handleClick = () => {
     router.back();

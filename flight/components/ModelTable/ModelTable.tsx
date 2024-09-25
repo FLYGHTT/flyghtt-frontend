@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import HeaderModels from "./HeaderModels";
+import ModelTableHeader from "./ModelTableHeader";
 import Recents from "./Recents";
 import Favourites from "./Favourites";
 
@@ -25,7 +25,7 @@ const Models = () => {
 
   return (
     <div className="mt-8 px-6 text-base">
-      <HeaderModels
+      <ModelTableHeader
         isFavorite={isFavorite}
         handleFavorite={handleFavorite}
         handleRecents={handleRecents}

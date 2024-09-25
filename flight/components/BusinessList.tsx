@@ -8,7 +8,7 @@ import Image from "next/image";
 import { useBusinessesQuery } from "@/hooks/reactQueryHooks";
 import { getImageSrc } from "@/lib/utils";
 import Error from "@/app/(root)/error";
-import { Skeleton } from "../ui/skeleton";
+import { Skeleton } from "./ui/skeleton";
 import { motion } from "framer-motion";
 const BusinessList = () => {
   const pathname = usePathname();
@@ -56,10 +56,7 @@ const BusinessList = () => {
         const base64Data = business.businessLogoImageData;
         const imageSrc = getImageSrc(base64Data);
         return (
-          <Link
-            key={index}
-            href={`${pathname}/${business.businessId}`}
-          >
+          <Link key={index} href={`${pathname}/${business.businessId}`}>
             <div className="flex items-center justify-between cursor-pointer bg-white shadow-md p-4 rounded-lg my-3 mb-5">
               <div className="flex items-center">
                 {base64Data ? (

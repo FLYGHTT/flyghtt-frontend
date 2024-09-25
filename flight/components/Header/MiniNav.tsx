@@ -2,7 +2,7 @@
 import React from "react";
 
 import { usePathname } from "next/navigation";
-const HeaderNav = () => {
+const MiniNav = () => {
   const pathname = usePathname();
   const splitPath = pathname.split("/")[2];
 
@@ -26,4 +26,4 @@ const HeaderNav = () => {
   );
 };
 
-export default HeaderNav;
+export default MiniNav;

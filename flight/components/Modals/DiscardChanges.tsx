@@ -2,7 +2,7 @@
 import React from "react";
 import info from "@/assets/icons/info.svg";
 import Image from "next/image";
-import { useModal } from "./Modal";
+import { useModal } from "../Modal";
 import { useRouter } from "next/navigation";
 const DiscardChanges = () => {
   const router = useRouter();

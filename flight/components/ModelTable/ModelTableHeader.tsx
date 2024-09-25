@@ -5,7 +5,7 @@ import Image from "next/image";
 import filter from "@/assets/icons/filter.svg";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
 import { motion } from "framer-motion";
-const HeaderModels = ({
+const ModelTableHeader = ({
   isFavorite,
   handleFavorite,
   handleRecents,
@@ -90,4 +90,4 @@ const HeaderModels = ({
   );
 };
 
-export default HeaderModels;
+export default ModelTableHeader;

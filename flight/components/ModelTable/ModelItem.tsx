@@ -1,8 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import Star from "../Star";
-import Pin from "../Pin";
-import { DisplayedModel, Model } from "@/types";
+import Pin from "./Pin";
+import { DisplayedModel } from "@/types";
 import { useAppContext } from "@/context";
 import useContextMenu from "@/hooks/useContextMenu";
 import ContextMenu from "../ContextMenu";
@@ -13,7 +13,7 @@ const ModelItem = ({
   model: DisplayedModel;
   isFavorites?: boolean;
 }) => {
-  const { contextMenu, setContextMenu } = useAppContext();
+  const { contextMenu } = useAppContext();
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const { handleRightClick } = useContextMenu();
   const handleHover = () => {

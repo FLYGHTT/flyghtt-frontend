@@ -8,7 +8,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { useAppContext } from "@/context";
 import type { CheckedState } from "@radix-ui/react-checkbox";
 import { useSubmitModelMutation } from "@/hooks/reactQueryHooks";
-import { useModal } from "./Modal";
+import { useModal } from "../Modal";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { convertToolColumnsToString } from "@/lib/convertToolColumns";

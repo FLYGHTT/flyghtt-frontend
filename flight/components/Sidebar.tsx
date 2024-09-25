@@ -2,7 +2,7 @@
 import React from "react";
 import eagle from "@/assets/images/logo.svg";
 import Image from "next/image";
-import { useAppContext } from "@/context";
+
 import { sidebartop, sidebarbottom } from "@/lib/data";
 import { usePathname } from "next/navigation";
 import Link from "next/link";

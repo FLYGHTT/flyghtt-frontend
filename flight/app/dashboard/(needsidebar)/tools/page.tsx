@@ -1,11 +1,11 @@
 import React from "react";
-import CreateNew from "@/components/Dashboard/CreateNew";
+import CreateNew from "@/components/CreateNew";
 import { queryClient } from "@/lib/http";
 
 import { getTools } from "@/lib/actions";
 import { HydrationBoundary } from "@tanstack/react-query";
 import { dehydrate } from "@tanstack/react-query";
-import ToolCategories from "@/components/Dashboard/ToolCategories";
+import ToolCategories from "@/components/ToolCategories";
 const Page = async () => {
   await queryClient.prefetchQuery({
     queryKey: ["tools"],

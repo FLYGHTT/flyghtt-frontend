@@ -1,7 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
 
-import Background from "../Background";
+import Background from "../PageBackground";
 import Content from "./Content";
 export default function PlanComponent() {
   return (

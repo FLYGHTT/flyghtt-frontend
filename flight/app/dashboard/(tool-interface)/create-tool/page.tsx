@@ -1,6 +1,6 @@
-import CreateToolHeader from "@/components/Dashboard/CreateTool/CTHeader";
-import CTInterface from "@/components/Dashboard/CreateTool/CTInterface";
-import CreateToolSidebar from "@/components/Dashboard/CreateTool/CTSidebar";
+import CreateToolHeader from "@/components/CreateTool/CTHeader";
+import CTInterface from "@/components/CreateTool/CTInterface";
+import CreateToolSidebar from "@/components/CreateTool/CTSidebar";
 
 import React from "react";
 
