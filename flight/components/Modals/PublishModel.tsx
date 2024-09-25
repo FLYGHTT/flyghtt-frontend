@@ -73,7 +73,6 @@ const PublishModel = () => {
     );
 
     closeModal();
-    await mutateAsync(submittedTool);
   };
   return (
     <div className="max-w-[400px]">
