@@ -24,13 +24,7 @@ const CreateToolHeader = () => {
       setModelSnapshot(canvas.toDataURL("image/png"));
     }
   };
-  const openDiscardModal = () => {
-    if (tool.name === "" || tool.description === "") {
-      router.push("/dashboard");
-      return;
-    }
-    openModal(<DiscardChanges />);
-  };
+ 
   const openPublishModal = async () => {
     if (tool.name === "" || tool.description === "") {
       toast.error("Cannot publish model without a name or description");
@@ -41,14 +35,13 @@ const CreateToolHeader = () => {
   };
 
   return (
-    <div className="flex row-span-1 justify-between shadow-sm w-full h-full items-center p-6  border border-b-gray-600">
-      <div className="flex items-center justify-center gap-5">
-        <IoIosArrowBack onClick={handleBack} className="cursor-pointer" />
-        <p className="flex gap-1 items-center font-semibold">
-          Create New Tool <Image src={eagle} alt="logo" className="w-12 h-12" />
-        </p>
-      </div>
-      <div className="text-gray-700 flex gap-4 items-center text-sm font-medium h-full">
+    <div className="flex justify-center w-full items-center p-2 px-4  border border-b-gray-600">
+      <p className="flex gap-2 items-center font-semibold">
+        Create Tool{" "}
+        <Image src={eagle} alt="Flyghtt logo" className="w-10 h-10" />
+      </p>
+
+      {/* <div className="text-gray-700 flex gap-4 items-center text-sm font-medium h-full">
         <p className="p-2 px-4 relative flex gap-3 items-center rounded-full bg-gray-100">
           <span className="relative flex h-3 w-3">
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
@@ -66,16 +59,8 @@ const CreateToolHeader = () => {
           Save as Draft
         </button>
         <hr className="border border-t-gray-300 h-[30px]" />
-        <button className="p-2 px-4 border-2 relative border-gray-300 rounded-lg">
-          Preview
-        </button>
-        <button
-          className="p-2 px-4 bg-green text-white rounded-lg flex gap-2 items-center justify-center"
-          onClick={openPublishModal}
-        >
-          Publish
-        </button>
-      </div>
+        
+      </div> */}
     </div>
   );
 };

@@ -1,10 +1,18 @@
 import React from "react";
+
 import AddNew from "@/components/AddNewTool";
 import Models from "@/components/ModelTable/ModelTable";
 import { getCurrentUser } from "@/lib/actions";
-const Home = async () => {
-  const user = await getCurrentUser();
+import { cookies } from "next/headers";
+
+const Page = async () => {
+  const cookieStore = cookies();
+  const cookieToken = cookieStore.get("flyghtt_token")?.value || "";
+
+  const user = await getCurrentUser(cookieToken);
+
   const { firstName } = user;
+
   return (
     <div className="p-6">
       <h1 className="text-2xl">
@@ -18,4 +26,4 @@ const Home = async () => {
   );
 };
 
-export default Home;
+export default Page;

@@ -18,10 +18,10 @@ const SidebarTools = ({ type, data }: { type: string; data: Tool[] }) => {
             <Image
               src={type === "Private" ? privatefile : file}
               alt="file icon"
-              className="w-5 h-5"
+              className="w-4 h-4"
             />
 
-            <h1 className="font-bold text-sm  capitalize truncate max-w-full">{tool.name}</h1>
+            <h1 className="font-medium text-sm  capitalize truncate max-w-full">{tool.name.toLowerCase()}</h1>
           </div>
           <div className="flex gap-4 items-center">
             <FaEye

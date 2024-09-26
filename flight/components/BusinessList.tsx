@@ -10,49 +10,40 @@ import { getImageSrc } from "@/lib/utils";
 import Error from "@/app/(root)/error";
 import { Skeleton } from "./ui/skeleton";
 import { motion } from "framer-motion";
-const BusinessList = () => {
+import { Business } from "@/types";
+const BusinessList = ({ businesses }: { businesses: Business[] }) => {
   const pathname = usePathname();
-  const { data, isLoading, isError, error } = useBusinessesQuery();
 
-  if (isLoading) {
-    return (
-      <motion.div
-        className="h-[450px]"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5, staggerChildren: 0.3 }}
-      >
-        {Array.from({ length: 4 }).map((_, index) => (
-          <motion.div
-            className="flex items-center w-full my-6"
-            key={index}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-          >
-            <Skeleton className="bg-green/10 w-20 h-20 rounded-md" />
-            <div className="ml-8 w-full">
-              <Skeleton className=" my-2 w-full h-[20px] bg-green/10" />
-              <Skeleton className=" my-2 w-32 h-[20px] bg-green/10" />
-            </div>
-          </motion.div>
-        ))}
-      </motion.div>
-    );
-  }
-
-  if (isError) {
-    console.log(error, "error");
-    return <Error />;
-  }
-
-  if (!data || data.length === 0) {
-    return <div className="mt-4 text-sm">No business to display</div>;
-  }
+  // if (isLoading) {
+  //   return (
+  //     <motion.div
+  //       className="h-[450px]"
+  //       initial={{ opacity: 0 }}
+  //       animate={{ opacity: 1 }}
+  //       transition={{ duration: 0.5, staggerChildren: 0.3 }}
+  //     >
+  //       {Array.from({ length: 4 }).map((_, index) => (
+  //         <motion.div
+  //           className="flex items-center w-full my-6"
+  //           key={index}
+  //           initial={{ opacity: 0 }}
+  //           animate={{ opacity: 1 }}
+  //           transition={{ duration: 0.5, delay: 0.3 }}
+  //         >
+  //           <Skeleton className="bg-green/10 w-20 h-20 rounded-md" />
+  //           <div className="ml-8 w-full">
+  //             <Skeleton className=" my-2 w-full h-[20px] bg-green/10" />
+  //             <Skeleton className=" my-2 w-32 h-[20px] bg-green/10" />
+  //           </div>
+  //         </motion.div>
+  //       ))}
+  //     </motion.div>
+  //   );
+  // }
 
   return (
     <div className="overflow-y-auto max-h-[70vh] mb-24 relative">
-      {data.map((business, index) => {
+      {businesses.map((business, index) => {
         const base64Data = business.businessLogoImageData;
         const imageSrc = getImageSrc(base64Data);
         return (

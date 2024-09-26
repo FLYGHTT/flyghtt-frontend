@@ -6,12 +6,13 @@ import React from "react";
 
 const Page = () => {
   return (
-    <div className="h-screen overflow-hidden grid grid-rows-12">
-      <CreateToolHeader />
-      <div className="grid grid-cols-12 overflow-hidden  h-screen row-span-11">
+    <div className="h-screen overflow-hidden grid grid-cols-12">
+      <div className="col-span-2">
+        <CreateToolHeader />
+
         <CreateToolSidebar />
-        <CTInterface />
       </div>
+      <CTInterface />
     </div>
   );
 };

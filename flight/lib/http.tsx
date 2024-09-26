@@ -11,7 +11,7 @@ export const queryClient = new QueryClient({
   },
 });
 
-const baseURL = "https://flyghtt-backend.onrender.com/api/v1";
+export const baseURL = "https://flyghtt-backend.onrender.com/api/v1";
 
 const http = axios.create({
   baseURL,

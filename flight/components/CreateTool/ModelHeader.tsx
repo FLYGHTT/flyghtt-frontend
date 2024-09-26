@@ -19,7 +19,7 @@ const ModelHeader = () => {
 
   return (
     <div
-      className="gap-6 mt-2  h-fit  bg-green/10 w-[60vw] rounded-xl p-8"
+      className="gap-6 mt-4  h-fit  bg-green/10 w-[60vw] rounded-xl p-8"
       ref={modelHeaderRef}
     >
       <div className="w-full flex  ">

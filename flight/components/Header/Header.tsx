@@ -5,8 +5,12 @@ import Image from "next/image";
 
 import { getCurrentUser } from "@/lib/actions";
 import MiniNav from "./MiniNav";
+import { cookies } from "next/headers";
 const Header = async () => {
-  const user = await getCurrentUser();
+  const cookieStore = cookies();
+  const cookieToken = cookieStore.get("flyghtt_token")?.value || "";
+
+  const user = await getCurrentUser(cookieToken);
   const { firstName, lastName } = user;
 
   return (
