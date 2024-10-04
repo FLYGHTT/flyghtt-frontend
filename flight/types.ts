@@ -106,6 +106,7 @@ export interface ConvertedTool {
 export interface Tab {
   id: string;
   name: string;
+  description: string;
   thumbnail: string;
   tabTool: Tool;
   mode: string;

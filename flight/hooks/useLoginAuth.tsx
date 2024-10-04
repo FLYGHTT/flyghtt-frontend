@@ -28,7 +28,6 @@ const useLoginAuth = () => {
       console.log(data, "data");
       if (data && data.token) {
         localStorage.setItem("flyghtt_token", data.token);
-
         await fetch(`${baseUrl}/api/cookies`, {
           method: "POST",
           headers: {

@@ -34,6 +34,7 @@ export const newTab = {
   id: generateRandomString(20),
   name: "New Tab",
   thumbnail: "",
+  description: "",
   tabTool: newTool,
-  mode: "preview",
+  mode: "edit",
 };

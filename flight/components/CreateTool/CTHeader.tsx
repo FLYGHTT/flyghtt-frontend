@@ -4,7 +4,7 @@ import { IoIosArrowBack } from "react-icons/io";
 import eagle from "@/assets/images/logo.svg";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useModal } from "@/components/Modal";
+
 import DiscardChanges from "@/components/Modals/DiscardChanges";
 import html2canvas from "html2canvas-pro";
 import PublishModel from "@/components/Modals/PublishModel";
@@ -13,7 +13,7 @@ import toast from "react-hot-toast";
 const CreateToolHeader = () => {
   const { tool, modelHeaderRef, setModelSnapshot } = useAppContext();
   const router = useRouter();
-  const { openModal } = useModal();
+ 
   const handleBack = () => {
     router.push("/dashboard");
   };
@@ -25,14 +25,7 @@ const CreateToolHeader = () => {
     }
   };
  
-  const openPublishModal = async () => {
-    if (tool.name === "" || tool.description === "") {
-      toast.error("Cannot publish model without a name or description");
-      return;
-    }
-    // await captureSnapshot(modelHeaderRef);
-    openModal(<PublishModel />);
-  };
+
 
   return (
     <div className="flex justify-center w-full items-center p-2 px-4  border border-b-gray-600">

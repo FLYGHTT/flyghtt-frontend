@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-
 export async function middleware(req: NextRequest) {
   const token = req.cookies.get("flyghtt_token");
 

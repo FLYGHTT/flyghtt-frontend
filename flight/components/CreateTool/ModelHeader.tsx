@@ -4,17 +4,37 @@ import React from "react";
 import { Input } from "@/components/ui/GlowInput";
 import { TextArea } from "@/components/ui/GlowTextArea";
 import { useAppContext } from "@/context";
-const ModelHeader = () => {
-  const { tool, setTool, modelHeaderRef } = useAppContext();
+import { Tool } from "@/types";
+const ModelHeader = ({ activeTool }: { activeTool: Tool }) => {
+  const { modelHeaderRef, setTabs, activeTabId } = useAppContext();
+
   const handleChange = (
     e:
       | React.ChangeEvent<HTMLInputElement>
       | React.ChangeEvent<HTMLTextAreaElement>
   ) => {
-    setTool((prevTool) => ({
-      ...prevTool,
-      [e.target.name]: e.target.value,
-    }));
+    const isHeadingEmpty = e.target.name === "name" && e.target.value === "";
+    setTabs((prevTabs) => {
+      const newTabs = prevTabs.map((tab) =>
+        tab.id === activeTabId
+          ? {
+              ...tab,
+              name: isHeadingEmpty
+                ? "New Tab"
+                : e.target.name === "name"
+                ? e.target.value
+                : tab.name,
+              tabTool: { ...tab.tabTool, [e.target.name]: e.target.value },
+              description:
+                e.target.name === "description"
+                  ? e.target.value
+                  : tab.description,
+            }
+          : tab
+      );
+      localStorage.setItem("flyghtt-tabs", JSON.stringify(newTabs));
+      return newTabs;
+    });
   };
 
   return (
@@ -33,7 +53,7 @@ const ModelHeader = () => {
           <Input
             id="name"
             placeholder="e.g. Customer churn prediction"
-            value={tool.name}
+            value={activeTool.name}
             name="name"
             onChange={handleChange}
             className="text-xl font-bold placeholder:text-sm placeholder:font-normal"
@@ -51,7 +71,7 @@ const ModelHeader = () => {
         <div className="w-[80%]">
           <TextArea
             id="description"
-            value={tool.description}
+            value={activeTool.description}
             name="description"
             placeholder="Enter description"
             onChange={handleChange}
@@ -68,8 +88,8 @@ const ModelHeader = () => {
         </label>
         <div className="w-[80%]">
           <Input
-            id="linke"
-            value={tool.link}
+            id="link"
+            value={activeTool.link}
             name="link"
             placeholder="Paste link here"
             onChange={handleChange}

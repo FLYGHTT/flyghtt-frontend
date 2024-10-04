@@ -5,16 +5,13 @@ import { Input } from "../ui/GlowInput";
 import ColumnItems from "./ColumnItems";
 import { Column } from "@/types";
 import "react-grid-layout/css/styles.css";
+import { useAppContext } from "@/context";
+import { convertToolColumnsToString } from "@/lib/convertToolColumns";
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
-const Columns = ({
-  columns,
-  setColumns,
-}: {
-  columns: Column[];
-  setColumns: React.Dispatch<React.SetStateAction<Column[]>>;
-}) => {
+const Columns = ({ columns }: { columns: Column[] }) => {
+  const { tabs, setTabs, activeTabId } = useAppContext();
   const handleItemChange = (
     e:
       | React.ChangeEvent<HTMLInputElement>
@@ -23,18 +20,31 @@ const Columns = ({
     factorIndex: number
   ) => {
     const { name, value } = e.target;
-    setColumns((prevState) =>
-      prevState.map((column, idx) =>
-        idx === columnIndex
-          ? {
-              ...column,
-              factors: column.factors.map((item, i) =>
-                i === factorIndex ? { ...item, [name]: value } : item
-              ),
-            }
-          : column
-      )
+    const newToolColumns = columns.map((column, idx) =>
+      idx === columnIndex
+        ? {
+            ...column,
+            factors: column.factors.map((item, i) =>
+              i === factorIndex ? { ...item, [name]: value } : item
+            ),
+          }
+        : column
     );
+    setTabs((prevTabs) => {
+      const newTabs = prevTabs.map((tab) =>
+        tab.id === activeTabId
+          ? {
+              ...tab,
+              tabTool: {
+                ...tab.tabTool,
+                columns: convertToolColumnsToString(newToolColumns),
+              },
+            }
+          : tab
+      );
+      localStorage.setItem("flyghtt-tabs", JSON.stringify(newTabs));
+      return newTabs;
+    });
   };
 
   const handleChange = (
@@ -44,23 +54,47 @@ const Columns = ({
     index: number
   ) => {
     const { name, value } = e.target;
-    setColumns((prevState) =>
-      prevState.map((column, idx) =>
-        idx === index ? { ...column, [name]: value } : column
-      )
+    const newToolColumns = columns.map((column, idx) =>
+      idx === index ? { ...column, [name]: value } : column
     );
+    setTabs((prevTabs) => {
+      const newTabs = prevTabs.map((tab) =>
+        tab.id === activeTabId
+          ? {
+              ...tab,
+              tabTool: {
+                ...tab.tabTool,
+                columns: convertToolColumnsToString(newToolColumns),
+              },
+            }
+          : tab
+      );
+      localStorage.setItem("flyghtt-tabs", JSON.stringify(newTabs));
+      return newTabs;
+    });
   };
   const handleAddNewColumnItem = (index: number) => {
-    setColumns((prevState) =>
-      prevState.map((column, idx) =>
-        idx === index
-          ? {
-              ...column,
-              factors: [...column.factors, { name: "", value: "" }],
-            }
-          : column
-      )
+    const newFactor = { name: "", value: "" };
+    const newToolColumns = columns.map((column, idx) =>
+      idx === index
+        ? { ...column, factors: [...column.factors, newFactor] }
+        : column
     );
+    setTabs((prevTabs) => {
+      const newTabs = prevTabs.map((tab) =>
+        tab.id === activeTabId
+          ? {
+              ...tab,
+              tabTool: {
+                ...tab.tabTool,
+                columns: convertToolColumnsToString(newToolColumns),
+              },
+            }
+          : tab
+      );
+      localStorage.setItem("flyghtt-tabs", JSON.stringify(newTabs));
+      return newTabs;
+    });
   };
   // Set up grid layout for the columns
   const [layouts, setLayouts] = useState({
@@ -85,7 +119,7 @@ const Columns = ({
     const itemHeight = 1;
     return baseHeight + column.factors.length * itemHeight;
   };
-  console.log(columns);
+  console.log(tabs);
   return (
     <div className="h-fit w-full bg-[#f8f9fa] rounded-xl mt-4 p-6">
       <ResponsiveGridLayout

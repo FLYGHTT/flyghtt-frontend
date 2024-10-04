@@ -21,8 +21,13 @@ export const AppProvider: React.FC<{
     convertToolColumnsToArray(tool.columns)
   );
   const [modelSnapshot, setModelSnapshot] = useState<string | null>(null);
-  const [tabs, setTabs] = useState<Tab[]>([newTab]);
-  const [activeTabId, setActiveTabId] = useState<string>(tabs[0].id);
+  const localTabs = localStorage.getItem("flyghtt-tabs");
+  const parsedTabs = () => (localTabs ? JSON.parse(localTabs) : []);
+  const localActiveTabId = localStorage.getItem("tab-id");
+  const [tabs, setTabs] = useState<Tab[]>(parsedTabs());
+  const [activeTabId, setActiveTabId] = useState<string>(
+    localActiveTabId || ""
+  );
   return (
     <AppContext.Provider
       value={{
