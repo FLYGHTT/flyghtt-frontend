@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/GlowInput";
 import { TextArea } from "@/components/ui/GlowTextArea";
 import { useAppContext } from "@/context";
 import { Tool } from "@/types";
-const ModelHeader = ({ activeTool }: { activeTool: Tool }) => {
+const ToolHeadingAndDesc = ({ tool }: { tool: Tool }) => {
   const { modelHeaderRef, setTabs, activeTabId } = useAppContext();
 
   const handleChange = (
@@ -39,7 +39,7 @@ const ModelHeader = ({ activeTool }: { activeTool: Tool }) => {
 
   return (
     <div
-      className="gap-6 mt-4  h-fit  bg-green/10 w-[60vw] rounded-xl p-8"
+      className="gap-6 mt-4  h-fit  bg-green/10 w-full rounded-xl p-8"
       ref={modelHeaderRef}
     >
       <div className="w-full flex  ">
@@ -53,7 +53,7 @@ const ModelHeader = ({ activeTool }: { activeTool: Tool }) => {
           <Input
             id="name"
             placeholder="e.g. Customer churn prediction"
-            value={activeTool.name}
+            value={tool.name}
             name="name"
             onChange={handleChange}
             className="text-xl font-bold placeholder:text-sm placeholder:font-normal"
@@ -71,7 +71,7 @@ const ModelHeader = ({ activeTool }: { activeTool: Tool }) => {
         <div className="w-[80%]">
           <TextArea
             id="description"
-            value={activeTool.description}
+            value={tool.description}
             name="description"
             placeholder="Enter description"
             onChange={handleChange}
@@ -89,7 +89,7 @@ const ModelHeader = ({ activeTool }: { activeTool: Tool }) => {
         <div className="w-[80%]">
           <Input
             id="link"
-            value={activeTool.link}
+            value={tool.link}
             name="link"
             placeholder="Paste link here"
             onChange={handleChange}
@@ -100,4 +100,4 @@ const ModelHeader = ({ activeTool }: { activeTool: Tool }) => {
   );
 };
 
-export default ModelHeader;
+export default ToolHeadingAndDesc;
