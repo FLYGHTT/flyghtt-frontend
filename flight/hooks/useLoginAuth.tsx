@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 
 import { useLoginMutation } from "@/hooks/reactQueryHooks";
 import { LoginInputs } from "@/types";
-import { handleSetCookie } from "@/lib/actions";
+
 const useLoginAuth = () => {
   const router = useRouter();
   const [inputs, setInputs] = useState<LoginInputs>({
@@ -13,7 +13,8 @@ const useLoginAuth = () => {
     password: "",
   });
   const [error, setError] = useState("");
-
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+  console.log(baseUrl, "baseUrl");
   const {
     mutate: loginMutate,
     isError,
@@ -27,7 +28,13 @@ const useLoginAuth = () => {
       console.log(data, "data");
       if (data && data.token) {
         localStorage.setItem("flyghtt_token", data.token);
-        handleSetCookie(data.token);
+        await fetch(`${baseUrl}/api/cookies`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ token: data.token }),
+        });
         console.log("Success");
         setTimeout(() => {
           router.push("/dashboard");

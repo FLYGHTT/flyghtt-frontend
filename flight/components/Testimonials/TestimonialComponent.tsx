@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
-import Background from "../Background";
+import Background from "../PageBackground";
 import Content from "../Testimonials/Content";
 const TestimonialComponent = () => {
   return (

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { SignUpInputs } from "@/types";
 import { useRouter } from "next/navigation";
 import { useSignUpMutation } from "@/hooks/reactQueryHooks";
-import { handleSetCookie } from "@/lib/actions";
+
 const useSignUpAuth = () => {
   const router = useRouter();
   const [inputs, setInputs] = useState<SignUpInputs>({
@@ -22,7 +22,7 @@ const useSignUpAuth = () => {
   });
 
   const [unknownError, setUnknownError] = useState("");
-
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
   const {
     mutate: signupMutate,
     isError,
@@ -36,7 +36,7 @@ const useSignUpAuth = () => {
       }
       setUnknownError("Something went wrong");
     },
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
       if (data && "message" in data) {
         setUnknownError(data.message);
         return;
@@ -44,7 +44,13 @@ const useSignUpAuth = () => {
       if (data && data.token) {
         console.log("data", data);
         localStorage.setItem("flyghtt_token", data.token);
-        handleSetCookie(data.token);
+        await fetch(`${baseUrl}/api/cookies`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ token: data.token }),
+        });
         if (data.emailVerified) {
           console.log("verified");
           router.push("/dashboard");
