@@ -1,4 +1,5 @@
 import image from "@/public/avatar.png";
+
 export const testimonials = [
   {
     quote:
@@ -83,6 +84,7 @@ import tool from "@/assets/icons/tool.svg";
 import draft from "@/assets/icons/draft.svg";
 import settings from "@/assets/icons/settings.svg";
 import explore from "@/assets/icons/explore.svg";
+import { FaCheck, FaR } from "react-icons/fa6";
 export const sidebartop = [
   {
     title: "Home",
@@ -141,7 +143,7 @@ export const models = [
   { ...model, id: 4 },
 ];
 
- const business = {
+const business = {
   id: 1,
   name: "CAFEY Foods",
   employeeNo: "5-10",

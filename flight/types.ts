@@ -81,6 +81,7 @@ export interface Tool {
   columns: string;
   public: boolean;
   createdAt: Date;
+  isPublished: boolean;
 }
 export interface Column {
   name: string;

@@ -29,6 +29,7 @@ export const newTool = {
   columns: convertToolColumnsToString(defaultColumns),
   public: false,
   createdAt: new Date(),
+  isPublished: false,
 };
 export const newTab = {
   id: generateRandomString(20),
@@ -36,5 +37,5 @@ export const newTab = {
   thumbnail: "",
   description: "",
   tabTool: newTool,
-  mode: "edit",
+  mode: "editor",
 };

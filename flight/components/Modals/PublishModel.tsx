@@ -5,7 +5,6 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { BeatLoader } from "react-spinners";
 import Image from "next/image";
 import { Checkbox } from "@/components/ui/checkbox";
-
 import { Tab } from "@/types";
 import type { CheckedState } from "@radix-ui/react-checkbox";
 import { useSubmitModelMutation } from "@/hooks/reactQueryHooks";

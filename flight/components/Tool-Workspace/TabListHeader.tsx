@@ -9,8 +9,8 @@ import { FaPlus } from "react-icons/fa6";
 import useTab from "@/hooks/useTab";
 import { useModal } from "../Modal";
 import DiscardChanges from "../Modals/DiscardChanges";
-const CTInterfaceTabHeader = () => {
-  const { tabs, setTabs, activeTabId, setActiveTabId } = useAppContext();
+const TabListHeader = () => {
+  const { tabs, activeTabId, setActiveTabId } = useAppContext();
   const { openModal, closeModal } = useModal();
 
   const { handleTabClose, handleAddTab, activeTab } = useTab();
@@ -27,17 +27,19 @@ const CTInterfaceTabHeader = () => {
       openModal(
         <DiscardChanges
           tabId={tabId}
-          discardFunction={handleDiscard(tabId)}
+          discardFunction={handleDiscard}
           message="Discard changes, are you sure?"
         />
       );
-      return;
+      console.log("eba");
+    } else {
+      console.log("beans");
+      handleTabClose(tabId);
     }
-    handleTabClose(tabId);
   };
-  console.log(activeTab);
+
   return (
-    <div className="w-full h-fit relative z-[3] flex gap-2 ">
+    <div className="w-full h-fit relative z-[3] flex gap-2 overflow-x-scroll hidden-scrollbar">
       <div className="pl-2 h-fit flex gap-2 items-end">
         {tabs.map((tab, index) => {
           const isActive = tab.id === activeTabId;
@@ -64,7 +66,7 @@ const CTInterfaceTabHeader = () => {
                 </h1>
               </div>
               <button
-                className="ml-2 cursor-default hover:bg-gray-200 rounded-full p-0.5 text-sm flex items-center justify-center"
+                className="ml-2 cursor-default hover:bg-gray-300 rounded-full p-0.5 text-sm flex items-center justify-center"
                 onClick={(e) => {
                   e.stopPropagation();
                   handleCloseTab(tab.id);
@@ -84,4 +86,4 @@ const CTInterfaceTabHeader = () => {
   );
 };
 
-export default CTInterfaceTabHeader;
+export default TabListHeader;
