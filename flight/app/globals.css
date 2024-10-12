@@ -15,10 +15,13 @@
 .business-form_input {
   @apply border border-gray-500  !important;
 }
+.hidden-scrollbar {
+  scrollbar-width: none;
+}
 
 .layout {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(1, 1fr);
   gap: 1rem;
 }
 
@@ -41,9 +44,6 @@ textarea {
   opacity: 0.8; /* Add transparency */
 }
 
-
-
-
 .floating-label-input {
   background-color: #f8f9fa; /* Light background */
   border: 1px solid #dfe3e6; /* Subtle border */
@@ -57,4 +57,3 @@ textarea {
   border: 1px solid #4a90e2; /* Blue border on focus */
   outline: none;
 }
-

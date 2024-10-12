@@ -42,6 +42,15 @@ export const useGetToolsQuery = () => {
     },
   });
 };
+export const useGetToolByIdQuery = (id: string) => {
+  return useQuery<Tool>({
+    queryKey: ["tool", id],
+    queryFn: async () => {
+      const response = await http.get(`/tools/${id}`);
+      return response.data;
+    },
+  });
+};
 //  Mutations
 export const useLoginMutation = (
   payload: MutationOptions<

@@ -6,6 +6,7 @@ import file from "@/assets/icons/file.svg";
 import privatefile from "@/assets/icons/privatefile.svg";
 import edit from "@/assets/icons/edit.svg";
 import Image from "next/image";
+import Link from "next/link";
 const Page = ({ params: { slug } }: { params: { slug: string } }) => {
   const allowedSlugs = ["private", "public", "favourites"];
   const { data } = useGetToolsQuery();
@@ -40,7 +41,11 @@ const Page = ({ params: { slug } }: { params: { slug: string } }) => {
         {activeData.map((tool) => (
           <div
             key={tool.toolId}
-            className={`rounded-md flex p-2 group hover:shadow-md  gap-3 items-center justify-between shadow-sm  cursor-pointer border-2 ${isPublic ? "border-teal-200 bg-green/10 hover:border-teal-400" : " bg-blue-100 border-[#4169E1]/40 hover:border-[#4169E1]" } `}
+            className={`rounded-md flex p-2 group hover:shadow-md  gap-3 items-center justify-between shadow-sm  cursor-pointer border-2 ${
+              isPublic
+                ? "border-teal-200 bg-green/10 hover:border-teal-400"
+                : " bg-blue-100 border-[#4169E1]/40 hover:border-[#4169E1]"
+            } `}
           >
             <div className="flex gap-3 items-center ">
               <Image
@@ -55,9 +60,12 @@ const Page = ({ params: { slug } }: { params: { slug: string } }) => {
               </div>
             </div>
             <div className="mr-2 gap-7 group-hover:flex hidden items-center">
-              <p className="text-sm text-gray-600 cursor-pointer hover:text-black ">
+              <Link
+                href={`/dashboard/preview-tool/${tool.toolId}`}
+                className="text-sm text-gray-600 cursor-pointer hover:text-black "
+              >
                 View
-              </p>
+              </Link>
               <Image
                 src={edit}
                 alt="edit icon"

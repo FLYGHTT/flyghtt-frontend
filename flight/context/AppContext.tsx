@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState, createContext, useRef } from "react";
-import { ContextMenuType, AppContextType, Tool } from "@/types";
-import { newTool } from "@/lib/constants";
+import React, { useState, createContext, useRef, useEffect } from "react";
+import { ContextMenuType, AppContextType, Tool, Tab } from "@/types";
+import { newTab, newTool } from "@/lib/constants";
 import { convertToolColumnsToArray } from "@/lib/convertToolColumns";
 export const AppContext = createContext<AppContextType | undefined>(undefined);
 
@@ -21,9 +21,24 @@ export const AppProvider: React.FC<{
     convertToolColumnsToArray(tool.columns)
   );
   const [modelSnapshot, setModelSnapshot] = useState<string | null>(null);
+
+  const [tabs, setTabs] = useState<Tab[]>([]);
+  const [activeTabId, setActiveTabId] = useState<string>("");
+
+  useEffect(() => {
+    const localTabs = localStorage.getItem("flyghtt-tabs");
+    const parsedTabs = localTabs ? JSON.parse(localTabs) : [];
+    setTabs(parsedTabs);
+
+    const localActiveTabId = localStorage.getItem("tab-id");
+    setActiveTabId(localActiveTabId || "");
+  }, []);
+
   return (
     <AppContext.Provider
       value={{
+        activeTabId,
+        setActiveTabId,
         toolColumns,
         setToolColumns,
         tool,
@@ -35,6 +50,8 @@ export const AppProvider: React.FC<{
         modelHeaderRef,
         modelSnapshot,
         setModelSnapshot,
+        tabs,
+        setTabs,
       }}
     >
       {children}

@@ -1,6 +1,6 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
-
+import crypto from "crypto";
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
@@ -19,3 +19,8 @@ export const getImageSrc = (base64Data: string) => {
   return `data:${mimeType};base64,${base64Data}`;
 };
 
+export function generateRandomString(length: number) {
+  return crypto.randomBytes(length).toString("hex");
+}
+
+console.log(generateRandomString(10));

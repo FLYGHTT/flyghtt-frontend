@@ -1,5 +1,4 @@
-
-import Background from "@/components/Background";
+import Background from "@/components/PageBackground";
 import Link from "next/link";
 import React from "react";
 const NotFound = () => {

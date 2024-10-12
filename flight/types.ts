@@ -12,6 +12,10 @@ export interface AppContextType {
   modelHeaderRef: React.MutableRefObject<null>;
   modelSnapshot: string | null;
   setModelSnapshot: React.Dispatch<React.SetStateAction<string | null>>;
+  tabs: Tab[];
+  setTabs: React.Dispatch<React.SetStateAction<Tab[]>>;
+  activeTabId: string;
+  setActiveTabId: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export interface DisplayedModel {
@@ -77,6 +81,7 @@ export interface Tool {
   columns: string;
   public: boolean;
   createdAt: Date;
+  isPublished: boolean;
 }
 export interface Column {
   name: string;
@@ -97,4 +102,13 @@ export interface ConvertedTool {
   columns: Column[];
   public: boolean;
   createdAt: Date;
+}
+
+export interface Tab {
+  id: string;
+  name: string;
+  description: string;
+  thumbnail: string;
+  tabTool: Tool;
+  mode: string;
 }

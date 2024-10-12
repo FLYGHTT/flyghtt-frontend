@@ -1,54 +1,36 @@
 "use client";
-
 import React from "react";
-
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+
 import tool from "@/assets/icons/tool.svg";
 import user from "@/assets/icons/user.svg";
 import share from "@/assets/icons/share.svg";
 import trash from "@/assets/icons/trash.svg";
 import eye from "@/assets/icons/eye.svg";
 import edit from "@/assets/icons/edit.svg";
-import { BiLogOutCircle } from "react-icons/bi";
-import {
-  useBusinessesQuery,
-  useDeleteBusinessMutation,
-  useGetBusinessByIdQuery,
-} from "@/hooks/reactQueryHooks";
+import { redirect } from "next/navigation";
+
 import { getImageSrc } from "@/lib/utils";
-import Loading from "@/app/(root)/loading";
-import Error from "@/app/(root)/error";
+
 import { queryClient } from "@/lib/http";
 import toast from "react-hot-toast";
 import type { Business } from "@/types";
-const Business = ({ id }: { id: string }) => {
-  const router = useRouter();
+import { revalidatePath } from "next/cache";
+const Business = ({ business }: { business: Business }) => {
+  const base64Data = business.businessLogoImageData;
+  
+  const imageSrc = getImageSrc(base64Data);
 
-  const { data: businessData, isPending, isError } = useGetBusinessByIdQuery(id);
-  const { mutate } = useDeleteBusinessMutation({
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["businesses"] });
-
-      router.push("/dashboard/businesses");
-      toast.success("Business deleted successfully", {
-        id: "delete-business-success",
-      });
-    },
-  });
-
-  if (isPending) {
-    return <Loading />;
-  }
-  if (isError) {
-    return <Error />;
-  }
-
-  if (!businessData) {
-    return <div>Business not found</div>;
-  }
-  const handleDelete = () => {
-    mutate(businessData.businessId);
+  const handleDelete = async () => {
+    await fetch("api/cookies", {
+      method: "DELETE",
+    });
+    queryClient.invalidateQueries({ queryKey: ["businesses"] });
+    revalidatePath("/dashboard/businesses");
+    toast.success("Business deleted successfully", {
+      id: "delete-business-success",
+    });
+    redirect("/dashboard/businesses");
   };
 
   const tools = [
@@ -73,17 +55,9 @@ const Business = ({ id }: { id: string }) => {
       role: "Administrator",
     },
   ];
-  const base64Data = businessData.businessLogoImageData;
 
-  const imageSrc = getImageSrc(base64Data);
   return (
     <div className="overflow-y-auto max-h-[85vh] relative">
-      <div
-        onClick={() => router.back()}
-        className={`  mb-1 w-fit rounded-full p-2 bg-light cursor-pointer`}
-      >
-        <BiLogOutCircle size={20} />
-      </div>
       <div className="p-8 px-10 pb-16">
         <div className="flex justify-between items-center ">
           <div className="flex gap-6  items-center">
@@ -100,16 +74,16 @@ const Business = ({ id }: { id: string }) => {
             )}{" "}
             <div>
               <h1 className="text-2xl font-bold mb-2">
-                {businessData.businessName}
+                {business.businessName}
               </h1>
               <div className="flex gap-3 mb-2">
                 <p className="text-xs flex gap-2 items-center">
                   <Image src={user} width={15} height={15} alt="employees" />
-                  {businessData.numberOfEmployees}
+                  {business.numberOfEmployees}
                 </p>
                 <p className="text-xs flex gap-2 items-center">
                   <Image src={tool} width={15} height={15} alt="tools" />
-                  {businessData.numberOfBusinessTools}
+                  {business.numberOfBusinessTools}
                 </p>
               </div>
               <p className="text-sm text-gray-500">Date Created: July 2024 </p>
