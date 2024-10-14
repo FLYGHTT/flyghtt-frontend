@@ -3,16 +3,20 @@ import message from "@/assets/icons/message.svg";
 // import ellipse from "@/assets/icons/ellipse.svg";
 import Image from "next/image";
 
-import { getCurrentUser } from "@/lib/actions";
 import MiniNav from "./MiniNav";
-import { cookies } from "next/headers";
+import { getUserDetails } from "@/lib/actions/user.actions";
+
+import { auth } from "@/auth";
+
+import { redirect } from "next/navigation";
 const Header = async () => {
-  const cookieStore = cookies();
-  const cookieToken = cookieStore.get("flyghtt_token")?.value || "";
+  const session = await auth();
+  if (!session) {
+    redirect("/login");
+  }
 
-  const user = await getCurrentUser(cookieToken);
-  const { firstName, lastName } = user;
-
+  const token = session.user.token;
+  const userDetails = await getUserDetails(token);
   return (
     <div className="w-full flex justify-between items-center p-6">
       <MiniNav />
@@ -21,7 +25,7 @@ const Header = async () => {
         <div className="flex items-center gap-2 relative">
           {/* <Image src={ellipse} alt="ellipse" width={60} height={60} /> */}
           <h1>
-            {firstName} {lastName}
+            {userDetails?.firstName} {userDetails?.lastName}
           </h1>
         </div>
         <button className="bg-darkPurple p-3 rounded-md text-white">

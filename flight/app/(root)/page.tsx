@@ -1,12 +1,13 @@
-"use client"
-import Home from "@/components/Home/Home";
+import FirstGrid from "@/components/(website)/FirstGrid";
+import SecondGrid from "@/components/(website)/SecondGrid";
+import ThirdGrid from "@/components/(website)/ThirdGrid";
 import React from "react";
 const page = () => {
   return (
-    <div className="">
-      <Home />
-      
-   
+    <div className="h-screen relative grid grid-rows-3 w-full gap-6 p-6">
+      <FirstGrid />
+      <SecondGrid />
+      <ThirdGrid />
     </div>
   );
 };

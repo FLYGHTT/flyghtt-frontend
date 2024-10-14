@@ -7,6 +7,8 @@ import { Toaster } from "react-hot-toast";
 import "/node_modules/react-grid-layout/css/styles.css";
 import "/node_modules/react-resizable/css/styles.css";
 import { Modal, ModalProvider } from "@/components/Modal";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -37,6 +39,18 @@ export default function RootLayout({
                     minWidth: "max-content",
                   },
                 }}
+              />
+              <ToastContainer
+                position="top-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="colored"
               />
             </AppProvider>
           </ModalProvider>

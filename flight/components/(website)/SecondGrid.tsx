@@ -8,7 +8,7 @@ import Link from "next/link";
 const SecondGrid = () => {
   const { handleClick, scope } = useNavigate();
   return (
-    <div className="row-span-4 w-full grid grid-cols-12 gap-8" ref={scope}>
+    <div className="w-full grid grid-cols-12 gap-8" ref={scope}>
       <div
         className={`${styles.mat} bg-green text-black/20  col-span-4 text-[100px] overflow-hidden cursor-pointer `}
         onClick={(e) => handleClick(e, "/about")}
@@ -18,9 +18,14 @@ const SecondGrid = () => {
       <div
         className={`${styles.mat} cursor-default col-span-4 bg-transparent flex  items-center justify-center flex-col`}
       >
-        <Image src={logo} alt="logo" priority className="cursor-default"/>
-        <p className="my-4 text-black cursor-default">Take your startup to new heights</p>
-        <Link href="/signup" className="uppercase w-1/2 bg-primary text-black py-4 mt-3 rounded-2xl flex justify-center ">
+        <Image src={logo} alt="logo" priority className="cursor-default" />
+        <p className="my-4 text-black cursor-default">
+          Take your startup to new heights
+        </p>
+        <Link
+          href="/signup"
+          className="uppercase w-1/2 bg-primary text-black py-4 mt-3 rounded-2xl flex justify-center "
+        >
           Get Started
         </Link>
       </div>

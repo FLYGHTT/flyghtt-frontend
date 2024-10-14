@@ -38,8 +38,8 @@ export interface SignUpInputs {
   email: string;
   password: string;
   confirmPassword: string;
-  remember: boolean;
-  newsletter: boolean;
+  isAcceptTerms?: boolean;
+  newsletter?: boolean;
   role: string;
 }
 
@@ -65,6 +65,13 @@ export interface User {
   token?: string;
 }
 export interface LoggedInUser {
+  userId: string;
+  emailVerified: boolean;
+  email: string;
+  firstName: string;
+  lastName: string;
+}
+export interface UserDetails {
   userId: string;
   emailVerified: boolean;
   email: string;

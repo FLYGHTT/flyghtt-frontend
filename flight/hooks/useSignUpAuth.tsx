@@ -73,22 +73,7 @@ const useSignUpAuth = () => {
     }));
   };
 
-  const validateInputs = (inputs: SignUpInputs) => {
-    const { firstName, lastName, email, password, confirmPassword, remember } =
-      inputs;
-    if (
-      !firstName.trim() ||
-      !lastName.trim() ||
-      !email.trim() ||
-      !password.trim() ||
-      !confirmPassword.trim() ||
-      !remember
-    ) {
-      setUnknownError("Please fill in all fields");
-      return false;
-    } else {
-      setUnknownError("");
-    }
+
 
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     if (!emailRegex.test(email)) {

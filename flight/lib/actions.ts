@@ -45,23 +45,4 @@ export const getTools = async () => {
   }
 };
 
-export const getCurrentUser = async (token: string): Promise<LoggedInUser> => {
-  console.log(token, "token");
-  if (!token) {
-    redirect("/login");
-  }
-  try {
-    const response = await fetch(`${baseURL}/users`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    const data = await response.json();
 
-    return data;
-  } catch (error) {
-    throw error;
-  }
-};
