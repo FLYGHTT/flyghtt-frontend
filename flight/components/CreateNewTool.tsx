@@ -7,7 +7,7 @@ const CreateNewTool = () => {
   const { handleAddTab } = useTab();
   return (
     <Link
-      href="/dashboard/create-tool"
+      href="/dashboard/tool-workspace"
       className="flex gap-2 items-center font-medium"
       onClick={handleAddTab}
     >

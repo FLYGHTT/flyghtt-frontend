@@ -3,10 +3,10 @@ import React from "react";
 import eagle from "@/assets/images/logo.svg";
 import Image from "next/image";
 
-import { sidebartop, sidebarbottom } from "@/lib/data";
+import { sidebartop } from "@/lib/data";
 import { redirect, usePathname } from "next/navigation";
 import Link from "next/link";
-import { IconLogout, IconLogout2 } from "@tabler/icons-react";
+import { IconLogout2 } from "@tabler/icons-react";
 import { signOutUser } from "@/lib/actions/user.actions";
 const Sidebar = () => {
   const pathname = usePathname();
@@ -42,40 +42,15 @@ const Sidebar = () => {
       </div>
       <hr className="w-full border-t border-t-gray-300 my-4" />
       <p
-        className={`flex items-center w-full p-2 rounded-lg mt-3 hover:bg-green/10 cursor-pointer`}
+        className={`flex items-center w-full p-2 gap-4 rounded-lg mt-3 hover:bg-green/10 cursor-pointer`}
         onClick={async () => {
           await signOutUser();
           redirect("/login");
         }}
       >
         <IconLogout2 />
-        {/* <Image src={item.icon} alt={item.title} width={20} height={20} /> */}
-        <p className="ml-4">Logout</p>
+        Logout
       </p>
-      <div className="">
-        {/* {sidebarbottom.map((item, index) => {
-            const isActive =
-              (pathname?.includes(item.link) && item.link.length > 1) ||
-              pathname === item.link;
-            return (
-              <Link
-                href={item.link}
-                className={`flex items-center p-4 px-6 hover:bg-gray-100 cursor-pointer  ${
-                  isActive ? "bg-green/30" : "hover:bg-green/10 "
-                } `}
-                key={index}
-              >
-                <Image
-                  src={item.icon}
-                  alt={item.title}
-                  width={20}
-                  height={20}
-                />
-                <p className="ml-4">{item.title}</p>
-              </Link>
-            );
-          })} */}
-      </div>
     </aside>
   );
 };

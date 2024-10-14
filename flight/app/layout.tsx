@@ -4,8 +4,6 @@ import "./globals.css";
 import { AppProvider } from "@/context/AppContext";
 import QueryProvider from "./QueryProvider";
 import { Toaster } from "react-hot-toast";
-import "/node_modules/react-grid-layout/css/styles.css";
-import "/node_modules/react-resizable/css/styles.css";
 import { Modal, ModalProvider } from "@/components/Modal";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

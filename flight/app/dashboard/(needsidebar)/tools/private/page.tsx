@@ -1,13 +1,12 @@
-import React from "react";
-
-import ToolCategories from "@/components/ToolCategories";
-import CreateNewTool from "@/components/CreateNewTool";
+import { redirect } from "next/navigation";
 
 import { auth } from "@/auth";
 import { toast } from "react-toastify";
-import { redirect } from "next/navigation";
+
 import { getUserDetails } from "@/lib/actions/user.actions";
+
 import ToolsHeader from "@/components/ToolsHeader";
+import ToolsDisplay from "@/components/ToolsDisplay";
 const Page = async () => {
   const session = await auth();
   if (!session) {
@@ -19,13 +18,12 @@ const Page = async () => {
   if (!userDetails) {
     toast.error("Couldn't fetch user");
   }
+
   return (
     <div className="h-full w-full">
-      <ToolsHeader userDetails={userDetails} token={token} />
-
-      <div className="p-6">
-        <CreateNewTool />
-        <ToolCategories token={token} />
+      <ToolsHeader userDetails={userDetails} token={token} isPrivate={true} />
+      <div className="px-6 py-4">
+        <ToolsDisplay token={token} isPrivate={true} />
       </div>
     </div>
   );

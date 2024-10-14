@@ -15,7 +15,7 @@ const Page = async () => {
   if (!session) {
     redirect("/login");
   }
-  console.log(session, "session");
+
   const token = session.user.token;
   const userDetails = await getUserDetails(token);
   if (!userDetails) {
@@ -24,9 +24,6 @@ const Page = async () => {
   return (
     <div className="h-full w-full">
       <Header userDetails={userDetails} />
-      {/* <div className="grid grid-cols-3 mt-6">
-        <AddNew text="New File" />
-      </div> */}
       <div className="px-6">
         <ToolAndBusinessStat token={token} />
         <QuickLinks />
