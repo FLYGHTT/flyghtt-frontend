@@ -5,7 +5,7 @@ import { IconBriefcase2, IconTool } from "@tabler/icons-react";
 const ToolAndBusinessStat = ({ token }: { token: string }) => {
   const { data: tools } = useGetToolsQuery(token);
   const { data: businesses } = useBusinessesQuery(token);
-  console.log(tools, "tools");
+
   const stats = [
     {
       icon: <IconTool className="w-5 h-5" />,

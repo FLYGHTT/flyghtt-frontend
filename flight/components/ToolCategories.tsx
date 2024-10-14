@@ -2,12 +2,12 @@
 import React from "react";
 import Link from "next/link";
 import { useGetToolsQuery } from "@/hooks/reactQueryHooks";
-const ToolCategories = () => {
+const ToolCategories = ({ token }: { token: string }) => {
   const baseUrl = "/dashboard/tools";
-  const { data } = useGetToolsQuery();
+  const { data: tools } = useGetToolsQuery(token);
 
-  const publicTools = data?.filter((tool) => tool.public);
-  const privateTools = data?.filter((tool) => !tool.public);
+  const publicTools = tools?.filter((tool) => tool.public);
+  const privateTools = tools?.filter((tool) => !tool.public);
 
   const toolCategories = [
     {
@@ -20,23 +20,23 @@ const ToolCategories = () => {
       link: `${baseUrl}/public`,
       number: publicTools?.length || 0,
     },
-    {
-      name: "Liked tools",
-      link: `${baseUrl}/favourites`,
-      number: 4,
-    },
-    {
-      name: "Drafts",
-      link: `${baseUrl}/draft`,
-      number: 4,
-    },
+    // {
+    //   name: "Liked tools",
+    //   link: `${baseUrl}/favourites`,
+    //   number: 4,
+    // },
+    // {
+    //   name: "Drafts",
+    //   link: `${baseUrl}/draft`,
+    //   number: 4,
+    // },
   ];
   return (
-    <div className="w-[50%] flex flex-col gap-3">
+    <div className=" flex flex-col gap-4 mt-8">
       {toolCategories.map((category, index) => (
         <div
           key={index}
-          className="flex items-center p-4 my-2  justify-between shadow-md"
+          className="flex  rounded-lg bg-white items-center p-4 w-[50%]  justify-between shadow-md"
         >
           <h3>
             {category.name} ({category.number})

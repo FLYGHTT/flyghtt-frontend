@@ -7,7 +7,7 @@ import { auth } from "@/auth";
 import { toast } from "react-toastify";
 import { redirect } from "next/navigation";
 import { getUserDetails } from "@/lib/actions/user.actions";
-import Header from "@/components/Header";
+import Header from "@/components/HomeHeader";
 import ToolAndBusinessStat from "@/components/ToolAndBusinessStat";
 import QuickLinks from "@/components/QuickLinks";
 const Page = async () => {

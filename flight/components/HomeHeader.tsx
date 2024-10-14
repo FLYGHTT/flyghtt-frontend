@@ -1,5 +1,6 @@
 import { UserDetails } from "@/types";
 import React from "react";
+import UserImage from "./UserImage";
 
 const Header = ({ userDetails }: { userDetails: UserDetails | null }) => {
   return (
@@ -7,9 +8,7 @@ const Header = ({ userDetails }: { userDetails: UserDetails | null }) => {
       <h1 className="text-2xl">
         Welcome {userDetails && <b>{userDetails?.firstName}</b>}!
       </h1>
-      <div className="bg-darkPurple text-white cursor-pointer w-10 h-10 rounded-full flex items-center justify-center">
-        {userDetails?.firstName.charAt(0).toUpperCase()}
-      </div>
+      <UserImage userDetails={userDetails} />
     </div>
   );
 };
