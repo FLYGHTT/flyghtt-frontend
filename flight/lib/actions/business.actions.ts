@@ -1,7 +1,6 @@
 "use server";
 
-import { redirect } from "next/navigation";
-import http, { baseURL } from "./http";
+import http, { baseURL } from "../http";
 
 import { LoggedInUser } from "@/types";
 export const getBusinessById = async (id: string, token: string) => {
@@ -21,19 +20,15 @@ export const getBusinessById = async (id: string, token: string) => {
 
 export const getBusinesses = async (token: string) => {
   try {
-    if (!token) {
-      throw new Error("No token found");
-    }
-    const response = await fetch(`${baseURL}/business/user`, {
+    const response = await http.get(`${baseURL}/business/user`, {
       headers: {
-        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
     });
-    const data = await response.json();
-    return data;
+    return response.data;
   } catch (error) {
-    throw error;
+    console.log(error);
+    return null;
   }
 };
 export const getTools = async () => {
@@ -44,5 +39,3 @@ export const getTools = async () => {
     throw error;
   }
 };
-
-

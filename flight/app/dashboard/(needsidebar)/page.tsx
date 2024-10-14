@@ -18,9 +18,7 @@ const Page = async () => {
 
   const token = session.user.token;
   const userDetails = await getUserDetails(token);
-  if (!userDetails) {
-    toast.error("Couldn't fetch user");
-  }
+
   return (
     <div className="h-full w-full">
       <Header userDetails={userDetails} />

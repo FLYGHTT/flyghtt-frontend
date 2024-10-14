@@ -11,14 +11,14 @@ const ToolCategories = ({ token }: { token: string }) => {
 
   const toolCategories = [
     {
-      name: "Private tools",
-      link: `${baseUrl}/private`,
-      number: privateTools?.length || 0,
-    },
-    {
       name: "Public tools",
       link: `${baseUrl}/public`,
       number: publicTools?.length || 0,
+    },
+    {
+      name: "Private tools",
+      link: `${baseUrl}/private`,
+      number: privateTools?.length || 0,
     },
     // {
     //   name: "Liked tools",

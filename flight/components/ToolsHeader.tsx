@@ -16,6 +16,7 @@ const ToolsHeader = ({
   isPrivate?: boolean;
 }) => {
   const { data: tools } = useGetToolsQuery(token);
+
   const publicTools = tools?.filter((tool) => tool.public);
   const privateTools = tools?.filter((tool) => !tool.public);
   let activeTools = tools;

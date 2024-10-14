@@ -1,5 +1,5 @@
 import Business from "@/components/Business";
-import { getBusinessById } from "@/lib/actions";
+import { getBusinessById } from "@/lib/actions/business.actions";
 import React from "react";
 import { queryClient } from "@/lib/http";
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query";

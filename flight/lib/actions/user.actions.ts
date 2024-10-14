@@ -2,9 +2,7 @@
 
 import { signIn, signOut } from "@/auth";
 import http from "../http";
-import { SignUpInputs, User, UserDetails } from "@/types";
-import { baseURL } from "../http";
-import { redirect } from "next/navigation";
+import { User, UserDetails } from "@/types";
 
 export const getUser = async (email: string, password: string) => {
   try {
@@ -61,6 +59,7 @@ export const getUserDetails = async (
     const userDetails = response.data;
     return userDetails;
   } catch (error) {
-    throw error;
+    console.log(error);
+    return null;
   }
 };
