@@ -6,14 +6,18 @@ import {
 } from "@tanstack/react-query";
 
 import http from "../lib/http";
-import { Business, LoginInputs, SignUpInputs, Tool, User } from "@/types";
-
+import { Business, Tool } from "@/types";
+const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL;
 // Queries
-export const useBusinessesQuery = () => {
+export const useBusinessesQuery = (token: string) => {
   return useQuery<Business[]>({
     queryKey: ["businesses"],
     queryFn: async () => {
-      const response = await http.get("/business/user");
+      const response = await http.get(`${baseURL}/business/user`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       return response.data;
     },
   });
@@ -33,11 +37,15 @@ export const useCurrentUserQuery = () => {
     queryFn: () => http.get("/users"),
   });
 };
-export const useGetToolsQuery = () => {
+export const useGetToolsQuery = (token: string) => {
   return useQuery<Tool[]>({
     queryKey: ["tools"],
     queryFn: async () => {
-      const response = await http.get(`/tools`);
+      const response = await http.get(`${baseURL}/tools`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       return response.data;
     },
   });
@@ -46,92 +54,13 @@ export const useGetToolByIdQuery = (id: string) => {
   return useQuery<Tool>({
     queryKey: ["tool", id],
     queryFn: async () => {
-      const response = await http.get(`/tools/${id}`);
+      const response = await http.get(`${baseURL}/tools/${id}`);
       return response.data;
     },
   });
 };
 //  Mutations
-export const useLoginMutation = (
-  payload: MutationOptions<
-    | User
-    | {
-        message: string;
-      },
-    unknown,
-    LoginInputs
-  >
-) => {
-  const { onSuccess, ...options } = payload;
 
-  return useMutation<
-    | User
-    | {
-        message: string;
-      },
-    unknown,
-    LoginInputs
-  >({
-    mutationFn: async (data) => {
-      const response = await http.post("/authentication/login", data);
-      return response.data;
-    },
-    onSuccess,
-    ...options,
-  });
-};
-
-export const useSignUpMutation = (
-  payload: MutationOptions<
-    | User
-    | {
-        message: string;
-      },
-    {
-      response: {
-        data: {
-          message: string;
-        };
-      };
-    },
-    SignUpInputs
-  >
-) => {
-  const { onSuccess, ...options } = payload;
-
-  return useMutation<
-    | User
-    | {
-        message: string;
-      },
-    {
-      response: {
-        data: {
-          message: string;
-        };
-      };
-    },
-    SignUpInputs
-  >({
-    mutationFn: async (data) => {
-      const response = await http.post("/authentication/sign-up", data);
-      return response.data;
-    },
-    onSuccess,
-    ...options,
-  });
-};
-export const useSetCookieMutation = (payload: MutationOptions) => {
-  const { ...options } = payload;
-
-  return useMutation({
-    mutationFn: async () => {
-      return http.post("http://localhost:3000/api/login", payload);
-    },
-
-    ...options,
-  });
-};
 export const useDeleteBusinessMutation = (
   payload: UseMutationOptions<
     (index: string) => Promise<{
@@ -157,21 +86,6 @@ export const useDeleteBusinessMutation = (
   });
 };
 
-export const useCookieMutation = (
-  payload: MutationOptions & { token: string }
-) => {
-  const { token, ...options } = payload;
-  return useMutation({
-    mutationFn: async () => {
-      return http.post("http://localhost:3000/api/login", null, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-    },
-    ...options,
-  });
-};
 export const useCreateBusinessMutation = (
   payload: MutationOptions<
     | Business
@@ -224,55 +138,6 @@ export const useCreateBusinessMutation = (
   });
 };
 
-export const useVerifyOtpMutation = (
-  payload: MutationOptions<
-    | User
-    | {
-        message: string;
-      },
-    {
-      response: {
-        data: {
-          message: string;
-        };
-      };
-    },
-    {
-      otp: number;
-    }
-  >
-) => {
-  const { onSuccess, ...options } = payload;
-
-  return useMutation<
-    | User
-    | {
-        message: string;
-      },
-    {
-      response: {
-        data: {
-          message: string;
-        };
-      };
-    },
-    {
-      otp: number;
-    }
-  >({
-    mutationFn: async (data) => {
-      const response = await http.post("/authentication/verify/otp", data, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      console.log(response, "response");
-      return response.data;
-    },
-    onSuccess,
-    ...options,
-  });
-};
 interface SubmittedModel {
   toolName: string;
   toolDescription: string;

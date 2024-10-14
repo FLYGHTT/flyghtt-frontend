@@ -77,6 +77,7 @@ export const plans = [
     ],
   },
 ];
+
 import home from "@/assets/icons/home.svg";
 import businessicon from "@/assets/icons/business.svg";
 import premium from "@/assets/icons/premium.svg";
@@ -85,6 +86,7 @@ import draft from "@/assets/icons/draft.svg";
 import settings from "@/assets/icons/settings.svg";
 import explore from "@/assets/icons/explore.svg";
 import { FaCheck, FaR } from "react-icons/fa6";
+import { IconTool } from "@tabler/icons-react";
 export const sidebartop = [
   {
     title: "Home",

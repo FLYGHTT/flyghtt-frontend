@@ -4,6 +4,7 @@ import { signIn, signOut } from "@/auth";
 import http from "../http";
 import { SignUpInputs, User, UserDetails } from "@/types";
 import { baseURL } from "../http";
+import { redirect } from "next/navigation";
 
 export const getUser = async (email: string, password: string) => {
   try {
