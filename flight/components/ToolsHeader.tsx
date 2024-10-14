@@ -1,22 +1,21 @@
-"use client";
-import { useGetToolsQuery } from "@/hooks/reactQueryHooks";
-import { UserDetails } from "@/types";
+
+import { Tool, UserDetails } from "@/types";
 import React from "react";
 import UserImage from "./UserImage";
 
 const ToolsHeader = ({
   userDetails,
-  token,
+
   isPublic,
   isPrivate,
+  tools,
 }: {
   userDetails: UserDetails | null;
-  token: string;
+
   isPublic?: boolean;
   isPrivate?: boolean;
+  tools: Tool[];
 }) => {
-  const { data: tools } = useGetToolsQuery(token);
-
   const publicTools = tools?.filter((tool) => tool.public);
   const privateTools = tools?.filter((tool) => !tool.public);
   let activeTools = tools;

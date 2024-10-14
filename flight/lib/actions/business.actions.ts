@@ -2,7 +2,6 @@
 
 import http, { baseURL } from "../http";
 
-import { LoggedInUser } from "@/types";
 export const getBusinessById = async (id: string, token: string) => {
   try {
     const response = await fetch(`${baseURL}/business/${id}`, {
@@ -29,13 +28,5 @@ export const getBusinesses = async (token: string) => {
   } catch (error) {
     console.log(error);
     return null;
-  }
-};
-export const getTools = async () => {
-  try {
-    const response = await http.get("/tools");
-    return response.data;
-  } catch (error) {
-    throw error;
   }
 };

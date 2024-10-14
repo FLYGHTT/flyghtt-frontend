@@ -1,10 +1,10 @@
-"use client";
+
 import React from "react";
 import Link from "next/link";
-import { useGetToolsQuery } from "@/hooks/reactQueryHooks";
-const ToolCategories = ({ token }: { token: string }) => {
+
+import { Tool } from "@/types";
+const ToolCategories = ({ tools }: { tools: Tool[] }) => {
   const baseUrl = "/dashboard/tools";
-  const { data: tools } = useGetToolsQuery(token);
 
   const publicTools = tools?.filter((tool) => tool.public);
   const privateTools = tools?.filter((tool) => !tool.public);
