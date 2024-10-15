@@ -3,20 +3,20 @@ import React, { useState } from "react";
 import { styles } from "../styles";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import useSignUpAuth from "@/hooks/useSignUpAuth";
+
 import Password from "../ui/Password";
 import { authFormvariants } from "@/lib/variants";
 import { FaCog } from "react-icons/fa";
 import PasswordInput from "../ui/Password";
 import { toast } from "react-toastify";
-import { SignUpInputs } from "@/types";
+
 import { useRouter } from "next/navigation";
-import http from "@/lib/http";
+
 import { signUpUser } from "@/lib/actions/user.actions";
 
 const SignUpForm = () => {
   const router = useRouter();
-  // const { handleSubmit, isLoading } = useSignUpAuth();
+
   const [isLoading, setIsLoading] = useState(false);
   const validateInputs = (inputs: any) => {
     const { firstName, lastName, email, password, confirmPassword } = inputs;

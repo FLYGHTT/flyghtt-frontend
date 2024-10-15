@@ -13,7 +13,8 @@ export const getBusinessById = async (id: string, token: string) => {
     const data = await response.json();
     return data;
   } catch (error) {
-    throw error;
+    console.log(error);
+    return null;
   }
 };
 
@@ -34,6 +35,19 @@ export const getBusinesses = async (token: string) => {
 export const deleteBusiness = async (id: string, token: string) => {
   try {
     const response = await http.delete(`${baseURL}/business/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const createBusiness = async (data: any, token: string) => {
+  try {
+    const response = await http.post(`${baseURL}/business`, data, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

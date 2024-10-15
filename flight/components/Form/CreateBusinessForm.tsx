@@ -10,43 +10,23 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
-import pluscircle from "@/assets/icons/plus-circle.svg";
+import http from "@/lib/http";
 import { useRouter } from "next/navigation";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { BusinessSchema } from "@/lib/validations/create-business";
-import Image from "next/image";
-import { useCreateBusinessMutation } from "@/hooks/reactQueryHooks";
+
 import { FaCog } from "react-icons/fa";
-import { queryClient } from "@/lib/http";
-import toast from "react-hot-toast";
-import { revalidatePath } from "next/cache";
-const CreateBusinessForm = () => {
+
+import { toast } from "react-toastify";
+import { createBusiness } from "@/lib/actions/business.actions";
+
+const CreateBusinessForm = ({ token }: { token: string }) => {
   const [files, setFiles] = useState<File[]>([]);
-  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-  const { mutate, isPending } = useCreateBusinessMutation({
-    onSuccess: (data) => {
-      if ("message" in data) {
-        setError(data.message);
-        return;
-      }
-    
-      queryClient.invalidateQueries({ queryKey: ["businesses"] });
-      router.push("/dashboard/businesses");
-      toast.success("Business created successfully", {
-        id: "create-business-success",
-      });
-    },
-    onError: (data) => {
-      setError(data.response.data.message);
-      toast.error(data.response.data.message, {
-        id: "create-business-error",
-      });
-    },
-  });
   const emptyFile = new File([], "");
   const form = useForm({
     resolver: zodResolver(BusinessSchema),
@@ -78,8 +58,23 @@ const CreateBusinessForm = () => {
       fileReader.readAsDataURL(file);
     }
   };
-  function onSubmit(values: z.infer<typeof BusinessSchema>) {
-    mutate(values);
+  const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL;
+  async function onSubmit(values: z.infer<typeof BusinessSchema>) {
+    try {
+      setIsLoading(true);
+      await http.post(`${baseURL}/business`, values, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setIsLoading(false);
+      router.push("/dashboard/businesses");
+    } catch (error) {
+      setIsLoading(false);
+      console.log(error);
+      toast.error("An error occurred, Could not create business");
+    }
   }
   return (
     <Form {...form}>
@@ -126,10 +121,10 @@ const CreateBusinessForm = () => {
             </FormItem>
           )}
         />
-        <div className="flex gap-2 text-sm my-2">
+        {/* <div className="flex gap-2 text-sm my-2">
           <Image src={pluscircle} alt="pluscircle" width={20} height={20} />
           Add collaborators
-        </div>
+        </div> */}
         <FormField
           control={form.control}
           name="businessLogo"
@@ -153,13 +148,12 @@ const CreateBusinessForm = () => {
         />
         <button
           type="submit"
-          disabled={isPending}
+          disabled={isLoading}
           className="bg-green py-2 rounded-md hover:opacity-75 text-black flex gap-3 items-center justify-center disabled:cursor-not-allowed disabled:opacity-50 "
         >
-          {isPending ? "Please Wait" : "Create Business"}
-          {isPending && <FaCog className="animate-spin text-white" />}
+          {isLoading ? "Please Wait..." : "Create Business"}
+          {isLoading && <FaCog className="animate-spin text-white" />}
         </button>
-        {error && <p className="text-sm text-red-500 mx-auto">{error}</p>}
       </form>
     </Form>
   );

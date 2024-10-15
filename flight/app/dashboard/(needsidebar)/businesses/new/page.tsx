@@ -1,15 +1,24 @@
 import React from "react";
 
 import CreateBusinessForm from "@/components/Form/CreateBusinessForm";
+import { auth } from "@/auth";
 
-import Back from "@/components/Back";
-const Page = () => {
+import { redirect } from "next/navigation";
+import { getUserDetails } from "@/lib/actions/user.actions";
+
+import CreateBusinessHeader from "@/components/CreateBusinessHeader";
+const Page = async () => {
+  const session = await auth();
+  if (!session) {
+    redirect("/login");
+  }
+  const token = session.user.token;
+  const userDetails = await getUserDetails(token);
   return (
-    <div className=" max-h-[80vh] overflow-auto  relative">
-      <Back />
-      <div className="p-7">
-        <h1 className="text-xl font-bold">My Businesses</h1>
-        <CreateBusinessForm />
+    <div className=" h-full  relative">
+      <CreateBusinessHeader userDetails={userDetails} />
+      <div className="px-6">
+        <CreateBusinessForm token={token} />
       </div>
     </div>
   );

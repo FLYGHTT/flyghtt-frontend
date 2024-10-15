@@ -12,7 +12,7 @@ import { formatDateToMonthYear, getImageSrc, getInitials } from "@/lib/utils";
 import type { Business } from "@/types";
 
 import DeleteBusiness from "./DeleteBusiness";
-import { notFound } from "next/navigation";
+
 const Business = ({
   business,
   token,
@@ -20,7 +20,6 @@ const Business = ({
   business: Business;
   token: string;
 }) => {
-  if (!business) return notFound();
   const base64Data = business.businessLogoImageData;
 
   const imageSrc = getImageSrc(base64Data);

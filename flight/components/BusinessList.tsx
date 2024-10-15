@@ -8,21 +8,13 @@ import { MdOutlineHandshake } from "react-icons/md";
 import { getImageSrc, getInitials } from "@/lib/utils";
 import { Business } from "@/types";
 import { IconTool } from "@tabler/icons-react";
-import { IconCirclePlus } from "@tabler/icons-react";
+
 const BusinessList = ({ businesses }: { businesses: Business[] | null }) => {
-  if (!businesses)
+  console.log(businesses);
+  if (businesses?.length === 0 || !businesses)
     return (
       <div className="h-full flex-col gap-4 flex items-center justify-center">
-        <h1 className="text-xl font-bold">No tools</h1>
-        <Link
-          href="/dashboard/businesses/new"
-          className=" w-[200px] p-6 hover:border-green border border-transparent rounded-xl bg-white flex flex-col items-center"
-        >
-          <IconCirclePlus className="w-8 h-8" />
-          <span className="flex gap-2 font-bold text-sm mt-2 items-center">
-            New Businesses
-          </span>
-        </Link>
+        <h1 className="text-xl font-bold">No Businesses</h1>
       </div>
     );
 
@@ -54,7 +46,9 @@ const BusinessList = ({ businesses }: { businesses: Business[] | null }) => {
                   </div>
                 )}
                 <div className="ml-8">
-                  <h1 className="font-bold my-1 text-lg">{business.businessName}</h1>
+                  <h1 className="font-bold my-1 text-lg">
+                    {business.businessName}
+                  </h1>
                   <div className="flex gap-3">
                     {/* <p className="text-sm flex gap-2 items-center">
                       <MdOutlineHandshake size={16} />

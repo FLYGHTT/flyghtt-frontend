@@ -1,6 +1,6 @@
-"use client"
+"use client";
 import React from "react";
-import { revalidatePath } from "next/cache";
+
 import { IconTrash } from "@tabler/icons-react";
 import { deleteBusiness } from "@/lib/actions/business.actions";
 import { redirect } from "next/navigation";
@@ -8,7 +8,6 @@ import { toast } from "react-toastify";
 const DeleteBusiness = ({ id, token }: { id: string; token: string }) => {
   const handleDelete = async () => {
     await deleteBusiness(id, token);
-    revalidatePath("/dashboard/businesses");
     toast.success("Business deleted successfully");
     redirect("/dashboard/businesses");
   };

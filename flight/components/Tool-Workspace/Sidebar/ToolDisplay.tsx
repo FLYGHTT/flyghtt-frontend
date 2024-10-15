@@ -2,11 +2,10 @@
 import React from "react";
 import SidebarTools from "@/components/Tool-Workspace/Sidebar/SidebarTools";
 import { useGetToolsQuery } from "@/hooks/reactQueryHooks";
-import Loading from "@/app/(root)/loading";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 const ToolDisplay = () => {
-  const { data, isLoading, isError } = useGetToolsQuery();
+  // const { data, isLoading, isError } = useGetToolsQuery();
 
   return (
     <Tabs
@@ -19,20 +18,20 @@ const ToolDisplay = () => {
         {/* <TabsTrigger value="liked">Liked</TabsTrigger> */}
       </TabsList>
       <TabsContent value="public" className="w-full h-full">
-        <SidebarTools
+        {/* <SidebarTools
           type="public"
           data={data}
           isLoading={isLoading}
           isError={isError}
-        />
+        /> */}
       </TabsContent>
       <TabsContent value="private" className="w-full h-full">
-        <SidebarTools
+        {/* <SidebarTools
           type="private"
           data={data}
           isLoading={isLoading}
           isError={isError}
-        />
+        /> */}
       </TabsContent>
     </Tabs>
   );
