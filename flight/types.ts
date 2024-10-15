@@ -52,7 +52,7 @@ export interface Business {
   businessName: string;
   description: string;
   numberOfEmployees: number;
-  createdAt: Date;
+  createdAt: string;
   numberOfBusinessTools: number;
   businessLogoImageData: string;
 }

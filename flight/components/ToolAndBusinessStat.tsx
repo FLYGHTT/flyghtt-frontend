@@ -1,11 +1,14 @@
-"use client";
 import React from "react";
-import { useBusinessesQuery, useGetToolsQuery } from "@/hooks/reactQueryHooks";
-import { IconBriefcase2, IconTool } from "@tabler/icons-react";
-const ToolAndBusinessStat = ({ token }: { token: string }) => {
-  const { data: tools } = useGetToolsQuery(token);
-  const { data: businesses } = useBusinessesQuery(token);
 
+import { IconBriefcase2, IconTool } from "@tabler/icons-react";
+import { Business, Tool } from "@/types";
+const ToolAndBusinessStat = ({
+  businesses,
+  tools,
+}: {
+  businesses: Business[];
+  tools: Tool[];
+}) => {
   const stats = [
     {
       icon: <IconTool className="w-5 h-5" />,

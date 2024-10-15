@@ -1,9 +1,15 @@
-import Business from "@/components/Business";
+import BusinessComponent from "@/components/Business";
 import { getBusinessById } from "@/lib/actions/business.actions";
 import React from "react";
-import { queryClient } from "@/lib/http";
-import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
-import { cookies } from "next/headers";
+
+import { auth } from "@/auth";
+import BusinessHeader from "@/components/BusinessHeader";
+import { getBusinesses } from "@/lib/actions/business.actions";
+
+import { getUserDetails } from "@/lib/actions/user.actions";
+import { Business } from "@/types";
+
+import { redirect } from "next/navigation";
 export const revalidate = 60;
 export const dynamicParams = true;
 
@@ -14,15 +20,18 @@ const Page = async ({
     id: string;
   };
 }) => {
-  const cookieStore = cookies();
-  const cookieToken = cookieStore.get("flyghtt_token")?.value || "";
-
-  const business = await getBusinessById(id, cookieToken);
+  const session = await auth();
+  if (!session) {
+    redirect("/login");
+  }
+  const token = session?.user.token;
+  const business = await getBusinessById(id, token!);
+  const userDetails = await getUserDetails(token);
+  const businesses: Business[] | null = await getBusinesses(token!);
   return (
     <div>
-      <HydrationBoundary state={dehydrate(queryClient)}>
-        <Business business={business} />
-      </HydrationBoundary>
+      <BusinessHeader userDetails={userDetails} businesses={businesses} />
+      <BusinessComponent business={business} token={token}/>
     </div>
   );
 };

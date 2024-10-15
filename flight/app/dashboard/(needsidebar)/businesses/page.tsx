@@ -1,5 +1,4 @@
 import React from "react";
-import { cookies } from "next/headers";
 
 import BusinessList from "@/components/BusinessList";
 import CreateNew from "@/components/CreateNew";

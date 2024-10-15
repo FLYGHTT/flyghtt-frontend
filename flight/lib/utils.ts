@@ -22,5 +22,13 @@ export const getImageSrc = (base64Data: string) => {
 export function generateRandomString(length: number) {
   return crypto.randomBytes(length).toString("hex");
 }
-
-console.log(generateRandomString(10));
+export function getInitials(businessName: string) {
+  return businessName
+    .split(" ") // Split by space
+    .map((word) => word[0]) // Get the first letter of each word
+    .join(""); // Join the letters together
+}
+export function formatDateToMonthYear(date: string) {
+  const newDate = new Date(date);
+  return newDate.toLocaleString("default", { month: "long", year: "numeric" });
+}

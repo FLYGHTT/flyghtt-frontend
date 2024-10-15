@@ -1,37 +1,29 @@
-"use client";
 import React from "react";
 import Image from "next/image";
 
 import tool from "@/assets/icons/tool.svg";
-import user from "@/assets/icons/user.svg";
+
 import share from "@/assets/icons/share.svg";
 import trash from "@/assets/icons/trash.svg";
 import eye from "@/assets/icons/eye.svg";
-import edit from "@/assets/icons/edit.svg";
-import { redirect } from "next/navigation";
 
-import { getImageSrc } from "@/lib/utils";
+import { formatDateToMonthYear, getImageSrc, getInitials } from "@/lib/utils";
 
-import { queryClient } from "@/lib/http";
-import toast from "react-hot-toast";
 import type { Business } from "@/types";
-import { revalidatePath } from "next/cache";
-const Business = ({ business }: { business: Business }) => {
-  const base64Data = business.businessLogoImageData;
-  
-  const imageSrc = getImageSrc(base64Data);
 
-  const handleDelete = async () => {
-    await fetch("api/cookies", {
-      method: "DELETE",
-    });
-    queryClient.invalidateQueries({ queryKey: ["businesses"] });
-    revalidatePath("/dashboard/businesses");
-    toast.success("Business deleted successfully", {
-      id: "delete-business-success",
-    });
-    redirect("/dashboard/businesses");
-  };
+import DeleteBusiness from "./DeleteBusiness";
+import { notFound } from "next/navigation";
+const Business = ({
+  business,
+  token,
+}: {
+  business: Business;
+  token: string;
+}) => {
+  if (!business) return notFound();
+  const base64Data = business.businessLogoImageData;
+
+  const imageSrc = getImageSrc(base64Data);
 
   const tools = [
     {
@@ -43,24 +35,12 @@ const Business = ({ business }: { business: Business }) => {
       modified: "24 July, 2024",
     },
   ];
-  const collaborators = [
-    {
-      name: "John Doe",
-      email: "taiwoonileowo17@gmail.com",
-      role: "Administrator",
-    },
-    {
-      name: "John Doe",
-      email: "taiwoonileowo17@gmail.com",
-      role: "Administrator",
-    },
-  ];
-
+  // TODO:TOOLS DISPLAY
   return (
-    <div className="overflow-y-auto max-h-[85vh] relative">
+    <div className="h-full relative">
       <div className="p-8 px-10 pb-16">
         <div className="flex justify-between items-center ">
-          <div className="flex gap-6  items-center">
+          <div className="flex gap-6 ">
             {base64Data ? (
               <Image
                 src={imageSrc}
@@ -70,36 +50,32 @@ const Business = ({ business }: { business: Business }) => {
                 className="object-cover rounded-md"
               />
             ) : (
-              <div className="bg-gray-200 w-32 h-32 rounded-md"></div>
+              <div className="bg-gray-200 flex items-center justify-center w-32 h-32 rounded-md">
+                <span className="text-xl font-bold max-w-full truncate">
+                  {getInitials(business.businessName)}
+                </span>
+              </div>
             )}{" "}
             <div>
               <h1 className="text-2xl font-bold mb-2">
                 {business.businessName}
               </h1>
               <div className="flex gap-3 mb-2">
-                <p className="text-xs flex gap-2 items-center">
+                {/* <p className="text-xs flex gap-2 items-center">
                   <Image src={user} width={15} height={15} alt="employees" />
                   {business.numberOfEmployees}
-                </p>
+                </p> */}
                 <p className="text-xs flex gap-2 items-center">
                   <Image src={tool} width={15} height={15} alt="tools" />
                   {business.numberOfBusinessTools}
                 </p>
               </div>
-              <p className="text-sm text-gray-500">Date Created: July 2024 </p>
+              <p className="text-sm text-gray-500">
+                Date Created: {formatDateToMonthYear(business.createdAt)}{" "}
+              </p>
             </div>
           </div>
-          <div className="flex flex-col items-center gap-2">
-            <div
-              className="bg-gray-200 p-2 w-fit rounded-md mb-2 cursor-pointer"
-              onClick={handleDelete}
-            >
-              <Image src={trash} alt="delete" width={20} height={20} />
-            </div>
-            <button className="bg-green w-[200px] rounded-md py-2">
-              Open in Editor
-            </button>
-          </div>
+          <DeleteBusiness id={business.businessId} token={token} />
         </div>
         <div className=" grid grid-cols-12 ">
           <div className="col-span-9">
@@ -147,7 +123,7 @@ const Business = ({ business }: { business: Business }) => {
                 ))}
               </div>
             </div>
-            <div className="mt-8">
+            {/* <div className="mt-8">
               <h3 className="font-bold my-2">
                 Collaborators ({collaborators.length})
               </h3>
@@ -186,7 +162,7 @@ const Business = ({ business }: { business: Business }) => {
                   </div>
                 ))}
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

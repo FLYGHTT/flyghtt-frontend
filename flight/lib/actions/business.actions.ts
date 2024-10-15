@@ -30,3 +30,16 @@ export const getBusinesses = async (token: string) => {
     return null;
   }
 };
+
+export const deleteBusiness = async (id: string, token: string) => {
+  try {
+    const response = await http.delete(`${baseURL}/business/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
