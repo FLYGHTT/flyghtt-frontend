@@ -36,14 +36,6 @@ const ColumnFactors = ({
               className="font-semibold w-full placeholder:font-normal"
               placeholder="Enter Factor Name"
             />
-            <Input
-              value={item.name}
-              name="value"
-              id={`value-${index}-${idx}`}
-              onChange={(e) => onChange(e, index, idx)}
-              className="font-semibold w-full mt-2 placeholder:font-normal"
-              placeholder="Enter Factor Value"
-            />
           </div>
         </div>
       ))}

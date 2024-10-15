@@ -62,13 +62,22 @@ const CreateBusinessForm = ({ token }: { token: string }) => {
   async function onSubmit(values: z.infer<typeof BusinessSchema>) {
     try {
       setIsLoading(true);
-      await http.post(`${baseURL}/business`, values, {
+      const formData = new FormData();
+
+      formData.append("businessLogo", values.businessLogo);
+      formData.append("businessName", values.businessName);
+      formData.append("description", values.description);
+
+      await http.post(`${baseURL}/business`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
 
       setIsLoading(false);
+      toast.success("Business created successfully", {
+        autoClose: 3000,
+      });
       router.push("/dashboard/businesses");
     } catch (error) {
       setIsLoading(false);

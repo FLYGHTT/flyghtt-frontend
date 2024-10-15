@@ -85,19 +85,18 @@ const ToolsDisplay = ({
               </div>
             </div>
             <div className="mr-2 gap-4 group-hover:flex hidden items-center">
-              <p
+              <button
                 onClick={() => previewTool(tabFromTool)}
                 className="text-sm text-gray-600 cursor-pointer hover:text-black"
               >
                 <IconEye className="w-5 h-5" />
-              </p>
-              <Link
-                href={`/dashboard/tool-workspace`}
+              </button>
+              <button
                 onClick={() => editTool(tabFromTool)}
                 className="text-sm text-gray-600 cursor-pointer hover:text-black"
               >
                 <IconEdit className="w-5 h-5" />
-              </Link>
+              </button>
             </div>
           </div>
         );

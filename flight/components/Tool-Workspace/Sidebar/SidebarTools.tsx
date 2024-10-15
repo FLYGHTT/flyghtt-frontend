@@ -1,48 +1,34 @@
+"use client";
 import React from "react";
 import Image from "next/image";
 import file from "@/assets/icons/file.svg";
 import privatefile from "@/assets/icons/privatefile.svg";
-import { FaEye } from "react-icons/fa";
-import error from "@/assets/icons/error.png";
+import { useAppContext } from "@/context";
 import { Tab, Tool } from "@/types";
-import useTool from "@/hooks/useTool";
+
 import { newTab } from "@/lib/constants";
-const SidebarTools = ({
-  type,
-  data,
-  isLoading,
-  isError,
-}: {
-  type: string;
-  data: Tool[] | undefined;
-  isLoading: boolean;
-  isError: boolean;
-}) => {
-  const { handlePreviewTool, handleEditTool } = useTool();
-  if (isLoading || !data) {
-    return (
-      <div className="flex h-full  items-center justify-center">
-        <div className="animate-spin mt-8 rounded-full h-10 w-10 border-b-2 border-green"></div>
-      </div>
-    );
-  }
-  if (isError) {
-    return (
-      <div className="flex h-full items-center justify-center flex-col">
-        <Image
-          src={error}
-          alt="error"
-          width={100}
-          height={100}
-          className="mt-8"
-        />
-        <h2>An error occured</h2>
-      </div>
-    );
-  }
+import { IconEdit, IconEye } from "@tabler/icons-react";
+
+const SidebarTools = ({ type, tools }: { type: string; tools: Tool[] }) => {
+  const { setTabs, setActiveTabId , tabs} = useAppContext();
+  const handlePreviewTool = (tab: Tab) => {
+    const newTab = { ...tab, mode: "preview" };
+
+    setTabs((prev) => [...prev, newTab]);
+    setActiveTabId(newTab.id);
+    return;
+  };
+  const handleEditTool = (tab: Tab) => {
+    const newTab = { ...tab, mode: "editor" };
+
+    setTabs((prev) => [...prev, newTab]);
+    setActiveTabId(newTab.id);
+    return;
+  };
+  
   return (
     <div className="flex flex-col gap-2">
-      {data.map((tool) => {
+      {tools.map((tool) => {
         const tabFromTool: Tab = {
           ...newTab,
           id: tool.toolId + Math.random() * 1000,
@@ -74,17 +60,18 @@ const SidebarTools = ({
               </h1>
             </div>
             <div className="flex gap-4 items-center">
-              <FaEye
-                className="text-gray-600 cursor-pointer text-xs group-hover:block hidden"
-                title="View tool"
+              <button
                 onClick={() => handlePreviewTool(tabFromTool)}
-              />
-              <p
-                className="text-xs text-gray-600 cursor-pointer"
+                className="text-sm text-gray-600 cursor-pointer hover:text-black"
+              >
+                <IconEye title="View tool" className="w-4 h-4" />
+              </button>
+              <button
+                className="text-sm text-gray-600 cursor-pointer hover:text-black"
                 onClick={() => handleEditTool(tabFromTool)}
               >
-                Use
-              </p>
+                <IconEdit className="w-4 h-4" title="Edit tool" />
+              </button>
             </div>
           </div>
         );

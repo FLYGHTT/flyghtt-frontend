@@ -1,9 +1,17 @@
 import TabList from "@/components/Tool-Workspace/TabList";
 import React from "react";
+import { auth } from "@/auth";
 
-const Page = () => {
+import { redirect } from "next/navigation";
+
+const Page = async () => {
+  const session = await auth();
+  if (!session) {
+    redirect("/login");
+  }
+
   return (
-    <div className="max-h-[98%] overflow-y-auto pb-4">
+    <div>
       <TabList />
     </div>
   );

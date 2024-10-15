@@ -27,38 +27,37 @@ const BusinessList = ({ businesses }: { businesses: Business[] | null }) => {
           <Link
             key={index}
             href={`/dashboard/businesses/${business.businessId}`}
+            className="flex justify-between cursor-pointer hover:border-green border border-transparent bg-white shadow-md p-4 rounded-lg "
           >
-            <div className="flex justify-between cursor-pointer hover:border-green border border-transparent bg-white shadow-md p-4 rounded-lg ">
-              <div className="flex">
-                {base64Data ? (
-                  <Image
-                    src={imageSrc}
-                    width={80}
-                    height={80}
-                    alt="business logo"
-                    className="object-cover rounded-md"
-                  />
-                ) : (
-                  <div className="bg-green/20 w-20 h-20 rounded-md flex items-center justify-center">
-                    <p className="font-bold truncate max-w-full">
-                      {getInitials(business.businessName)}
-                    </p>
-                  </div>
-                )}
-                <div className="ml-8">
-                  <h1 className="font-bold my-1 text-lg">
-                    {business.businessName}
-                  </h1>
-                  <div className="flex gap-3">
-                    {/* <p className="text-sm flex gap-2 items-center">
+            <div className="flex">
+              {base64Data ? (
+                <Image
+                  src={imageSrc}
+                  width={80}
+                  height={80}
+                  alt="business logo"
+                  className="object-cover rounded-md"
+                />
+              ) : (
+                <div className="bg-green/20 w-20 h-20 rounded-md flex items-center justify-center">
+                  <p className="font-bold truncate max-w-full">
+                    {getInitials(business.businessName)}
+                  </p>
+                </div>
+              )}
+              <div className="ml-8">
+                <h1 className="font-bold my-1 text-lg">
+                  {business.businessName}
+                </h1>
+                <div className="flex gap-3">
+                  {/* <p className="text-sm flex gap-2 items-center">
                       <MdOutlineHandshake size={16} />
                       {business.numberOfEmployees}
                     </p> */}
-                    <p className="text-sm flex gap-2 items-center">
-                      <IconTool className="w-4 h-4" />
-                      {business.numberOfBusinessTools}
-                    </p>
-                  </div>
+                  <p className="text-sm flex gap-2 items-center">
+                    <IconTool className="w-4 h-4" />
+                    {business.numberOfBusinessTools}
+                  </p>
                 </div>
               </div>
             </div>

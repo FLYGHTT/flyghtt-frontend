@@ -9,7 +9,7 @@ const TabList = () => {
   const { tabs, activeTabId } = useAppContext();
   const { handleAddTab } = useTab();
   return (
-    <div className="h-screen overflow-hidden">
+    <div className="h-full">
       {tabs.length > 0 ? (
         <div className="h-full">
           <TabListHeader />

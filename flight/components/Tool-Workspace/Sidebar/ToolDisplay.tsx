@@ -1,12 +1,11 @@
-"use client";
 import React from "react";
 import SidebarTools from "@/components/Tool-Workspace/Sidebar/SidebarTools";
-import { useGetToolsQuery } from "@/hooks/reactQueryHooks";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-const ToolDisplay = () => {
-  // const { data, isLoading, isError } = useGetToolsQuery();
-
+import { Tool } from "@/types";
+const ToolDisplay = ({ tools }: { tools: Tool[] }) => {
+  const publicTools = tools.filter((tool) => tool.public);
+  const privateTools = tools.filter((tool) => !tool.public);
   return (
     <Tabs
       defaultValue="public"
@@ -18,20 +17,10 @@ const ToolDisplay = () => {
         {/* <TabsTrigger value="liked">Liked</TabsTrigger> */}
       </TabsList>
       <TabsContent value="public" className="w-full h-full">
-        {/* <SidebarTools
-          type="public"
-          data={data}
-          isLoading={isLoading}
-          isError={isError}
-        /> */}
+        <SidebarTools type="public" tools={publicTools} />
       </TabsContent>
       <TabsContent value="private" className="w-full h-full">
-        {/* <SidebarTools
-          type="private"
-          data={data}
-          isLoading={isLoading}
-          isError={isError}
-        /> */}
+        <SidebarTools type="private" tools={privateTools} />
       </TabsContent>
     </Tabs>
   );
